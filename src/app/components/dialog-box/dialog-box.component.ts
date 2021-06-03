@@ -22,7 +22,7 @@ export class DialogBoxComponent {
 
 
   constructor(private tokenStorageService: TokenStorageService, private _snackBar: MatSnackBar, public dialogRef: MatDialogRef<DialogBoxComponent>,
-    @Optional() @Inject(MAT_DIALOG_DATA) public data: Tab) { console.log(data); this.local_data = { ...data }; this.action = this.local_data.action; }
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: Tab) { this.local_data = { ...data }; this.action = this.local_data.action; }
 
 
   diaFormControl = new FormControl('', [

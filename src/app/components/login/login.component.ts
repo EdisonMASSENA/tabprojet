@@ -103,8 +103,8 @@ export class LoginComponent implements OnInit {
           for (let i = 0; i < data.length; i++) {
             this.dirs = this.dirs.concat(data[i].username);
           }
-          console.log(data);
-          console.log(this.dirs);
+          // console.log(data);
+          // console.log(this.dirs);
         },
         error => {
           console.log(error);

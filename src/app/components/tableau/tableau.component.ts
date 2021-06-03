@@ -96,7 +96,7 @@ export class TableauComponent implements OnInit {
         if (state.matches) {
           this.medium = true;
           this.displayedColumns = ['chef', 'direction', 'projet', 'etat', 'tendance'];
-          console.log('ok')
+          // console.log('ok')
         } else {
           this.medium = false;
           this.displayedColumns = ['chef', 'direction', 'priorite', 'projet', 'etat', 'tendance', 'accompli', 'attention', 'enCours', 'action'];
@@ -147,22 +147,22 @@ export class TableauComponent implements OnInit {
       didDrawCell: function (data) {
         if (data.column.index === 4 && data.cell.section === 'body') {
           let td = data.cell.raw;
-          console.log(td);
+          // console.log(td);
           let textPosx = data.cell.x;
           let textPosy = data.cell.y;
-          console.log(textPosx);
-          console.log(textPosy);
+          // console.log(textPosx);
+          // console.log(textPosy);
           if (td !== null) {
             doc.addImage("https://tabprojet.herokuapp.com/" + td, 'PNG', textPosx + 0.5, textPosy + 0.5, 20, 14);
           }
         }
         if (data.column.index === 5 && data.cell.section === 'body') {
           let td = data.cell.raw;
-          console.log(td);
+          // console.log(td);
           let textPosx = data.cell.x;
           let textPosy = data.cell.y;
-          console.log(textPosx);
-          console.log(textPosy);
+          // console.log(textPosx);
+          // console.log(textPosy);
           if (td !== null) {
             doc.addImage("https://tabprojet.herokuapp.com/" + td, 'PNG', textPosx + 1, textPosy + 1, 20, 13);
           }
@@ -170,7 +170,7 @@ export class TableauComponent implements OnInit {
       }
     })
 
-    doc.save('tableau projets.pdf')
+    doc.save('tableau-projets.pdf')
 
   }
 
@@ -206,7 +206,7 @@ export class TableauComponent implements OnInit {
     this.service.create(data)
       .subscribe(
         response => {
-          console.log(response);
+          // console.log(response);
           this.recupTab()
         },
         error => {
@@ -226,11 +226,11 @@ export class TableauComponent implements OnInit {
     this.service.update(data.id, data)
       .subscribe(
         response => {
-          console.log(response);
+          // console.log(response);
           this.recupTab();
         },
         error => {
-          console.log(error);
+          // console.log(error);
         });
 
     let msg = 'Le projet ' + data.projet + ' à été modifié '
@@ -251,7 +251,7 @@ export class TableauComponent implements OnInit {
     this.service.delete(data.id)
       .subscribe(
         response => {
-          console.log(response);
+          // console.log(response);
           this.recupTab();
         },
         error => {
@@ -280,7 +280,7 @@ export class TableauComponent implements OnInit {
           else {
             this.dataSource.data = data.filter(item => item.direction === this.username);
           }
-          console.log(this.dataSource.data);
+          // console.log(this.dataSource.data);
         },
         error => {
           console.log(error);
