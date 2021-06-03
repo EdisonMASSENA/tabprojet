@@ -1,0 +1,41 @@
+.container
+{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    width: 25%;
+    margin: 20vh auto;
+    padding: 30px;
+    border: 2px solid rgb(63, 81, 181);
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgb(80, 102, 224);
+}
+
+.altsm
+{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    width: 70%;
+    margin: 20vh auto;
+    padding: 30px;
+    border: 2px solid rgb(63, 81, 181);
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgb(80, 102, 224);
+}
+
+.full
+{
+    width: 100% ;
+}
+
+.icon
+{
+    padding-top: 10px;
+}
+
+.center
+{
+    justify-content: center;
+}
+

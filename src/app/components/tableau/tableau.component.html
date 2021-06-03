@@ -1,0 +1,358 @@
+<mat-toolbar [ngClass]="medium ? 'toolbarM' : 'toolbar' " color="primary">
+
+  <span *ngIf="isLoggedIn">{{ username }}</span>
+
+  <span>Avancement Projets</span>
+
+  <button mat-icon-button matTooltip="Deconnexion" (click)="logout()">
+    <mat-icon>power_settings_new</mat-icon>
+  </button>
+
+</mat-toolbar>
+
+<div class="container">
+
+  <div class="center">
+
+    <button mat-raised-button [disabled]="consult" [matTooltip]=" consult ? 'Vous n\'avez pas les droits' : null "
+      color="primary" class="add" (click)="openDialog('Ajouter',{})"> Nouveau Projet</button>
+
+    <button class="red" (click)="downloadPdf()" mat-mini-fab [matTooltip]="'Tableau en PDF'">
+      <mat-icon>picture_as_pdf</mat-icon>
+    </button>
+
+    <mat-form-field class="rech" color="accent">
+      <mat-label>Recherche</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Nom projet" #input>
+    </mat-form-field>
+
+  </div>
+
+  <mat-table id="table" multiTemplateDataRows matSort #table class="mat-elevation-z8" [dataSource]="dataSource">
+
+    <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true" class="blue"></mat-header-row>
+    <mat-row *matRowDef="let tabs; columns: displayedColumns;" class="example-element-row"
+      (click)="medium ? expandedElement = expandedElement === tabs ? null : tabs : false" [class.example-expanded-row]="expandedElement === tabs">
+    </mat-row>
+    <mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></mat-row>
+
+    <ng-container matColumnDef="chef">
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="white" [ngClass]="!medium ? 'chef' : 'chefM' "> Chef de
+        projet </mat-header-cell>
+      <mat-cell [ngClass]="!medium ? 'chef' : 'chefM' " *matCellDef="let tabs">
+
+        <div *ngIf="!tabs.editing; else editingTab">
+          {{tabs.chef}}
+        </div>
+
+        <ng-template #editingTab>
+          <mat-form-field class="full" appearance="outline">
+            <textarea matInput [(ngModel)]="tabs.chef"></textarea>
+          </mat-form-field>
+        </ng-template>
+
+      </mat-cell>
+    </ng-container>
+
+
+    <ng-container matColumnDef="direction">
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="white"
+        [ngClass]="!medium ? 'direction' : 'directionM' "> Direction </mat-header-cell>
+      <mat-cell *matCellDef="let tabs" [ngClass]="!medium ? 'direction' : 'directionM' ">
+
+        <div *ngIf="!tabs.editing; else editingTab">
+          {{tabs.direction}}
+        </div>
+
+        <ng-template #editingTab>
+          <mat-form-field class="full" appearance="outline">
+            <textarea disabled matInput [(ngModel)]="tabs.direction"></textarea>
+          </mat-form-field>
+        </ng-template>
+
+      </mat-cell>
+    </ng-container>
+
+
+    <ng-container matColumnDef="priorite">
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="white"> Priorité </mat-header-cell>
+      <mat-cell *matCellDef="let tabs">
+
+        <div *ngIf="!tabs.editing; else editingTab">
+          {{tabs.priorite}}
+        </div>
+
+        <ng-template #editingTab>
+          <mat-form-field class="full" appearance="outline">
+            <textarea matInput [(ngModel)]="tabs.priorite"></textarea>
+          </mat-form-field>
+        </ng-template>
+
+      </mat-cell>
+    </ng-container>
+
+
+    <ng-container matColumnDef="projet">
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="white" [ngClass]="!medium ? 'projet' : 'projetM' ">
+        Projet </mat-header-cell>
+      <mat-cell *matCellDef="let tabs" [ngClass]="!medium ? 'projet' : 'projetM' ">
+
+        <div *ngIf="!tabs.editing; else editingTab">
+          {{tabs.projet}}
+        </div>
+
+        <ng-template #editingTab>
+          <mat-form-field class="full" appearance="outline">
+            <textarea matInput [(ngModel)]="tabs.projet"></textarea>
+          </mat-form-field>
+        </ng-template>
+
+      </mat-cell>
+    </ng-container>
+
+
+    <ng-container matColumnDef="etat">
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="white" [ngClass]="!medium ? 'etat' : 'etatM' "> État
+      </mat-header-cell>
+      <mat-cell *matCellDef="let tabs" [ngClass]="!medium ? 'etat' : 'etatM' ">
+
+        <div *ngIf="!tabs.editing; else editingTab">
+          <img [ngClass]="!medium ? 'imgr' : 'imgrM' " [src]="tabs.etat" />
+        </div>
+
+        <ng-template #editingTab>
+          <mat-radio-group [(ngModel)]="tabs.etat">
+            <mat-radio-button value="assets/1.png">
+              <img [ngClass]="!medium ? 'imgr' : 'imgrM' " src="assets/1.png">
+            </mat-radio-button>
+            <mat-radio-button value="assets/2.png">
+              <img [ngClass]="!medium ? 'imgr' : 'imgrM' " src="assets/2.png">
+            </mat-radio-button>
+            <mat-radio-button value="assets/3.png">
+              <img [ngClass]="!medium ? 'imgr' : 'imgrM' " src="assets/3.png">
+            </mat-radio-button>
+            <mat-radio-button value="assets/4.png">
+              <img [ngClass]="!medium ? 'imgr' : 'imgrM' " src="assets/4.png">
+            </mat-radio-button>
+          </mat-radio-group>
+        </ng-template>
+
+      </mat-cell>
+    </ng-container>
+
+
+    <ng-container matColumnDef="tendance">
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="white" [ngClass]="!medium ? 'tendance' : 'tendanceM' ">
+        Tendance </mat-header-cell>
+      <mat-cell *matCellDef="let tabs" [ngClass]="!medium ? 'tendance' : 'tendanceM' ">
+
+        <div *ngIf="!tabs.editing; else editingTab">
+          <img [ngClass]="!medium ? 'imgr' : 'imgrM' " [src]="tabs.tendance" />
+        </div>
+
+        <ng-template #editingTab>
+          <mat-radio-group [(ngModel)]="tabs.tendance">
+            <mat-radio-button value="assets/a.PNG">
+              <img [ngClass]="!medium ? 'imgr' : 'imgrM' " src="assets/a.PNG">
+            </mat-radio-button>
+            <mat-radio-button value="assets/b.PNG">
+              <img [ngClass]="!medium ? 'imgr' : 'imgrM' " src="assets/b.PNG">
+            </mat-radio-button>
+            <mat-radio-button value="assets/c.PNG">
+              <img [ngClass]="!medium ? 'imgr' : 'imgrM' " src="assets/c.PNG">
+            </mat-radio-button>
+          </mat-radio-group>
+        </ng-template>
+
+      </mat-cell>
+    </ng-container>
+
+
+    <ng-container matColumnDef="accompli">
+      <mat-header-cell *matHeaderCellDef class="white"> Travaux faits </mat-header-cell>
+      <mat-cell *matCellDef="let tabs">
+
+        <div *ngIf="!tabs.editing; else editingTab">
+          {{tabs.accompli}}
+        </div>
+
+        <ng-template #editingTab>
+          <mat-form-field class="full" appearance="outline">
+            <textarea matInput [(ngModel)]="tabs.accompli"></textarea>
+          </mat-form-field>
+        </ng-template>
+
+      </mat-cell>
+    </ng-container>
+
+
+    <ng-container matColumnDef="attention">
+      <mat-header-cell *matHeaderCellDef class="white"> Points d'attention </mat-header-cell>
+      <mat-cell *matCellDef="let tabs">
+
+        <div *ngIf="!tabs.editing; else editingTab">
+          {{tabs.attention}}
+        </div>
+
+        <ng-template #editingTab>
+          <mat-form-field class="full" appearance="outline">
+            <textarea matInput [(ngModel)]="tabs.attention"></textarea>
+          </mat-form-field>
+        </ng-template>
+
+      </mat-cell>
+    </ng-container>
+
+
+    <ng-container matColumnDef="enCours">
+      <mat-header-cell *matHeaderCellDef class="white"> Travaux en cours / à venir </mat-header-cell>
+      <mat-cell *matCellDef="let tabs">
+
+        <div *ngIf="!tabs.editing; else editingTab">
+          {{tabs.enCours}}
+        </div>
+
+        <ng-template #editingTab>
+          <mat-form-field class="full" appearance="outline">
+            <textarea matInput [(ngModel)]="tabs.enCours"></textarea>
+          </mat-form-field>
+        </ng-template>
+
+      </mat-cell>
+    </ng-container>
+
+
+    <ng-container matColumnDef="action">
+      <mat-header-cell *matHeaderCellDef class="white"> Action </mat-header-cell>
+      <mat-cell *matCellDef="let tabs">
+
+        <span class="pill"> 
+
+          <button mat-icon-button [disabled]="consult"
+            [matTooltip]=" consult ? 'Vous n\'avez pas les droits' : 'Modifier' " color="primary"
+            *ngIf="!tabs.editing; else editingTab" (click)="editTab(tabs)">
+            <mat-icon>edit</mat-icon>
+          </button>
+
+          <ng-template #editingTab>
+            <button mat-icon-button matTooltip="Valider" class="vert" (click)="doneEditTab(tabs)">
+              <mat-icon>check</mat-icon>
+            </button>
+          </ng-template>
+
+          <span class="spacer"></span>
+
+          <button mat-icon-button [disabled]="consult"
+            [matTooltip]=" consult ? 'Vous n\'avez pas les droits' : 'Supprimer' " color="warn"
+            (click)="openDialog('Supprimer',tabs)">
+            <mat-icon>delete</mat-icon>
+          </button>
+
+        </span>
+
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="expandedDetail">
+      <mat-cell *matCellDef="let tabs" [attr.colspan]="displayedColumns.length" class="element-exp"
+        [@detailExpand]="tabs == expandedElement ? 'expanded' : 'collapsed' ">
+
+        <div class="exp">
+
+          <div class="expR">
+
+            <span class="titre">Priorité: </span>
+            <div *ngIf="!tabs.editing; else editingTabPr">
+              {{tabs.priorite}}
+            </div>
+            <ng-template #editingTabPr>
+              <mat-form-field class="full" appearance="outline">
+                <textarea matInput [(ngModel)]="tabs.priorite"></textarea>
+              </mat-form-field>
+            </ng-template>
+
+          </div>
+
+          <div class="expR">
+
+            <span class="titre">Travaux faits: </span>
+            <div *ngIf="!tabs.editing; else editingTabAc">
+              {{tabs.accompli}}
+            </div>
+            <ng-template #editingTabAc>
+              <mat-form-field class="full" appearance="outline">
+                <textarea matInput [(ngModel)]="tabs.accompli"></textarea>
+              </mat-form-field>
+            </ng-template>
+
+          </div>
+
+          <div class="expR">
+
+            <span class="titre">Points d'attention: </span>
+            <div *ngIf="!tabs.editing; else editingTabAt">
+              {{tabs.attention}}
+            </div>
+            <ng-template #editingTabAt>
+              <mat-form-field class="full" appearance="outline">
+                <textarea matInput [(ngModel)]="tabs.attention"></textarea>
+              </mat-form-field>
+            </ng-template>
+
+          </div>
+
+          <div class="expR">
+
+            <span class="titre">Travaux en cours / à venir: </span>
+            <div *ngIf="!tabs.editing; else editingTabEn">
+              {{tabs.enCours}}
+            </div>
+            <ng-template #editingTabEn>
+              <mat-form-field class="full" appearance="outline">
+                <textarea matInput [(ngModel)]="tabs.enCours"></textarea>
+              </mat-form-field>
+            </ng-template>
+
+          </div>
+
+          <div class="expR">
+            <span>
+              <span class="titre">Action:</span>
+              <button mat-icon-button [disabled]="consult"
+                [matTooltip]=" consult ? 'Vous n\'avez pas les droits' : 'Modifier' " color="primary"
+                *ngIf="!tabs.editing; else editingTabAct" (click)="editTab(tabs)">
+                <mat-icon>edit</mat-icon>
+              </button>
+
+              <ng-template #editingTabAct>
+                <button mat-icon-button matTooltip="Valider" class="vert" (click)="doneEditTab(tabs)">
+                  <mat-icon>check</mat-icon>
+                </button>
+              </ng-template>
+
+              <span class="spacer"></span>
+
+              <button mat-icon-button [disabled]="consult"
+                [matTooltip]=" consult ? 'Vous n\'avez pas les droits' : 'Supprimer' " color="warn"
+                (click)="openDialog('Supprimer',tabs)">
+                <mat-icon>delete</mat-icon>
+              </button>
+
+            </span>
+          </div>
+
+        </div>
+      </mat-cell>
+    </ng-container>
+
+  </mat-table>
+
+  <button mat-fab class="scroll" *ngIf="isShow" (click)="scroll()" color="accent">
+    <mat-icon>north</mat-icon>
+  </button>
+
+</div>
+
+<!-- <ng-template #loggedOut>
+  Please login.
+</ng-template> -->

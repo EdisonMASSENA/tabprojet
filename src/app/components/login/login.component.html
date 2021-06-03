@@ -1,0 +1,33 @@
+<mat-toolbar class="center" color="primary">
+  <span>Avancement Projets</span>
+</mat-toolbar>
+
+<div *ngIf="!isLoggedIn" [ngClass]="small ? 'altsm' : 'container'">
+
+  <h1>Connectez-vous</h1>
+
+  <mat-form-field class="full" appearance="outline">
+    <mat-label>Direction</mat-label>
+    <mat-select [(ngModel)]="form.username">
+      <mat-option [value]="dir" *ngFor="let dir of dirs">
+        {{ dir }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field *ngIf="form.username !== 'Consult'" class="full" appearance="outline">
+    <mat-label>Mot de passe</mat-label>
+    <input (keyup.enter)="login()" [(ngModel)]="form.password" required matInput [type]="hide ? 'password' : 'text'">
+    <button class="icon" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+      [attr.aria-pressed]="hide">
+      <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+    </button>
+    <mat-error *ngIf="mdpFormControl.hasError('required')">
+      Mot de passe <strong>requis</strong>
+    </mat-error>
+  </mat-form-field>
+
+  <button (click)="login()" mat-flat-button color="accent">Connexion</button>
+
+</div>
+

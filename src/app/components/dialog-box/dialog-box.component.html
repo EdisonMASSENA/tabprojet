@@ -1,0 +1,91 @@
+<h1 mat-dialog-title> Action :: <strong>{{action}}</strong></h1>
+
+<div mat-dialog-content>
+
+  <div *ngIf="action != 'Supprimer'; else elseTemplate">
+
+    <mat-form-field class="full" appearance="outline">
+      <mat-label>{{action}} Chef de projet</mat-label>
+      <input matInput class="full" [(ngModel)]="local_data.chef" required>
+      <mat-error *ngIf="diaFormControl.hasError('required')">
+       Chef de projet <strong>requis</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="full" appearance="outline">
+      <mat-label>{{action}} Priorité</mat-label>
+      <input matInput class="full" [(ngModel)]="local_data.priorite" required>
+      <mat-error *ngIf="diaFormControl.hasError('required')">
+        Priorité <strong>requis</strong>
+       </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="full" appearance="outline">
+      <mat-label>{{action}} Projet</mat-label>
+      <input matInput class="full" [(ngModel)]="local_data.projet" required>
+      <mat-error *ngIf="diaFormControl.hasError('required')">
+        Projet <strong>requis</strong>
+       </mat-error>
+    </mat-form-field>
+
+    <div class="flex">
+
+      <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group" [(ngModel)]="local_data.etat" >
+        <mat-label>Etat :</mat-label>
+        <mat-radio-button class="example-radio-button" value="assets/1.png">
+          <img src="assets/1.png">
+        </mat-radio-button>
+        <mat-radio-button class="example-radio-button" value="assets/2.png">
+          <img src="assets/2.png">
+        </mat-radio-button>
+        <mat-radio-button class="example-radio-button" value="assets/3.png">
+          <img src="assets/3.png">
+        </mat-radio-button>
+        <mat-radio-button class="example-radio-button" value="assets/4.png">
+          <img src="assets/4.png">
+        </mat-radio-button>
+      </mat-radio-group>
+
+      <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group" [(ngModel)]="local_data.tendance" >
+        <mat-label>Tendance :</mat-label>
+        <mat-radio-button class="example-radio-button" value="assets/a.PNG">
+          <img src="assets/a.PNG">
+        </mat-radio-button>
+        <mat-radio-button class="example-radio-button" value="assets/b.PNG">
+          <img class="ecl" src="assets/b.PNG">
+        </mat-radio-button>
+        <mat-radio-button class="example-radio-button" value="assets/c.PNG">
+          <img src="assets/c.PNG">
+        </mat-radio-button>
+      </mat-radio-group>
+
+    </div>
+
+    <mat-form-field class="full" appearance="outline">
+      <mat-label>{{action}} Travaux faits</mat-label>
+      <textarea class="row" matInput [(ngModel)]="local_data.accompli"></textarea>
+    </mat-form-field>
+
+    <mat-form-field class="full" appearance="outline">
+      <mat-label>{{action}} Points d'attention</mat-label>
+      <textarea class="row" matInput [(ngModel)]="local_data.attention"></textarea>
+    </mat-form-field>
+
+
+    <mat-form-field class="full" appearance="outline">
+      <mat-label>{{action}} Travaux en cours / à venir</mat-label>
+      <textarea class="row" matInput [(ngModel)]="local_data.enCours"></textarea>
+    </mat-form-field>
+
+  </div>
+
+  <ng-template #elseTemplate>
+    <p> Êtes-vous sûr de vouloir supprimer le projet : <b>{{local_data.projet}}</b>?</p>
+  </ng-template>
+
+</div>
+
+<div mat-dialog-actions>
+  <button mat-flat-button (click)="doAction(); openSnackBar( local_data.projet, action )" color="accent"> {{action}} </button>
+  <button mat-button (click)="closeDialog()">Annuler</button>
+</div>

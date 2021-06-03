@@ -1,0 +1,315 @@
+
+.container
+{
+    width: 95%;
+    margin: 10px auto;
+}
+
+.center
+{
+    text-align: center;
+
+}
+.toolbar
+{
+    justify-content: space-between;
+    padding: 0px 30px;
+
+}
+
+.toolbarM
+{
+    justify-content: space-between;
+    padding: 0px 30px;
+    font-size: 17px;
+    
+}
+
+#table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 20px;
+}
+
+
+.add
+{
+    margin-top: 30px;
+    margin-right: 50px;
+    width: 35%;
+    white-space: pre-wrap !important;
+}
+
+.blue
+{
+    background-color: #495bbe;
+    border-collapse: collapse;
+    border-radius: 20px;
+
+}
+
+.white
+{
+    color: white;
+}
+
+.red
+{
+    background-color: rgb(180, 1, 1);
+}
+
+.spacer
+{
+    margin: 0 5px ;
+}
+
+.imgr
+{
+    max-width: 55px;
+    max-height: 55px;
+}
+
+.imgrM
+{
+    max-width: 40px;
+    max-height: 40px;
+}
+
+img
+{
+    width: 100%;
+    height: 100%;
+}
+
+.full
+{
+    width: 100%;
+}
+
+.vert
+{
+    color: rgb(60, 180, 114);
+}
+
+.rech
+{
+    width: 70%;
+}
+
+.scroll
+{
+    position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+
+::ng-deep .white .mat-sort-header-arrow 
+{
+    color: #ff4081;
+}
+
+.chef
+{
+    padding: 10px 0px 10px 20px;
+    flex: 0 0 8% !important;
+    word-wrap: break-word !important;
+    white-space: pre-wrap !important;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+      
+}
+
+.chefM
+{
+    padding: 10px 5px;
+    font-size: 12px;
+    word-wrap: break-word !important;
+    white-space: pre-wrap !important;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+    
+}
+
+.direction
+{
+    padding: 10px 0px 10px 20px;
+    flex: 0 0 5% !important;
+    word-wrap: break-word !important;
+    white-space: pre-wrap !important;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+    
+}
+
+.directionM
+{
+    font-size: 12px;
+    
+}
+
+.mat-column-priorite
+{
+    padding: 10px 10px;
+    flex: 0 0 5% !important;
+}
+
+.projet
+{
+    padding: 10px 10px ;
+    flex: 0 0 10% !important;
+    word-wrap: break-word !important;
+    white-space: pre-wrap !important;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+}
+
+.projetM
+{
+    font-size: 12px;
+    word-wrap: break-word !important;
+    white-space: pre-wrap !important;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+
+}
+
+.etat
+{
+    padding: 0px 10px ;
+    flex: 0 0 5% !important;
+    justify-content: center;
+}
+
+.etatM
+{
+    justify-content: center;
+    font-size: 12px;
+    
+}
+
+
+.tendance
+{
+    padding: 0px 10px ;
+    flex: 0 0 5% !important;
+    justify-content: center;
+}
+
+.tendanceM
+{
+    justify-content: center;
+    padding-right: 5px;
+    font-size: 12px;
+
+}
+
+
+.mat-column-accompli
+{
+    padding: 10px 10px ;
+    word-wrap: break-word !important;
+    white-space: pre-wrap !important;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+    
+}
+
+.mat-column-attention
+{ 
+    padding: 10px 10px ;
+    word-wrap: break-word !important;
+    white-space: pre-wrap !important;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+    
+}
+
+.mat-column-enCours
+{
+    padding: 10px 10px ;
+    word-wrap: break-word !important;
+    white-space: pre-wrap !important;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+    
+}
+
+.mat-column-action
+{
+    flex: 0 0 7% !important;
+    padding: 5px 5px ;
+    justify-content: center;
+    word-wrap: break-word !important;
+    white-space: pre-wrap !important;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+}
+
+
+.example-detail-row {
+    min-height: 0;
+}
+
+.example-element-row
+{
+    border-bottom-width: 0;
+}
+
+.example-element-row:not(.example-expanded-row):hover {
+    background: #ff408007;
+}
+
+.example-element-row:not(.example-expanded-row):active {
+    background: #efefef;
+}
+
+.exp
+{
+    display: flex;
+    flex-direction: column;
+    font-size: 12px;
+}
+
+.expR
+{
+    padding: 5px 0;
+}
+
+.titre
+{
+    color: white;
+    background: #495bbe ;
+    padding: 5px;
+    border-radius: 10px;
+    
+}
+
+.expR div
+{
+    margin-left: 20px;
+    word-wrap: break-word !important;
+    white-space: pre-wrap !important;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+}
+
+.pill
+{
+    border: 2px solid #495bbe ;
+    border-radius: 20px;
+}
+
+.element-exp {
+    overflow: hidden;
+    display: flex;
+  }
