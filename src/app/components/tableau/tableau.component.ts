@@ -153,7 +153,7 @@ export class TableauComponent implements OnInit {
           console.log(textPosx);
           console.log(textPosy);
           if (td !== null) {
-            doc.addImage("https://avancement-projets.herokuapp.com/projets/" + td, 'PNG', textPosx + 0.5, textPosy + 0.5, 20, 14);
+            doc.addImage("https://tabprojet.herokuapp.com/projets/" + td, 'PNG', textPosx + 0.5, textPosy + 0.5, 20, 14);
           }
         }
         if (data.column.index === 5 && data.cell.section === 'body') {
@@ -164,7 +164,7 @@ export class TableauComponent implements OnInit {
           console.log(textPosx);
           console.log(textPosy);
           if (td !== null) {
-            doc.addImage("https://avancement-projets.herokuapp.com/projets/" + td, 'PNG', textPosx + 1, textPosy + 1, 20, 13);
+            doc.addImage("https://tabprojet.herokuapp.com/projets/" + td, 'PNG', textPosx + 1, textPosy + 1, 20, 13);
           }
         }
       }
