@@ -32,7 +32,7 @@
 
     <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true" class="blue"></mat-header-row>
     <mat-row *matRowDef="let tabs; columns: displayedColumns;" class="example-element-row"
-      (click)="medium || tabs.editing ? expandedElement = expandedElement === tabs ? null : tabs : false" [class.example-expanded-row]="expandedElement === tabs">
+      (click)="tabs.editing ? medium ? expandedElement = expandedElement === tabs ? null : tabs : false : false" [class.example-expanded-row]="expandedElement === tabs">
     </mat-row>
     <mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></mat-row>
 
