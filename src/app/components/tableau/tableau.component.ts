@@ -91,7 +91,7 @@ export class TableauComponent implements OnInit {
 
   responsiveM() {
     this.breakpointObserver
-      .observe([Breakpoints.Medium,Breakpoints.Small,Breakpoints.HandsetPortrait])
+      .observe([Breakpoints.Medium,Breakpoints.Small,Breakpoints.HandsetPortrait,Breakpoints.XSmall])
       .subscribe((state: BreakpointState) => {
         if (state.matches) {
           this.medium = true;

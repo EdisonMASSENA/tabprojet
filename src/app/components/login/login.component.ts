@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit {
     this.recupUser();
 
     this.breakpointObserver
-      .observe([Breakpoints.HandsetPortrait])
+      .observe([Breakpoints.HandsetPortrait,Breakpoints.Small,,Breakpoints.XSmall])
       .subscribe((state: BreakpointState) => {
         if (state.matches) {
            this.small = true;
