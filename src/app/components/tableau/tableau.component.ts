@@ -45,7 +45,6 @@ export class TableauComponent implements OnInit {
   expandedElement: Tab|null;
   dataSource = new MatTableDataSource<Tab>();
 
-
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   // @ViewChild(MatTable, { static: true }) table: MatTable<any>;
   
@@ -76,7 +75,16 @@ export class TableauComponent implements OnInit {
   }
 
   
-
+  tabclick(cli) {
+    if (this.medium && !cli.editing ) {
+      if (this.expandedElement === cli) {
+        this.expandedElement = null;
+      }
+      else {
+        this.expandedElement = cli;
+      }
+    }
+  };
 
   isLogged() {
     this.isLoggedIn = !!this.tokenStorage.getToken();
@@ -86,7 +94,7 @@ export class TableauComponent implements OnInit {
       this.username = user.username;
 
     }
-  }
+  };
 
 
   responsiveM() {
@@ -102,7 +110,7 @@ export class TableauComponent implements OnInit {
           this.displayedColumns = ['chef', 'direction', 'priorite', 'projet', 'etat', 'tendance', 'accompli', 'attention', 'enCours', 'action'];
         }
       });
-  }
+  };
 
 
   downloadPdf() {
@@ -172,7 +180,7 @@ export class TableauComponent implements OnInit {
 
     doc.save('tableau-projets.pdf')
 
-  }
+  };
 
 
 
@@ -191,14 +199,14 @@ export class TableauComponent implements OnInit {
         this.deleteTableau(result.data);
       }
     });
-  }
+  };
 
 
   //////////////////// Deconnexion //////////////////////////
   logout(): void {
     this.tokenStorage.signOut();
     this.router.navigate(['/login']);
-  }
+  };
 
 
   /////////////////////// Ajout Projet ////////////////////
@@ -213,13 +221,13 @@ export class TableauComponent implements OnInit {
           console.log(error);
         });
 
-  }
+  };
 
 
   //////////////// Modification des champs /////////////////
   editTab(data: Tab): void {
     data.editing = true;
-  }
+  };
 
   doneEditTab(data: Tab): void {
 
@@ -243,7 +251,7 @@ export class TableauComponent implements OnInit {
 
     data.editing = false;
 
-  }
+  };
 
 
   //////////////////// Suppression Projet ////////////////////
@@ -258,7 +266,7 @@ export class TableauComponent implements OnInit {
           console.log(error);
         });
 
-  }
+  };
 
 
 
@@ -266,7 +274,7 @@ export class TableauComponent implements OnInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase()
-  }
+  };
 
 
   ///////////////////// Reload ////////////////////////
@@ -286,7 +294,7 @@ export class TableauComponent implements OnInit {
           console.log(error);
         });
     
-  }
+  };
 
 
   /////////////////// Scroll /////////////////////
@@ -307,8 +315,8 @@ export class TableauComponent implements OnInit {
       left: 0,
       behavior: 'smooth'
     });
-  }
+  };
 
 
-}
+};
 
