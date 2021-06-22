@@ -14,10 +14,11 @@
 
   <div class="center">
 
-    <button mat-raised-button [disabled]="consult" [matTooltip]=" consult ? 'Vous n\'avez pas les droits' : null "
-      color="primary" class="add" (click)="openDialog('Ajouter',{})"> Nouveau Projet</button>
-
-    <button class="red" (click)="downloadPdf()" mat-mini-fab [matTooltip]="'Tableau en PDF'">
+    <span [matTooltip]=" consult ? 'Vous n\'avez pas les droits' : null " >
+      <button mat-raised-button [disabled]="consult" color="primary" class="add" (click)="openDialog('Ajouter',{})"> Nouveau Projet</button>
+    </span>
+    
+    <button class="red" (click)="downloadPdf()" mat-mini-fab matTooltip="Télécharger tableau en PDF">
       <mat-icon>picture_as_pdf</mat-icon>
     </button>
 
@@ -228,9 +229,7 @@
 
         <span class="pill"> 
 
-          <button mat-icon-button [disabled]="consult"
-            [matTooltip]=" consult ? 'Vous n\'avez pas les droits' : 'Modifier' " color="primary"
-            *ngIf="!tabs.editing; else editingTab" (click)="editTab(tabs)">
+          <button mat-icon-button matTooltip="Modifier" color="primary" *ngIf="!tabs.editing; else editingTab" (click)="editTab(tabs)">
             <mat-icon>edit</mat-icon>
           </button>
 
@@ -242,9 +241,7 @@
 
           <span class="spacer"></span>
 
-          <button mat-icon-button [disabled]="consult"
-            [matTooltip]=" consult ? 'Vous n\'avez pas les droits' : 'Supprimer' " color="warn"
-            (click)="openDialog('Supprimer',tabs)">
+          <button mat-icon-button matTooltip="Supprimer" color="warn" (click)="openDialog('Supprimer',tabs)">
             <mat-icon>delete</mat-icon>
           </button>
 
@@ -315,11 +312,10 @@
 
           </div>
 
-          <div class="expR">
+          <div *ngIf="!consult" class="expR">
             <span>
               <span class="titre">Action:</span>
-              <button mat-icon-button [disabled]="consult"
-                [matTooltip]=" consult ? 'Vous n\'avez pas les droits' : 'Modifier' " color="primary"
+              <button mat-icon-button matTooltip="Modifier" color="primary"
                 *ngIf="!tabs.editing; else editingTabAct" (click)="editTab(tabs)">
                 <mat-icon>edit</mat-icon>
               </button>
@@ -332,9 +328,7 @@
 
               <span class="spacer"></span>
 
-              <button mat-icon-button [disabled]="consult"
-                [matTooltip]=" consult ? 'Vous n\'avez pas les droits' : 'Supprimer' " color="warn"
-                (click)="openDialog('Supprimer',tabs)">
+              <button mat-icon-button matTooltip="Supprimer" color="warn" (click)="openDialog('Supprimer',tabs)">
                 <mat-icon>delete</mat-icon>
               </button>
 
@@ -352,7 +346,3 @@
   </button>
 
 </div>
-
-<!-- <ng-template #loggedOut>
-  Please login.
-</ng-template> -->

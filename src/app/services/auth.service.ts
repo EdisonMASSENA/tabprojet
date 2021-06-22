@@ -13,7 +13,7 @@ const httpOptions = {
 })
 export class AuthService {
 
-  constructor(private http: HttpClient) { }
+  constructor (private http: HttpClient) { }
 
   login(credentials): Observable<any> {
     return this.http.post(AUTH_API + 'signin', {

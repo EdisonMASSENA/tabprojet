@@ -44,7 +44,8 @@ export class TableauComponent implements OnInit {
   displayedColumns: string[];
   expandedElement: Tab|null;
   dataSource = new MatTableDataSource<Tab>();
-
+  acces = "Vous n'avez pas les droits"
+  
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   // @ViewChild(MatTable, { static: true }) table: MatTable<any>;
   
@@ -70,7 +71,7 @@ export class TableauComponent implements OnInit {
       this.consult = true;
     }
 
-    this.responsiveM();
+    this.tabDisplay();
     
   }
 
@@ -97,15 +98,21 @@ export class TableauComponent implements OnInit {
   };
 
 
-  responsiveM() {
+  tabDisplay() {
     this.breakpointObserver
       .observe([Breakpoints.Medium,Breakpoints.Small,Breakpoints.HandsetPortrait,Breakpoints.XSmall])
       .subscribe((state: BreakpointState) => {
+        
         if (state.matches) {
           this.medium = true;
           this.displayedColumns = ['chef', 'direction', 'projet', 'etat', 'tendance'];
           // console.log('ok')
-        } else {
+        }
+        else if (this.consult) {
+          this.medium = false;
+          this.displayedColumns = ['chef', 'direction', 'priorite', 'projet', 'etat', 'tendance', 'accompli', 'attention', 'enCours'];
+        }
+         else {
           this.medium = false;
           this.displayedColumns = ['chef', 'direction', 'priorite', 'projet', 'etat', 'tendance', 'accompli', 'attention', 'enCours', 'action'];
         }
