@@ -38,6 +38,7 @@
     margin-right: 50px;
     width: 35%;
     white-space: pre-wrap !important;
+    border: 1px solid #ff4081;
 }
 
 .blue
