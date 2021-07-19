@@ -1,4 +1,4 @@
-.container
+.normal
 {
     display: flex;
     flex-direction: column;
@@ -9,6 +9,7 @@
     border: 2px solid rgb(63, 81, 181);
     border-radius: 10px;
     box-shadow: 0px 0px 10px rgb(80, 102, 224);
+    background: rgb(255, 255, 255);
 }
 
 .altsm
@@ -22,6 +23,7 @@
     border: 2px solid rgb(63, 81, 181);
     border-radius: 10px;
     box-shadow: 0px 0px 10px rgb(80, 102, 224);
+    background: white;
 }
 
 .full
