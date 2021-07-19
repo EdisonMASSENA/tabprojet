@@ -15,7 +15,7 @@
   <div class="center">
 
     <span [matTooltip]=" consult ? 'Vous n\'avez pas les droits' : null " >
-      <button mat-raised-button [disabled]="consult" color="primary" class="add" (click)="openDialog('Ajouter',{})"> Nouveau Projet</button>
+      <button mat-raised-button [disabled]="consult" color="secondary" class="add" (click)="openDialog('Ajouter',{})"> Nouveau Projet</button>
     </span>
     
     <button class="red" (click)="downloadPdf()" mat-mini-fab matTooltip="Télécharger tableau en PDF">
