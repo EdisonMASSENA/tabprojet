@@ -6,10 +6,11 @@
     width: 25%;
     margin: 20vh auto;
     padding: 30px;
-    border: 2px solid rgb(63, 81, 181);
+    /* border: 2px solid rgb(63, 81, 181); */
+    /* box-shadow: 0px 0px 10px rgb(80, 102, 224); */
     border-radius: 10px;
-    box-shadow: 0px 0px 10px rgb(80, 102, 224);
-    background: rgb(255, 255, 255);
+    
+    
 }
 
 .altsm
@@ -20,15 +21,17 @@
     width: 70%;
     margin: 20vh auto;
     padding: 30px;
-    border: 2px solid rgb(63, 81, 181);
+    /* border: 2px solid rgb(63, 81, 181); */
+    /* box-shadow: 0px 0px 10px rgb(80, 102, 224); */
     border-radius: 10px;
-    box-shadow: 0px 0px 10px rgb(80, 102, 224);
-    background: white;
+    
+    
 }
 
 .full
 {
     width: 100% ;
+    background: white;
 }
 
 .icon
@@ -39,5 +42,6 @@
 .center
 {
     justify-content: center;
+    background: transparent;
 }
 
