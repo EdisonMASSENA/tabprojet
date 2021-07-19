@@ -106,7 +106,6 @@ export class TableauComponent implements OnInit {
         if (state.matches) {
           this.medium = true;
           this.displayedColumns = ['chef', 'direction', 'projet', 'etat', 'tendance'];
-          // console.log('ok')
         }
         else if (this.consult) {
           this.medium = false;
@@ -137,7 +136,7 @@ export class TableauComponent implements OnInit {
       prepare.push(tempObj);
     });
 
-    const doc = new jsPDF('l', 'mm', 'a3')
+    const doc = new jsPDF('l', 'mm', 'a4')
     autoTable(doc, {
       styles: {
         overflow: 'linebreak',
