@@ -269,7 +269,7 @@ img
 }
 
 .example-element-row:not(.example-expanded-row):active {
-    background: #ff408062;
+    background: #ff408026;
 }
 
 /* .example-element-row:not(.example-expanded-row):active {
