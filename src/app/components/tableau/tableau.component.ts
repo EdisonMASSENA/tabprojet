@@ -93,7 +93,6 @@ export class TableauComponent implements OnInit {
 
       const user = this.tokenStorage.getUser();
       this.username = user.username;
-
     }
   };
 
@@ -305,6 +304,7 @@ export class TableauComponent implements OnInit {
 
   /////////////////// Scroll /////////////////////
   @HostListener('window:scroll')
+
   displayScroll() {
     const scrollPosition = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
 
