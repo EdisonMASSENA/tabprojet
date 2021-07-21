@@ -269,8 +269,12 @@ img
 }
 
 .example-element-row:not(.example-expanded-row):active {
-    background: #efefef;
+    background: #ff408026;
 }
+
+/* .example-element-row:not(.example-expanded-row):active {
+    background: #efefef;
+} */
 
 .exp
 {

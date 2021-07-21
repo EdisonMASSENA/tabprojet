@@ -44,7 +44,7 @@ export class TableauComponent implements OnInit {
   displayedColumns: string[];
   expandedElement: Tab|null;
   dataSource = new MatTableDataSource<Tab>();
-  acces = "Vous n'avez pas les droits"
+  
   
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   // @ViewChild(MatTable, { static: true }) table: MatTable<any>;
@@ -136,7 +136,7 @@ export class TableauComponent implements OnInit {
       prepare.push(tempObj);
     });
 
-    const doc = new jsPDF('l', 'mm', 'a')
+    const doc = new jsPDF('l', 'mm', 'a3')
     autoTable(doc, {
       styles: {
         overflow: 'linebreak',

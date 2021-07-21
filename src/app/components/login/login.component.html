@@ -1,12 +1,12 @@
-<header class="center">
+<mat-toolbar color="primary" class="center">
   <span>Avancement Projets</span>
-</header>
+</mat-toolbar>
 
 <div *ngIf="!isLoggedIn" [ngClass]="small ? 'altsm' : 'normal'">
 
-  <h1>Connectez-vous</h1>
+  <h1>Connection</h1>
 
-  <mat-form-field class="full" appearance="outline">
+  <mat-form-field  appearance="outline">
     <mat-label>Direction</mat-label>
     <mat-select [(ngModel)]="form.username">
       <mat-option [value]="dir" *ngFor="let dir of dirs">
@@ -15,7 +15,7 @@
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field *ngIf="form.username !== 'Consult'" class="full" appearance="outline">
+  <mat-form-field *ngIf="form.username !== 'Consult'"  appearance="outline">
     <mat-label>Mot de passe</mat-label>
     <input (keyup.enter)="login()" [(ngModel)]="form.password" required matInput [type]="hide ? 'password' : 'text'">
     <button class="icon" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
