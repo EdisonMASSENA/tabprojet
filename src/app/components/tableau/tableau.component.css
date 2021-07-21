@@ -268,13 +268,13 @@ img
     background: #ff408007;
 }
 
-.example-element-row:not(.example-expanded-row):focus {
+.example-element-row:not(.example-expanded-row):active {
     background: #ff408062;
 }
 
-.example-element-row:not(.example-expanded-row):active {
+/* .example-element-row:not(.example-expanded-row):active {
     background: #efefef;
-}
+} */
 
 .exp
 {
