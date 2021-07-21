@@ -136,7 +136,7 @@ export class TableauComponent implements OnInit {
       prepare.push(tempObj);
     });
 
-    const doc = new jsPDF('l', 'mm', 'a')
+    const doc = new jsPDF('l', 'mm', 'a3')
     autoTable(doc, {
       styles: {
         overflow: 'linebreak',
