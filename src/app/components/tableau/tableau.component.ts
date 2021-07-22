@@ -203,6 +203,13 @@ export class TableauComponent implements OnInit {
       else if (result.event == 'Supprimer') {
         this.deleteTableau(result.data);
       }
+      else if (result.event == 'Annuler') {
+        this._snackBar.open('Modification annulée', 'Fermer', {
+          duration: 2500,
+          horizontalPosition: "center",
+          verticalPosition: "bottom",
+        });
+      }
     });
   };
 
@@ -256,7 +263,8 @@ export class TableauComponent implements OnInit {
     });
 
     data.editing = false;
-
+    this.editBlock = false;
+    
   };
 
 
