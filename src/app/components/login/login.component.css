@@ -6,8 +6,8 @@
     width: 35%;
     margin: 20vh auto;
     padding: 30px;
-    border: 2px solid #d198fa;
-    box-shadow: 0px 0px 10px #a178ef ;
+    border: 2px solid #b651ff;
+    /* box-shadow: 0px 0px 10px #a178ef ; */
     border-radius: 10px;
     background: white;
 }
@@ -20,8 +20,8 @@
     width: 70%;
     margin: 20vh auto;
     padding: 30px;
-    border: 2px solid #d198fa;
-    box-shadow: 0px 0px 10px #a178ef;
+    border: 2px solid #b651ff;
+    /* box-shadow: 0px 0px 10px #a178ef; */
     border-radius: 10px;
     background: white;
 }
