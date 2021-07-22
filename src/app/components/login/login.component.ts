@@ -69,7 +69,7 @@ export class LoginComponent implements OnInit {
 
 
   login(): void {
-    if (this.form.username = 'Consult') {
+    if (this.form.username == 'Consult') {
       this.form.password = ''
     };
     this.authService.login(this.form).subscribe(
