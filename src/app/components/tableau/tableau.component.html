@@ -229,7 +229,7 @@
 
         <span class="pill"> 
 
-          <button mat-icon-button matTooltip="Modifier" color="primary" [disabled]="tabs.editing" *ngIf="!tabs.editing; else editingTab" (click)="editTab(tabs)">
+          <button mat-icon-button matTooltip="Modifier" color="primary" [disabled]="editBlock" *ngIf="!tabs.editing; else editingTab" (click)="editTab(tabs)">
             <mat-icon >edit</mat-icon>
           </button>
 
