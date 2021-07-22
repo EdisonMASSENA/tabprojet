@@ -44,7 +44,7 @@ export class TableauComponent implements OnInit {
   displayedColumns: string[];
   expandedElement: Tab|null;
   dataSource = new MatTableDataSource<Tab>();
-  
+  editBlock: boolean;
   
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   // @ViewChild(MatTable, { static: true }) table: MatTable<any>;
@@ -232,6 +232,7 @@ export class TableauComponent implements OnInit {
   //////////////// Modification des champs /////////////////
   editTab(data: Tab): void {
     data.editing = true;
+    this.editBlock = true;
   };
 
   doneEditTab(data: Tab): void {
