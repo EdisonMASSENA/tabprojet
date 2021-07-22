@@ -4,25 +4,25 @@
 
   <div *ngIf="action != 'Supprimer'; else elseTemplate">
 
-    <mat-form-field class="full" appearance="outline">
+    <mat-form-field class="textInp" appearance="outline">
       <mat-label>{{action}} Chef de projet</mat-label>
-      <input matInput class="full" [(ngModel)]="local_data.chef" required>
+      <input matInput class="textInp" [(ngModel)]="local_data.chef" required>
       <mat-error *ngIf="diaFormControl.hasError('required')">
        Chef de projet <strong>requis</strong>
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field class="full" appearance="outline">
+    <mat-form-field class="textInp" appearance="outline">
       <mat-label>{{action}} Priorité</mat-label>
-      <input matInput class="full" [(ngModel)]="local_data.priorite" required>
+      <input matInput class="textInp" [(ngModel)]="local_data.priorite" required>
       <mat-error *ngIf="diaFormControl.hasError('required')">
         Priorité <strong>requis</strong>
        </mat-error>
     </mat-form-field>
 
-    <mat-form-field class="full" appearance="outline">
+    <mat-form-field class="textInp" appearance="outline">
       <mat-label>{{action}} Projet</mat-label>
-      <input matInput class="full" [(ngModel)]="local_data.projet" required>
+      <input matInput class="textInp" [(ngModel)]="local_data.projet" required>
       <mat-error *ngIf="diaFormControl.hasError('required')">
         Projet <strong>requis</strong>
        </mat-error>
@@ -61,18 +61,18 @@
 
     </div>
 
-    <mat-form-field class="full" appearance="outline">
+    <mat-form-field class="textInp" appearance="outline">
       <mat-label>{{action}} Travaux faits</mat-label>
       <textarea class="row" matInput [(ngModel)]="local_data.accompli"></textarea>
     </mat-form-field>
 
-    <mat-form-field class="full" appearance="outline">
+    <mat-form-field class="textInp" appearance="outline">
       <mat-label>{{action}} Points d'attention</mat-label>
       <textarea class="row" matInput [(ngModel)]="local_data.attention"></textarea>
     </mat-form-field>
 
 
-    <mat-form-field class="full" appearance="outline">
+    <mat-form-field class="textInp" appearance="outline">
       <mat-label>{{action}} Travaux en cours / à venir</mat-label>
       <textarea class="row" matInput [(ngModel)]="local_data.enCours"></textarea>
     </mat-form-field>

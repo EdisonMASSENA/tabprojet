@@ -63,6 +63,10 @@
     margin: 0 5px ;
 }
 
+.radioGrp{
+    padding-left: 10px;
+}
+
 .imgr
 {
     max-width: 55px;
@@ -81,9 +85,10 @@ img
     height: 100%;
 }
 
-.full
+.textInp
 {
     width: 100%;
+    margin-top: 5px;
 }
 
 .vert
@@ -134,7 +139,7 @@ img
 
 .direction
 {
-    padding: 10px 0px 10px 20px;
+    padding: 10px;
     flex: 0 0 5% !important;
     word-wrap: break-word !important;
     white-space: pre-wrap !important;
@@ -284,11 +289,11 @@ img
     padding: 5px 0;
 }
 
-.titre
+.textPills
 {
     color: white;
     background: #495bbe ;
-    padding: 5px;
+    padding: 4px 10px;
     border-radius: 10px;
     
 }
@@ -307,6 +312,7 @@ img
 {
     border: 2px solid #495bbe ;
     border-radius: 20px;
+    display: inline-flex;
 }
 
 .element-exp {

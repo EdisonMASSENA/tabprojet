@@ -62,7 +62,7 @@ export class DialogBoxComponent {
     this._snackBar.open(nom, action, {
       duration: 2500,
       horizontalPosition: "center",
-      verticalPosition: "top",
+      verticalPosition: "bottom",
     });
   }
 }
