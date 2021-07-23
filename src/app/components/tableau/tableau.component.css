@@ -25,6 +25,11 @@
     
 }
 
+#logo{
+    width: 50px;
+    height: 64px;
+}
+
 #table {
     width: 100%;
     border-collapse: collapse;

@@ -1,7 +1,10 @@
 <mat-toolbar [ngClass]="medium ? 'toolbarM' : 'toolbar' " color="primary">
-
-  <span *ngIf="isLoggedIn">{{ username }}</span>
-
+  
+  <span>
+    <img src="assets/logo.png" alt="logo" id="logo">
+    <span *ngIf="isLoggedIn">{{ username }}</span>
+  </span>
+  
   <span>Avancement Projets</span>
 
   <button mat-icon-button matTooltip="Deconnexion" (click)="logout()">

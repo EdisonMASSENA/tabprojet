@@ -26,7 +26,7 @@
     background: white;
 }
 
-.icon
+.eye
 {
     padding-top: 10px;
 }
@@ -36,3 +36,7 @@
     justify-content: center;
 }
 
+#logo{
+    width: 50px;
+    height: 64px;
+}
