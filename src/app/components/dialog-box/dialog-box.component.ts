@@ -36,7 +36,7 @@ export class DialogBoxComponent {
     this.local_data.projet = this.local_data.projet.charAt(0).toUpperCase() + this.local_data.projet.slice(1);
     this.local_data.direction = user.username;
     this.dialogRef.close({ event: this.action, data: this.local_data });
-    this.dialogRef.backdropClick({ event: 'Annuler' })
+    this.dialogRef.backdropClick().subscribe(()=> this.closeDialog);
   }
 
   closeDialog() {
