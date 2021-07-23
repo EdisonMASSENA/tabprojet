@@ -28,7 +28,7 @@
 .user
 {
     display: flex;
-    align-content: center;
+    align-items: center;
 }
 
 #logo{
@@ -327,7 +327,8 @@ img
     display: inline-flex;
 }
 
-.element-exp {
+.element-exp 
+{
     overflow: hidden;
     display: flex;
-  }
+}

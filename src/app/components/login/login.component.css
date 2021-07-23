@@ -34,10 +34,15 @@
 .center
 {
     display: flex;
-    justify-content: center;
 }
 
-#logo{
+.center span
+{
+    justify-self: center;
+}
+
+#logo
+{
     width: 39px;
     height: 50px;
     justify-self: start;
