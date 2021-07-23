@@ -25,6 +25,12 @@
     
 }
 
+.user
+{
+    display: flex;
+    align-content: center;
+}
+
 #logo{
     width: 39px;
     height: 50px;
