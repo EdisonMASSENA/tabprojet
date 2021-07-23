@@ -104,8 +104,8 @@ img
 .scroll
 {
     position: fixed;
-  bottom: 20px;
-  right: 20px;
+    bottom: 20px;
+    right: 20px;
 }
 
 ::ng-deep .white .mat-sort-header-arrow 
@@ -145,7 +145,7 @@ img
     white-space: pre-wrap !important;
     overflow-wrap: break-word;
     word-wrap: break-word;
-    word-break: break-word;
+    /* word-break: break-word; */
     
 }
 
