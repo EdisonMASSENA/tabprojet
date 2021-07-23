@@ -57,12 +57,13 @@ export class DialogBoxComponent {
         break;
     }
 
-    action = 'Fermer'
-
-    this._snackBar.open(nom, action, {
+    this._snackBar.open(nom,'Fermer', {
       duration: 2500,
       horizontalPosition: "center",
       verticalPosition: "bottom",
     });
+
   }
+
+/////////////////////////////////////////////  
 }

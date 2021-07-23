@@ -205,8 +205,8 @@ export class TableauComponent implements OnInit {
         this.deleteTableau(result.data);
       }
       else if (result.event == 'Annuler') {
-        let msg = 'Action annulée';
-        this.snackbar(msg);
+        let msg = 'Action annulée'
+        this.snackbar(msg)
       }
     });
   };
@@ -216,6 +216,8 @@ export class TableauComponent implements OnInit {
   logout(): void {
     this.tokenStorage.signOut();
     this.router.navigate(['/login']);
+    let msg = 'Vous êtes déconnecté';
+    this.snackbar(msg);
   };
 
 
@@ -230,9 +232,6 @@ export class TableauComponent implements OnInit {
         error => {
           console.log(error);
         });
-
-    let msg = 'Le projet ' + data.projet + ' a été ajouté ';
-    this.snackbar(msg);
 
   };
 
@@ -255,8 +254,8 @@ export class TableauComponent implements OnInit {
           // console.log(error);
         });
 
-    let msg = 'Le projet ' + data.projet + ' a été modifié ';
-    this.snackbar(msg);
+    let msg = 'Le projet' + data.projet + 'a été modifié'
+    this.snackbar(msg)
 
     data.editing = false;
     this.editBlock = false;
@@ -274,10 +273,7 @@ export class TableauComponent implements OnInit {
         },
         error => {
           console.log(error);
-        });
-
-    let msg = 'Le projet ' + data.projet + ' a été supprimé ';
-    this.snackbar(msg);
+        });  
 
   };
 
@@ -342,7 +338,7 @@ export class TableauComponent implements OnInit {
       verticalPosition: "bottom",
     });
   };
-  
+
 
 ////////////////////////////////////////////////
 };
