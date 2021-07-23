@@ -45,6 +45,7 @@ export class TableauComponent implements OnInit {
   expandedElement: Tab|null;
   dataSource = new MatTableDataSource<Tab>();
   editBlock: boolean;
+  msg: string;
   
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   // @ViewChild(MatTable, { static: true }) table: MatTable<any>;
@@ -204,11 +205,8 @@ export class TableauComponent implements OnInit {
         this.deleteTableau(result.data);
       }
       else if (result.event == 'Annuler') {
-        this._snackBar.open('Modification annulée', 'Fermer', {
-          duration: 2500,
-          horizontalPosition: "center",
-          verticalPosition: "bottom",
-        });
+        let msg = 'Action annulée';
+        this.snackbar(msg);
       }
     });
   };
@@ -233,6 +231,9 @@ export class TableauComponent implements OnInit {
           console.log(error);
         });
 
+    let msg = 'Le projet ' + data.projet + ' a été ajouté ';
+    this.snackbar(msg);
+
   };
 
 
@@ -254,13 +255,8 @@ export class TableauComponent implements OnInit {
           // console.log(error);
         });
 
-    let msg = 'Le projet ' + data.projet + ' à été modifié '
-
-    this._snackBar.open(msg, 'Fermer', {
-      duration: 2500,
-      horizontalPosition: "center",
-      verticalPosition: "bottom",
-    });
+    let msg = 'Le projet ' + data.projet + ' a été modifié ';
+    this.snackbar(msg);
 
     data.editing = false;
     this.editBlock = false;
@@ -279,6 +275,9 @@ export class TableauComponent implements OnInit {
         error => {
           console.log(error);
         });
+
+    let msg = 'Le projet ' + data.projet + ' a été supprimé ';
+    this.snackbar(msg);
 
   };
 
@@ -333,5 +332,18 @@ export class TableauComponent implements OnInit {
   };
 
 
+
+///////////////////Snackbar//////////////////////
+
+  snackbar(msg){
+    this._snackBar.open(msg, 'Fermer', {
+      duration: 2500,
+      horizontalPosition: "center",
+      verticalPosition: "bottom",
+    });
+  };
+  
+
+////////////////////////////////////////////////
 };
 
