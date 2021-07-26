@@ -77,7 +77,7 @@ export class TableauComponent implements OnInit {
 
   
   tabclick(cli) {
-    if (this.medium && !cli.editing) {
+    if (this.medium && !cli.editing && this.editBlock) {
       if (this.expandedElement === cli) {
         this.expandedElement = null;
       }
