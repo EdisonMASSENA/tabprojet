@@ -13,16 +13,28 @@
 .toolbar
 {
     justify-content: space-between;
-    padding: 0px 30px;
+    padding: 0px 10px;
 
 }
 
 .toolbarM
 {
     justify-content: space-between;
-    padding: 0px 30px;
+    padding: 0px 10px;
     font-size: 17px;
     
+}
+
+.user
+{
+    display: flex;
+    align-items: center;
+}
+
+#logo{
+    width: 39px;
+    height: 50px;
+    padding-right: 5px;
 }
 
 #table {
@@ -63,6 +75,10 @@
     margin: 0 5px ;
 }
 
+.radioGrp{
+    padding-left: 10px;
+}
+
 .imgr
 {
     max-width: 55px;
@@ -81,9 +97,10 @@ img
     height: 100%;
 }
 
-.full
+.textInp
 {
     width: 100%;
+    margin-top: 5px;
 }
 
 .vert
@@ -99,8 +116,8 @@ img
 .scroll
 {
     position: fixed;
-  bottom: 20px;
-  right: 20px;
+    bottom: 20px;
+    right: 20px;
 }
 
 ::ng-deep .white .mat-sort-header-arrow 
@@ -134,13 +151,13 @@ img
 
 .direction
 {
-    padding: 10px 0px 10px 20px;
+    padding: 10px;
     flex: 0 0 5% !important;
     word-wrap: break-word !important;
     white-space: pre-wrap !important;
     overflow-wrap: break-word;
     word-wrap: break-word;
-    word-break: break-word;
+    /* word-break: break-word; */
     
 }
 
@@ -284,11 +301,11 @@ img
     padding: 5px 0;
 }
 
-.titre
+.textPills
 {
     color: white;
     background: #495bbe ;
-    padding: 5px;
+    padding: 4px 10px;
     border-radius: 10px;
     
 }
@@ -307,9 +324,11 @@ img
 {
     border: 2px solid #495bbe ;
     border-radius: 20px;
+    display: inline-flex;
 }
 
-.element-exp {
+.element-exp 
+{
     overflow: hidden;
     display: flex;
-  }
+}

@@ -1,4 +1,5 @@
 <mat-toolbar color="primary" class="center">
+  <img src="assets/logo.png" alt="logo" id="logo">
   <span>Avancement Projets</span>
 </mat-toolbar>
 
@@ -18,13 +19,10 @@
   <mat-form-field *ngIf="form.username !== 'Consult'"  appearance="outline">
     <mat-label>Mot de passe</mat-label>
     <input (keyup.enter)="login()" [(ngModel)]="form.password" required matInput [type]="hide ? 'password' : 'text'">
-    <button class="icon" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
-      [attr.aria-pressed]="hide">
+    <button class="eye" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
       <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
     </button>
-    <mat-error *ngIf="mdpFormControl.hasError('required')">
-      Mot de passe <strong>requis</strong>
-    </mat-error>
+    <mat-error *ngIf="mdpFormControl.hasError('required')"> Mot de passe <strong>requis</strong> </mat-error>
   </mat-form-field>
 
   <button (click)="login()" mat-flat-button color="accent">Connexion</button>

@@ -1,7 +1,10 @@
 <mat-toolbar [ngClass]="medium ? 'toolbarM' : 'toolbar' " color="primary">
-
-  <span *ngIf="isLoggedIn">{{ username }}</span>
-
+  
+  <span class="user">
+    <img src="assets/logo.png" alt="logo" id="logo">
+    <span *ngIf="isLoggedIn">{{ username }}</span>
+  </span>
+  
   <span>Avancement Projets</span>
 
   <button mat-icon-button matTooltip="Deconnexion" (click)="logout()">
@@ -47,7 +50,7 @@
         </div>
 
         <ng-template #editingTab>
-          <mat-form-field class="full" appearance="outline">
+          <mat-form-field class="textInp" appearance="outline">
             <textarea matInput [(ngModel)]="tabs.chef"></textarea>
           </mat-form-field>
         </ng-template>
@@ -66,7 +69,7 @@
         </div>
 
         <ng-template #editingTab>
-          <mat-form-field class="full" appearance="outline">
+          <mat-form-field class="textInp" appearance="outline">
             <textarea disabled matInput [(ngModel)]="tabs.direction"></textarea>
           </mat-form-field>
         </ng-template>
@@ -84,7 +87,7 @@
         </div>
 
         <ng-template #editingTab>
-          <mat-form-field class="full" appearance="outline">
+          <mat-form-field class="textInp" appearance="outline">
             <textarea matInput [(ngModel)]="tabs.priorite"></textarea>
           </mat-form-field>
         </ng-template>
@@ -103,7 +106,7 @@
         </div>
 
         <ng-template #editingTab>
-          <mat-form-field class="full" appearance="outline">
+          <mat-form-field class="textInp" appearance="outline">
             <textarea matInput [(ngModel)]="tabs.projet"></textarea>
           </mat-form-field>
         </ng-template>
@@ -122,7 +125,7 @@
         </div>
 
         <ng-template #editingTab>
-          <mat-radio-group [(ngModel)]="tabs.etat">
+          <mat-radio-group [(ngModel)]="tabs.etat" class="radioGrp">
             <mat-radio-button value="assets/1.png">
               <img [ngClass]="!medium ? 'imgr' : 'imgrM' " src="assets/1.png">
             </mat-radio-button>
@@ -178,7 +181,7 @@
         </div>
 
         <ng-template #editingTab>
-          <mat-form-field class="full" appearance="outline">
+          <mat-form-field class="textInp" appearance="outline">
             <textarea matInput [(ngModel)]="tabs.accompli"></textarea>
           </mat-form-field>
         </ng-template>
@@ -196,7 +199,7 @@
         </div>
 
         <ng-template #editingTab>
-          <mat-form-field class="full" appearance="outline">
+          <mat-form-field class="textInp" appearance="outline">
             <textarea matInput [(ngModel)]="tabs.attention"></textarea>
           </mat-form-field>
         </ng-template>
@@ -214,7 +217,7 @@
         </div>
 
         <ng-template #editingTab>
-          <mat-form-field class="full" appearance="outline">
+          <mat-form-field class="textInp" appearance="outline">
             <textarea matInput [(ngModel)]="tabs.enCours"></textarea>
           </mat-form-field>
         </ng-template>
@@ -229,8 +232,8 @@
 
         <span class="pill"> 
 
-          <button mat-icon-button matTooltip="Modifier" color="primary" *ngIf="!tabs.editing; else editingTab" (click)="editTab(tabs)">
-            <mat-icon>edit</mat-icon>
+          <button mat-icon-button matTooltip="Modifier" color="primary" [disabled]="editBlock" *ngIf="!tabs.editing; else editingTab" (click)="editTab(tabs)">
+            <mat-icon >edit</mat-icon>
           </button>
 
           <ng-template #editingTab>
@@ -258,12 +261,12 @@
 
           <div class="expR">
 
-            <span class="titre">Priorité: </span>
+            <span class="textPills">Priorité: </span>
             <div *ngIf="!tabs.editing; else editingTabPr">
               {{tabs.priorite}}
             </div>
             <ng-template #editingTabPr>
-              <mat-form-field class="full" appearance="outline">
+              <mat-form-field class="textInp" appearance="outline">
                 <textarea matInput [(ngModel)]="tabs.priorite"></textarea>
               </mat-form-field>
             </ng-template>
@@ -272,12 +275,12 @@
 
           <div class="expR">
 
-            <span class="titre">Travaux faits: </span>
+            <span class="textPills">Travaux faits: </span>
             <div *ngIf="!tabs.editing; else editingTabAc">
               {{tabs.accompli}}
             </div>
             <ng-template #editingTabAc>
-              <mat-form-field class="full" appearance="outline">
+              <mat-form-field class="textInp" appearance="outline">
                 <textarea matInput [(ngModel)]="tabs.accompli"></textarea>
               </mat-form-field>
             </ng-template>
@@ -286,12 +289,12 @@
 
           <div class="expR">
 
-            <span class="titre">Points d'attention: </span>
+            <span class="textPills">Points d'attention: </span>
             <div *ngIf="!tabs.editing; else editingTabAt">
               {{tabs.attention}}
             </div>
             <ng-template #editingTabAt>
-              <mat-form-field class="full" appearance="outline">
+              <mat-form-field class="textInp" appearance="outline">
                 <textarea matInput [(ngModel)]="tabs.attention"></textarea>
               </mat-form-field>
             </ng-template>
@@ -300,12 +303,12 @@
 
           <div class="expR">
 
-            <span class="titre">Travaux en cours / à venir: </span>
+            <span class="textPills">Travaux en cours / à venir: </span>
             <div *ngIf="!tabs.editing; else editingTabEn">
               {{tabs.enCours}}
             </div>
             <ng-template #editingTabEn>
-              <mat-form-field class="full" appearance="outline">
+              <mat-form-field class="textInp" appearance="outline">
                 <textarea matInput [(ngModel)]="tabs.enCours"></textarea>
               </mat-form-field>
             </ng-template>
@@ -314,7 +317,7 @@
 
           <div *ngIf="!consult" class="expR">
             <span>
-              <span class="titre">Action:</span>
+              <span class="textPills">Action:</span>
               <button mat-icon-button matTooltip="Modifier" color="primary"
                 *ngIf="!tabs.editing; else editingTabAct" (click)="editTab(tabs)">
                 <mat-icon>edit</mat-icon>

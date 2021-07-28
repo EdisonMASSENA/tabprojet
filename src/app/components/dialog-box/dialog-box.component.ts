@@ -19,10 +19,10 @@ export class DialogBoxComponent {
 
   action: string;
   local_data: any;
-
+  msg: string;
 
   constructor(private tokenStorageService: TokenStorageService, private _snackBar: MatSnackBar, public dialogRef: MatDialogRef<DialogBoxComponent>,
-    @Optional() @Inject(MAT_DIALOG_DATA) public data: Tab) { this.local_data = { ...data }; this.action = this.local_data.action; }
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: Tab) { this.local_data = { ...data }; this.action = this.local_data.action;  }
 
 
   diaFormControl = new FormControl('', [
@@ -45,11 +45,11 @@ export class DialogBoxComponent {
   openSnackBar(nom: string, action: string) {
 
     switch (action) {
-      case 'Ajouter': nom = 'Le projet ' + nom + ' à été ajouté '
+      case 'Ajouter': this.msg = 'Le projet ' + nom + ' à été ajouté'
 
         break;
 
-      case 'Supprimer': nom = 'Le projet ' + nom + ' à été supprimé '
+      case 'Supprimer': this.msg = 'Le projet ' + nom + ' à été supprimé'
 
         break;
 
@@ -57,12 +57,13 @@ export class DialogBoxComponent {
         break;
     }
 
-    action = 'Fermer'
-
-    this._snackBar.open(nom, action, {
-      duration: 2500,
+    this._snackBar.open(this.msg,'Fermer', {
+      duration: 3000,
       horizontalPosition: "center",
-      verticalPosition: "top",
+      verticalPosition: "bottom",
     });
+
   }
+
+/////////////////////////////////////////////  
 }

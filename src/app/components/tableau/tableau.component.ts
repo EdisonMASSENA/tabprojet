@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource, MatTable } from '@angular/material/table';
+import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 
@@ -44,7 +44,7 @@ export class TableauComponent implements OnInit {
   displayedColumns: string[];
   expandedElement: Tab|null;
   dataSource = new MatTableDataSource<Tab>();
-  
+  editBlock: boolean;
   
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   // @ViewChild(MatTable, { static: true }) table: MatTable<any>;
@@ -77,7 +77,7 @@ export class TableauComponent implements OnInit {
 
   
   tabclick(cli) {
-    if (this.medium && !cli.editing ) {
+    if (this.medium && !cli.editing && !this.editBlock) {
       if (this.expandedElement === cli) {
         this.expandedElement = null;
       }
@@ -93,7 +93,6 @@ export class TableauComponent implements OnInit {
 
       const user = this.tokenStorage.getUser();
       this.username = user.username;
-
     }
   };
 
@@ -204,6 +203,10 @@ export class TableauComponent implements OnInit {
       else if (result.event == 'Supprimer') {
         this.deleteTableau(result.data);
       }
+      else if (result.event == 'Annuler') {
+        let msg = 'Action annulée'
+        this.snackbar(msg)
+      }
     });
   };
 
@@ -212,6 +215,8 @@ export class TableauComponent implements OnInit {
   logout(): void {
     this.tokenStorage.signOut();
     this.router.navigate(['/login']);
+    let msg = 'Vous êtes déconnecté';
+    this.snackbar(msg);
   };
 
 
@@ -233,6 +238,7 @@ export class TableauComponent implements OnInit {
   //////////////// Modification des champs /////////////////
   editTab(data: Tab): void {
     data.editing = true;
+    this.editBlock = true;
   };
 
   doneEditTab(data: Tab): void {
@@ -247,16 +253,12 @@ export class TableauComponent implements OnInit {
           // console.log(error);
         });
 
-    let msg = 'Le projet ' + data.projet + ' à été modifié '
-
-    this._snackBar.open(msg, 'Fermer', {
-      duration: 2500,
-      horizontalPosition: "center",
-      verticalPosition: "bottom",
-    });
+    let msg = 'Le projet ' + data.projet + ' a été modifié'
+    this.snackbar(msg)
 
     data.editing = false;
-
+    this.editBlock = false;
+    
   };
 
 
@@ -270,7 +272,7 @@ export class TableauComponent implements OnInit {
         },
         error => {
           console.log(error);
-        });
+        });  
 
   };
 
@@ -305,6 +307,7 @@ export class TableauComponent implements OnInit {
 
   /////////////////// Scroll /////////////////////
   @HostListener('window:scroll')
+
   displayScroll() {
     const scrollPosition = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
 
@@ -324,5 +327,18 @@ export class TableauComponent implements OnInit {
   };
 
 
+
+///////////////////Snackbar//////////////////////
+
+  snackbar(msg){
+    this._snackBar.open(msg, 'Fermer', {
+      duration: 3000,
+      horizontalPosition: "center",
+      verticalPosition: "bottom",
+    });
+  };
+
+
+////////////////////////////////////////////////
 };
 
