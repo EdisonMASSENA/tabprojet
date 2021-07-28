@@ -73,7 +73,6 @@ export class TableauComponent implements OnInit {
     }
 
     this.tabDisplay();
-    console.log(location.origin);
     
   }
 
@@ -121,6 +120,7 @@ export class TableauComponent implements OnInit {
 
 
   downloadPdf() {
+    let url = location.origin + '/';
 
     let prepare = [];
     this.dataSource.data.forEach(e => {
@@ -168,7 +168,7 @@ export class TableauComponent implements OnInit {
           // console.log(textPosx);
           // console.log(textPosy);
           if (td !== null) {
-            doc.addImage(location.origin + '/' + td, 'PNG', textPosx + 0.5, textPosy + 0.5, 20, 14);
+            doc.addImage(url + td, 'PNG', textPosx + 0.5, textPosy + 0.5, 20, 14);
           }
         }
         if (data.column.index === 5 && data.cell.section === 'body') {
@@ -179,7 +179,7 @@ export class TableauComponent implements OnInit {
           // console.log(textPosx);
           // console.log(textPosy);
           if (td !== null) {
-            doc.addImage(location.origin + '/' + td, 'PNG', textPosx + 1, textPosy + 1, 20, 13);
+            doc.addImage(url + td, 'PNG', textPosx + 1, textPosy + 1, 20, 13);
           }
         }
       }
