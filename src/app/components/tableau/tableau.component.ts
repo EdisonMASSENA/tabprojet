@@ -4,6 +4,9 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+import { Router } from '@angular/router';
+import { Breakpoints, BreakpointState, BreakpointObserver } from '@angular/cdk/layout';
+
 
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable'
@@ -13,8 +16,6 @@ import { Tab } from "src/app/interface/tab";
 import { TableauService } from "src/app/services/tableau.service";
 import { DialogBoxComponent } from 'src/app/components/dialog-box/dialog-box.component';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
-import { Router } from '@angular/router';
-import { Breakpoints, BreakpointState, BreakpointObserver } from '@angular/cdk/layout';
 
 
 
@@ -72,6 +73,7 @@ export class TableauComponent implements OnInit {
     }
 
     this.tabDisplay();
+    console.log(this.router.url)
     
   }
 
