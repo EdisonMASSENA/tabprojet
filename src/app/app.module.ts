@@ -19,6 +19,7 @@ import { HttpClientModule } from '@angular/common/http';
 import {MatTooltipModule} from '@angular/material/tooltip'; 
 import {LayoutModule} from '@angular/cdk/layout';
 import {MatChipsModule} from '@angular/material/chips';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -60,7 +61,8 @@ import { authInterceptorProviders } from './helpers/auth.interceptor';
     HttpClientModule,
     MatTooltipModule,
     LayoutModule,
-    MatChipsModule
+    MatChipsModule,
+    MatDatepickerModule
     
   ],
   entryComponents: [

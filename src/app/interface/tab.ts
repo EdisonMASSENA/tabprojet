@@ -5,22 +5,22 @@ export interface Tab {
     direction:string;
     priorite:string;
     projet:string;
+    mois:any;
+    annee:any;
+    date:any;
+    type:string;
     accompli:string;
     attention:string;
-    enCours:string;
+    encours:string;
     etat: string;
     tendance: string; 
     editing: boolean;
-}
+};
 
 export interface User{
     id:number;
     direction:string;
     mdp:string;
     
-}
+};
 
-export interface Dir {
-    value: string;
-  }
-  

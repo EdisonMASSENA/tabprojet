@@ -1,33 +1,92 @@
 import { Component, Inject, Optional } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+// import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
+// import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
+// import {MatDatepicker} from '@angular/material/datepicker';
+
+
+// import * as _moment from 'moment';
+// import {default as _rollupMoment, Moment} from 'moment';
+// const moment = _rollupMoment || _moment;
+
 
 import { Tab } from "src/app/interface/tab";
 import { TokenStorageService } from 'src/app/services/token-storage.service';
-import { FormControl, Validators } from '@angular/forms';
 
 
+
+// export const MY_FORMATS = {
+//   parse: {
+//     dateInput: 'MM/YYYY',
+//   },
+//   display: {
+//     dateInput: 'MM/YYYY',
+//     monthYearLabel: 'MMM YYYY',
+//     dateA11yLabel: 'LL',
+//     monthYearA11yLabel: 'MMMM YYYY',
+//   },
+// };
 
 
 @Component({
   selector: 'app-dialog-box',
   templateUrl: './dialog-box.component.html',
-  styleUrls: ['./dialog-box.component.css']
+  styleUrls: ['./dialog-box.component.css'],
+  providers: [
+  //   {
+  //     provide: DateAdapter,
+  //     useClass: MomentDateAdapter,
+  //     deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
+  //   },
+
+  //   {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
+  ],
 })
 
 export class DialogBoxComponent {
 
+  
+  types= [
+    {value: 'Technique', disp:'Technique' },
+    {value: 'Numérique', disp:'Numérique' },
+    {value: 'Métier', disp:'Métier' },
+  ];
   action: string;
   local_data: any;
   msg: string;
+  moiss: number[] = [];
+  annees: number[] = [];
+  // date = new FormControl(moment().toISOString);
 
   constructor(private tokenStorageService: TokenStorageService, private _snackBar: MatSnackBar, public dialogRef: MatDialogRef<DialogBoxComponent>,
-    @Optional() @Inject(MAT_DIALOG_DATA) public data: Tab) { this.local_data = { ...data }; this.action = this.local_data.action;  }
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: Tab) { this.local_data = { ...data }; this.action = this.local_data.action; 
+    for (let i = 1; i <= 12; i++) {
+      this.moiss.push(i);
+    }
+    for (let i = 2020; i <= 2075; i++) {
+      this.annees.push(i);
+    } }
 
+// this.local_data.date = this.date
 
   diaFormControl = new FormControl('', [
     Validators.required
   ]);
+
+  // chosenYearHandler(normalizedYear: Moment) {
+  //   const ctrlValue = this.date.value;
+  //   ctrlValue.year(normalizedYear.year());
+  //   this.date.setValue(ctrlValue);
+  // }
+
+  // chosenMonthHandler(normalizedMonth: Moment, datepicker: MatDatepicker<Moment>) {
+  //   const ctrlValue = this.date.value;
+  //   ctrlValue.month(normalizedMonth.month());
+  //   this.date.setValue(ctrlValue);
+  //   datepicker.close();
+  // }
 
   doAction() {
     const user = this.tokenStorageService.getUser();
@@ -66,4 +125,6 @@ export class DialogBoxComponent {
   }
 
 /////////////////////////////////////////////  
+
+
 }

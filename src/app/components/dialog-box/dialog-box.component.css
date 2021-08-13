@@ -6,11 +6,12 @@
 {
     height: 95px;
 }
-.example-radio-group {
+.radio-group 
+{
     display: flex;
     flex-direction: column;
     margin: 15px 0;
-  }
+}
 
 .flex
 {
@@ -22,4 +23,12 @@ img
 {
     width: 55px;
     height: 50px;
+}
+
+.month-picker .mat-calendar-period-button {
+  pointer-events: none;
+}
+
+.month-picker .mat-calendar-arrow {
+  display: none;
 }
