@@ -28,33 +28,75 @@
        </mat-error>
     </mat-form-field>
 
+    
+      <mat-form-field class="textInp" appearance="outline">
+        <mat-label>{{action}} Type de projet</mat-label>
+        <mat-select [(ngModel)]="local_data.type" required>
+          <mat-option [value]="type.value" *ngFor="let type of types">
+            {{ type.disp }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="diaFormControl.hasError('required')">
+          Type de projet <strong>requis</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <p> {{action}} date de fin prévue </p>
+      <mat-form-field appearance="outline">
+        <mat-label>Mois</mat-label>
+        <mat-select [(ngModel)]="local_data.mois">
+          <mat-option *ngFor="let mois of moiss" [value]="mois">
+            {{mois}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline"> 
+        <mat-label>Année</mat-label>
+        <mat-select [(ngModel)]="local_data.annee">
+          <mat-option *ngFor="let annee of annees" [value]="annee">
+            {{annee}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+       
+        <!-- <input matInput [disabled]="true" [matDatepicker]="dp" [(ngModel)]="local_data.date">
+        <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+        <mat-datepicker #dp
+                        [disabled]="false"
+                        startView="multi-year"
+                        (yearSelected)="chosenYearHandler($event)"
+                        (monthSelected)="chosenMonthHandler($event, dp)"
+                        panelClass="month-picker">
+        </mat-datepicker> -->
+      
+
     <div class="flex">
 
-      <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group" [(ngModel)]="local_data.etat" >
+      <mat-radio-group aria-labelledby="radio-group-label" class="radio-group" [(ngModel)]="local_data.etat" >
         <mat-label>Etat :</mat-label>
-        <mat-radio-button class="example-radio-button" value="assets/1.png">
+        <mat-radio-button class="radio-button" value="assets/1.png">
           <img src="assets/1.png">
         </mat-radio-button>
-        <mat-radio-button class="example-radio-button" value="assets/2.png">
+        <mat-radio-button class="radio-button" value="assets/2.png">
           <img src="assets/2.png">
         </mat-radio-button>
-        <mat-radio-button class="example-radio-button" value="assets/3.png">
+        <mat-radio-button class="radio-button" value="assets/3.png">
           <img src="assets/3.png">
         </mat-radio-button>
-        <mat-radio-button class="example-radio-button" value="assets/4.png">
+        <mat-radio-button class="radio-button" value="assets/4.png">
           <img src="assets/4.png">
         </mat-radio-button>
       </mat-radio-group>
 
-      <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group" [(ngModel)]="local_data.tendance" >
+      <mat-radio-group aria-labelledby="radio-group-label" class="radio-group" [(ngModel)]="local_data.tendance" >
         <mat-label>Tendance :</mat-label>
-        <mat-radio-button class="example-radio-button" value="assets/a.png">
+        <mat-radio-button class="radio-button" value="assets/a.png">
           <img src="assets/a.png">
         </mat-radio-button>
-        <mat-radio-button class="example-radio-button" value="assets/b.png">
+        <mat-radio-button class="radio-button" value="assets/b.png">
           <img src="assets/b.png">
         </mat-radio-button>
-        <mat-radio-button class="example-radio-button" value="assets/c.png">
+        <mat-radio-button class="radio-button" value="assets/c.png">
           <img src="assets/c.png">
         </mat-radio-button>
       </mat-radio-group>
@@ -74,7 +116,7 @@
 
     <mat-form-field class="textInp" appearance="outline">
       <mat-label>{{action}} Travaux en cours / à venir</mat-label>
-      <textarea class="row" matInput [(ngModel)]="local_data.enCours"></textarea>
+      <textarea class="row" matInput [(ngModel)]="local_data.encours"></textarea>
     </mat-form-field>
 
   </div>

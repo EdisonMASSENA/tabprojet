@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
   isLoggedIn = false;
   isLoginFailed = false;
   errorMessage = '';
-  small:boolean;
+  small: boolean;
 
   constructor(private _snackBar: MatSnackBar, private router: Router, private authService: AuthService, private tokenStorage: TokenStorageService, private breakpointObserver: BreakpointObserver) { }
 
@@ -69,7 +69,7 @@ export class LoginComponent implements OnInit {
 
 
   login(): void {
-    if (this.form.username == 'Consult') {
+    if (this.form.username == 'Consultation') {
       this.form.password = null ;
     };
     this.authService.login(this.form).subscribe(
@@ -106,8 +106,6 @@ export class LoginComponent implements OnInit {
           for (let i = 0; i < data.length; i++) {
             this.dirs = this.dirs.concat(data[i].username);
           }
-          // console.log(data);
-          // console.log(this.dirs);
         },
         error => {
           console.log(error);

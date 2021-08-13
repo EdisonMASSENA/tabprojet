@@ -1,13 +1,24 @@
-import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
+import { Component, OnInit, ViewChild, HostListener, NgZone } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import { Router } from '@angular/router';
+import { FormControl } from '@angular/forms';
 import { Breakpoints, BreakpointState, BreakpointObserver } from '@angular/cdk/layout';
+// import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
+// import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
+// import {MatDatepicker} from '@angular/material/datepicker';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 
 
+// import * as _moment from 'moment';
+// import {default as _rollupMoment, Moment} from 'moment';
+// const moment = _rollupMoment || _moment;
+
+
+import {take} from 'rxjs/operators';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable'
 
@@ -16,6 +27,21 @@ import { Tab } from "src/app/interface/tab";
 import { TableauService } from "src/app/services/tableau.service";
 import { DialogBoxComponent } from 'src/app/components/dialog-box/dialog-box.component';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
+
+
+
+/////////// Datepicker format ////////////
+// export const MY_FORMATS = {
+//   parse: {
+//     dateInput: 'MM/YYYY',
+//   },
+//   display: {
+//     dateInput: 'MM/YYYY',
+//     monthYearLabel: 'MMM YYYY',
+//     dateA11yLabel: 'LL',
+//     monthYearA11yLabel: 'MMMM YYYY',
+//   },
+// };
 
 
 
@@ -30,11 +56,22 @@ import { TokenStorageService } from 'src/app/services/token-storage.service';
       transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
     ]),
   ],
+  providers: [
+    // {
+    //   provide: DateAdapter,
+    //   useClass: MomentDateAdapter,
+    //   deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
+    // },
+
+    // {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
+  ],
 })
 
 
 export class TableauComponent implements OnInit {
-
+  
+  
+  // date = new FormControl(moment());
   username: string;
   isLoggedIn = false;
   tabs: Tab[];
@@ -46,39 +83,56 @@ export class TableauComponent implements OnInit {
   expandedElement: Tab|null;
   dataSource = new MatTableDataSource<Tab>();
   editBlock: boolean;
-  
+  types= [
+    {value: 'Technique', disp:'Technique' },
+    {value: 'Numérique', disp:'Numérique' },
+    {value: 'Métier', disp:'Métier' },
+  ];
+  moiss: number[] = [];
+  annees: number[] = [];
+
+
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-  // @ViewChild(MatTable, { static: true }) table: MatTable<any>;
   
-  constructor(private tokenStorage: TokenStorageService, private _snackBar: MatSnackBar, private service: TableauService, public dialog: MatDialog, private router: Router, private breakpointObserver: BreakpointObserver) {  }
+  constructor(private _ngZone: NgZone, private tokenStorage: TokenStorageService, private _snackBar: MatSnackBar, private service: TableauService, public dialog: MatDialog, private router: Router, private breakpointObserver: BreakpointObserver) {  }
 
 
   ngOnInit(): void {
 
+    for (let i = 1; i <= 12; i++) {
+      this.moiss.push(i);
+    }
+    for (let i = 2020; i <= 2075; i++) {
+      this.annees.push(i);
+    }
+    /////vérification si session déjà connecté////
     this.isLogged();
 
+    /////récupération du tableau/////
     this.recupTab();
     
-    // console.log(this.dataTab);
-    //////////////////// Bar de recherche de projet ////////////////////////////
+    //////////////////// Bar de recherche filtré par projet ////////////////////////////
     this.dataSource.filterPredicate = function (tab, filter: string): boolean {
       return tab.projet.toLowerCase().includes(filter);
     };
 
-    ///////////////////////// Tri ////////////////////////
+    ///////////////////////// Tri colonne ////////////////////////
     this.dataSource.sort = this.sort;
-
-    if (this.username == 'Consult') {
-      this.consult = true;
-    }
-
-    this.tabDisplay();
     
+    ////// Affichage responsive//////
+    this.tabDisplay();
+
+
   }
 
-  
+
+
+
+/////////////////////  Ouverture détail du projet en responsive ///////////////////////
+// sécurité pour ne pas fermer les details pendant la modification --> editBlock
+
   tabclick(cli) {
-    if (this.medium && !cli.editing && !this.editBlock) {
+    if (this.medium && !this.editBlock) {
       if (this.expandedElement === cli) {
         this.expandedElement = null;
       }
@@ -88,15 +142,21 @@ export class TableauComponent implements OnInit {
     }
   };
 
+////////////////// Vérification si connecté et si en tant que consult ////////////////////
+
   isLogged() {
     this.isLoggedIn = !!this.tokenStorage.getToken();
     if (this.isLoggedIn) {
 
       const user = this.tokenStorage.getUser();
       this.username = user.username;
-    }
+    };
+    if (this.username == 'Consultation') {
+      this.consult = true;
+    };
   };
 
+////////////////// Affichage tableau en responsive ///////////////////  
 
   tabDisplay() {
     this.breakpointObserver
@@ -109,86 +169,14 @@ export class TableauComponent implements OnInit {
         }
         else if (this.consult) {
           this.medium = false;
-          this.displayedColumns = ['chef', 'direction', 'priorite', 'projet', 'etat', 'tendance', 'accompli', 'attention', 'enCours'];
+          this.displayedColumns = ['chef', 'direction', 'priorite', 'projet', 'date', 'etat', 'tendance', 'accompli', 'attention', 'enCours'];
         }
          else {
           this.medium = false;
-          this.displayedColumns = ['chef', 'direction', 'priorite', 'projet', 'etat', 'tendance', 'accompli', 'attention', 'enCours', 'action'];
+          this.displayedColumns = ['chef', 'direction', 'priorite', 'projet', 'date', 'etat', 'tendance', 'accompli', 'attention', 'enCours', 'action'];
         }
       });
   };
-
-
-  downloadPdf() {
-    let url = location.origin + '/';
-
-    let prepare = [];
-    this.dataSource.data.forEach(e => {
-      let tempObj = [];
-      tempObj.push(e.chef);
-      tempObj.push(e.direction);
-      tempObj.push(e.priorite);
-      tempObj.push(e.projet);
-      tempObj.push(e.etat);
-      tempObj.push(e.tendance);
-      tempObj.push(e.accompli);
-      tempObj.push(e.attention);
-      tempObj.push(e.enCours);
-      prepare.push(tempObj);
-    });
-
-    const doc = new jsPDF('l', 'mm', 'a3')
-    autoTable(doc, {
-      styles: {
-        overflow: 'linebreak',
-        cellPadding: 2,
-      },
-      headStyles: {
-        fillColor: '#495bbe'
-      },
-      columnStyles: {
-        0: { cellWidth: 35 },
-        1: { cellWidth: 19 },
-        2: { cellWidth: 17 },
-        4: { cellWidth: 20, minCellHeight: 15, textColor: 255 },
-        5: { cellWidth: 21, minCellHeight: 15, textColor: 255 },
-        6: { cellWidth: 70 },
-        7: { cellWidth: 70 },
-        8: { cellWidth: 70 },
-      },
-      theme: "grid",
-      head: [['Chef de projet', 'Direction', 'Priorité', 'Projet', 'État', 'Tendance', 'Travaux faits', 'Points d\'attention', 'Travaux en cours / à venir ']],
-      body: prepare,
-      didDrawCell: function (data) {
-        if (data.column.index === 4 && data.cell.section === 'body') {
-          let td = data.cell.raw;
-          // console.log(td);
-          let textPosx = data.cell.x;
-          let textPosy = data.cell.y;
-          // console.log(textPosx);
-          // console.log(textPosy);
-          if (td !== null) {
-            doc.addImage(url + td, 'png', textPosx + 0.5, textPosy + 0.5, 20, 14);
-          }
-        }
-        if (data.column.index === 5 && data.cell.section === 'body') {
-          let td = data.cell.raw;
-          // console.log(td);
-          let textPosx = data.cell.x;
-          let textPosy = data.cell.y;
-          // console.log(textPosx);
-          // console.log(textPosy);
-          if (td !== null) {
-            doc.addImage(url + td, 'png', textPosx + 1, textPosy + 1, 20, 13);
-          }
-        }
-      }
-    })
-
-    doc.save('tableau-projets.pdf')
-
-  };
-
 
 
   /////////////////// Boite de dialogue //////////////////
@@ -224,6 +212,7 @@ export class TableauComponent implements OnInit {
 
   /////////////////////// Ajout Projet ////////////////////
   createTableau(data: Tab): void {
+
     this.service.create(data)
       .subscribe(
         response => {
@@ -231,7 +220,7 @@ export class TableauComponent implements OnInit {
           this.recupTab()
         },
         error => {
-          console.log(error);
+          // console.log(error);
         });
 
   };
@@ -244,11 +233,9 @@ export class TableauComponent implements OnInit {
   };
 
   doneEditTab(data: Tab): void {
-
     this.service.update(data.id, data)
       .subscribe(
         response => {
-          // console.log(response);
           this.recupTab();
         },
         error => {
@@ -273,8 +260,10 @@ export class TableauComponent implements OnInit {
           this.recupTab();
         },
         error => {
-          console.log(error);
+          // console.log(error);
         });  
+
+    this.editBlock = false;
 
   };
 
@@ -287,27 +276,93 @@ export class TableauComponent implements OnInit {
   };
 
 
-  ///////////////////// Reload ////////////////////////
+  ///////////////////// Data Tableau ////////////////////////
   recupTab(): void {
     this.service.getAll()
       .subscribe(
         data => {
-          if (this.username == 'Consult') {
+          if (this.username == 'Consultation') {
             this.dataSource.data = data
           }
           else {
             this.dataSource.data = data.filter(item => item.direction === this.username);
           }
-          // console.log(this.dataSource.data);
         },
         error => {
-          console.log(error);
+          // console.log(error);
         });
     
   };
 
+//////////////// Tableau en PDF (npm: jsPDF autotable) /////////////////
+  downloadPdf() {
+    let url = location.origin + '/';
 
-  /////////////////// Scroll /////////////////////
+    let prepare = [];
+    this.dataSource.data.forEach(e => {
+      let tempObj = [];
+      tempObj.push(e.chef);
+      tempObj.push(e.direction);
+      tempObj.push(e.priorite);
+      tempObj.push(e.projet);
+      tempObj.push(e.date);
+      tempObj.push(e.etat);
+      tempObj.push(e.tendance);
+      tempObj.push(e.accompli);
+      tempObj.push(e.attention);
+      tempObj.push(e.encours);
+      prepare.push(tempObj);
+    });
+
+    const doc = new jsPDF('l', 'mm', 'a3')
+    autoTable(doc, {
+      styles: {
+        overflow: 'linebreak',
+        cellPadding: 2,
+      },
+      headStyles: {
+        fillColor: '#495bbe'
+      },
+      columnStyles: {
+        0: { cellWidth: 35 },
+        1: { cellWidth: 19 },
+        2: { cellWidth: 17 },
+        3: { cellWidth: 35 },
+        4: { cellWidth: 30 },
+        5: { cellWidth: 21, minCellHeight: 15, textColor: 255 },
+        6: { cellWidth: 21, minCellHeight: 15, textColor: 255 },
+        7: { cellWidth: 70 },
+        8: { cellWidth: 70 },
+        9: { cellWidth: 70 },
+      },
+      theme: "grid",
+      head: [['Chef de projet', 'Direction', 'Priorité', 'Projet', 'Fin prévue', 'État', 'Tendance', 'Travaux faits', 'Points d\'attention', 'Travaux en cours / à venir ']],
+      body: prepare,
+      didDrawCell: function (data) {
+        if (data.column.index === 5 && data.cell.section === 'body') {
+          let td = data.cell.raw;
+          let textPosx = data.cell.x;
+          let textPosy = data.cell.y;
+          if (td !== null) {
+            doc.addImage(url + td, 'png', textPosx + 0.5, textPosy + 0.5, 20, 14);
+          }
+        }
+        if (data.column.index === 6 && data.cell.section === 'body') {
+          let td = data.cell.raw;
+          let textPosx = data.cell.x;
+          let textPosy = data.cell.y;
+          if (td !== null) {
+            doc.addImage(url + td, 'png', textPosx + 1, textPosy + 1, 20, 13);
+          }
+        }
+      }
+    })
+
+    doc.save('Tableau-Projets.pdf')
+
+  };
+
+  /////////////////// Scroll vers le haut click bouton /////////////////////
   @HostListener('window:scroll')
 
   displayScroll() {
@@ -330,7 +385,7 @@ export class TableauComponent implements OnInit {
 
 
 
-///////////////////Snackbar//////////////////////
+/////////////////// Snackbar //////////////////////
 
   snackbar(msg){
     this._snackBar.open(msg, 'Fermer', {
@@ -341,6 +396,36 @@ export class TableauComponent implements OnInit {
   };
 
 
-////////////////////////////////////////////////
+//////////////////// Datepicker ////////////////////////////
+
+// chosenYearHandler(normalizedYear: Moment) {
+//   const ctrlValue = this.date.value;
+//   ctrlValue.year(normalizedYear.year());
+//   this.date.setValue(ctrlValue);
+// }
+
+// chosenMonthHandler(normalizedMonth: Moment, datepicker: MatDatepicker<Moment>) {
+//   const ctrlValue = this.date.value;
+//   ctrlValue.month(normalizedMonth.month());
+//   this.date.setValue(ctrlValue);
+//   datepicker.close();
+// }
+
+///////////////// Autosize Textarea ////////////////////
+
+@ViewChild('autosize') autosize: CdkTextareaAutosize;
+
+  triggerResize() {
+    // Wait for changes to be applied, then trigger textarea resize.
+    this._ngZone.onStable.pipe(take(1))
+        .subscribe(() => this.autosize.resizeToFitContent(true));
+  };
+
+
+/////////////////////////////////
+
+
+
+
 };
 

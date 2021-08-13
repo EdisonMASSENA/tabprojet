@@ -16,7 +16,7 @@
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field *ngIf="form.username !== 'Consult'"  appearance="outline">
+  <mat-form-field *ngIf="form.username !== 'Consultation'"  appearance="outline">
     <mat-label>Mot de passe</mat-label>
     <input (keyup.enter)="login()" [(ngModel)]="form.password" required matInput [type]="hide ? 'password' : 'text'">
     <button class="eye" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
