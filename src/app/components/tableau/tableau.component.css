@@ -327,7 +327,7 @@ img
 
 .expR
 {
-    padding: 5px 0;
+    padding: 10px 0;
 }
 
 .textPills
@@ -361,6 +361,7 @@ img
 
 .expR div
 {
+    margin-top: 10px;
     margin-left: 20px;
     word-wrap: break-word !important;
     white-space: pre-wrap !important;
