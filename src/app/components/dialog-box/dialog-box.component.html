@@ -36,12 +36,9 @@
             {{ type.disp }}
           </mat-option>
         </mat-select>
-        <mat-error *ngIf="diaFormControl.hasError('required')">
-          Type de projet <strong>requis</strong>
-        </mat-error>
       </mat-form-field>
 
-      <p> {{action}} date de fin prévue </p>
+      <p> {{action}} une date de fin prévue : </p>
       <mat-form-field appearance="outline">
         <mat-label>Mois</mat-label>
         <mat-select [(ngModel)]="local_data.mois">

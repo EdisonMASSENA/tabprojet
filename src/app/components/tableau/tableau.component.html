@@ -7,7 +7,7 @@
   
   <span>Avancement Projets</span>
 
-  <button mat-icon-button matTooltip="Deconnexion" (click)="logout()">
+  <button mat-icon-button matTooltip="Déconnexion" (click)="logout()">
     <mat-icon>power_settings_new</mat-icon>
   </button>
 
@@ -106,7 +106,11 @@
 
         <ng-template #editingTab>
           <mat-form-field class="textInp" appearance="outline">
-            <textarea matInput [(ngModel)]="tabs.projet"></textarea>
+            <textarea matInput [(ngModel)]="tabs.projet"
+                      cdkTextareaAutosize
+                      #autosize="cdkTextareaAutosize"
+                      cdkAutosizeMinRows="1"
+                      cdkAutosizeMaxRows="9"></textarea>
           </mat-form-field>
           <mat-form-field class="textInp" appearance="outline">
             <mat-select [(ngModel)]="tabs.type" required>
@@ -121,7 +125,7 @@
     </ng-container>
 
     <ng-container matColumnDef="date">
-      <mat-header-cell *matHeaderCellDef mat-sort-header class="white">
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="white dateHea">
         Date de fin prévue </mat-header-cell>
       <mat-cell *matCellDef="let tabs" [ngClass]="!medium ? 'date' : 'dateM' ">
 
@@ -327,6 +331,33 @@
             <ng-template #editingTabPr>
               <mat-form-field class="textInp" appearance="outline">
                 <textarea matInput [(ngModel)]="tabs.priorite"></textarea>
+              </mat-form-field>
+            </ng-template>
+
+          </div>
+
+          <div class="expR">
+
+            <span class="textPills">Date de fin prévue : </span>
+            <div *ngIf="!tabs.editing; else editingTabDa">
+              {{tabs.mois}}/{{tabs.annee}}
+            </div>
+            <ng-template #editingTabDa>
+              <mat-form-field class="textInp" appearance="outline">
+                <mat-label>Mois</mat-label>
+                <mat-select [(ngModel)]="tabs.mois">
+                  <mat-option *ngFor="let mois of moiss" [value]="mois">
+                    {{mois}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field class="textInp" appearance="outline"> 
+                <mat-label>Année</mat-label>
+                <mat-select [(ngModel)]="tabs.annee">
+                  <mat-option *ngFor="let annee of annees" [value]="annee">
+                    {{annee}}
+                  </mat-option>
+                </mat-select>
               </mat-form-field>
             </ng-template>
 

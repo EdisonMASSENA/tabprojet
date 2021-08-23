@@ -55,7 +55,7 @@
     margin-top: 30px;
     margin-right: 45px;
     width: 30%;
-    font-size: 12px;
+    font-size: 11px;
 }
 
 .blue
@@ -204,6 +204,12 @@ img
     word-break: break-word;
     flex-direction: column;
 
+}
+
+.dateHea
+{
+    flex: 0 0 8% !important;
+    justify-content: center;
 }
 
 .date
