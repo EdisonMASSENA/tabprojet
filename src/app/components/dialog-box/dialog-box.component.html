@@ -31,7 +31,7 @@
     
       <mat-form-field class="textInp" appearance="outline">
         <mat-label>{{action}} Type de projet</mat-label>
-        <mat-select [(ngModel)]="local_data.type" required>
+        <mat-select [(ngModel)]="local_data.type" >
           <mat-option [value]="type.value" *ngFor="let type of types">
             {{ type.disp }}
           </mat-option>
