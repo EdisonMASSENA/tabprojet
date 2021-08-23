@@ -52,6 +52,8 @@ export class DialogBoxComponent {
     {value: 'Technique', disp:'Technique' },
     {value: 'Numérique', disp:'Numérique' },
     {value: 'Métier', disp:'Métier' },
+    {value: 'Étude', disp:'Étude' },
+    {value: 'Documentation', disp:'Documentation' },
   ];
   action: string;
   local_data: any;

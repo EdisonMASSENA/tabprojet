@@ -5,7 +5,6 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import { Router } from '@angular/router';
-import { FormControl } from '@angular/forms';
 import { Breakpoints, BreakpointState, BreakpointObserver } from '@angular/cdk/layout';
 // import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
 // import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
@@ -105,6 +104,7 @@ export class TableauComponent implements OnInit {
     for (let i = 2020; i <= 2075; i++) {
       this.annees.push(i);
     }
+
     /////vérification si session déjà connecté////
     this.isLogged();
 
@@ -205,13 +205,15 @@ export class TableauComponent implements OnInit {
   logout(): void {
     this.tokenStorage.signOut();
     this.router.navigate(['/login']);
-    let msg = 'Vous êtes déconnecté';
+    let msg = 'Déconnexion';
     this.snackbar(msg);
   };
 
 
   /////////////////////// Ajout Projet ////////////////////
   createTableau(data: Tab): void {
+
+    // data.date = data.mois + '/' + data.annee;
 
     this.service.create(data)
       .subscribe(
@@ -305,7 +307,7 @@ export class TableauComponent implements OnInit {
       tempObj.push(e.direction);
       tempObj.push(e.priorite);
       tempObj.push(e.projet);
-      tempObj.push(e.date);
+      tempObj.push(e.mois + '/' + e.annee);
       tempObj.push(e.etat);
       tempObj.push(e.tendance);
       tempObj.push(e.accompli);
