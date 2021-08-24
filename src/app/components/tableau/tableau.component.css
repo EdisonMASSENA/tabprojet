@@ -7,13 +7,12 @@
 .center
 {
     text-align: center;
-
 }
+
 .toolbar
 {
     justify-content: space-between;
     padding: 0px 10px;
-
 }
 
 .toolbarM
@@ -21,7 +20,6 @@
     justify-content: space-between;
     padding: 0px 10px;
     font-size: 17px;
-    
 }
 
 .user

@@ -86,6 +86,8 @@ export class TableauComponent implements OnInit {
     {value: 'Technique', disp:'Technique' },
     {value: 'Numérique', disp:'Numérique' },
     {value: 'Métier', disp:'Métier' },
+    {value: 'Étude', disp:'Étude' },
+    {value: 'Documentation', disp:'Documentation' },
   ];
   moiss: number[] = [];
   annees: number[] = [];
