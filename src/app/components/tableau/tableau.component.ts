@@ -181,7 +181,7 @@ export class TableauComponent implements OnInit {
   };
 
 
-  /////////////////// Boite de dialogue //////////////////
+  /////////////////// Boite de dialogue add et delete //////////////////
   openDialog(action, obj) {
     obj.action = action;
     const dialogRef = this.dialog.open(DialogBoxComponent, {
