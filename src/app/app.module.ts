@@ -20,6 +20,10 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {LayoutModule} from '@angular/cdk/layout';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatCardModule} from '@angular/material/card';
+import {MatListModule} from '@angular/material/list';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -29,6 +33,7 @@ import { DialogBoxComponent } from './components/dialog-box/dialog-box.component
 import { TableauService } from './services/tableau.service';
 import { LoginComponent } from './components/login/login.component';
 import { authInterceptorProviders } from './helpers/auth.interceptor';
+import { UploadComponent } from './components/upload/upload.component';
 
 
 
@@ -37,7 +42,8 @@ import { authInterceptorProviders } from './helpers/auth.interceptor';
     AppComponent,
     TableauComponent,
     DialogBoxComponent,
-    LoginComponent
+    LoginComponent,
+    UploadComponent
   ],
   imports: [
     BrowserModule,
@@ -62,8 +68,10 @@ import { authInterceptorProviders } from './helpers/auth.interceptor';
     MatTooltipModule,
     LayoutModule,
     MatChipsModule,
-    MatDatepickerModule
-    
+    MatDatepickerModule,
+    MatCardModule,
+    MatListModule,
+    MatProgressBarModule
   ],
   entryComponents: [
     DialogBoxComponent

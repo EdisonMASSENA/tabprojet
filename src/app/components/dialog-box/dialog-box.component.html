@@ -29,33 +29,36 @@
     </mat-form-field>
 
     
-      <mat-form-field class="textInp" appearance="outline">
-        <mat-label>{{action}} Type de projet</mat-label>
-        <mat-select [(ngModel)]="local_data.type" >
-          <mat-option [value]="type.value" *ngFor="let type of types">
-            {{ type.disp }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+    <mat-form-field class="textInp" appearance="outline">
+      <mat-label>{{action}} Type de projet</mat-label>
+      <mat-select [(ngModel)]="local_data.type" >
+        <mat-option [value]="type.value" *ngFor="let type of types">
+          {{ type.value }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
 
-      <p> {{action}} une date de fin prévue : </p>
-      <mat-form-field appearance="outline">
-        <mat-label>Mois</mat-label>
-        <mat-select [(ngModel)]="local_data.mois">
-          <mat-option *ngFor="let mois of moiss" [value]="mois">
-            {{mois}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field appearance="outline"> 
-        <mat-label>Année</mat-label>
-        <mat-select [(ngModel)]="local_data.annee">
-          <mat-option *ngFor="let annee of annees" [value]="annee">
-            {{annee}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-       
+    <p> {{action}} une date de fin prévue : </p>
+    <mat-form-field appearance="outline">
+      <mat-label>Mois</mat-label>
+      <mat-select [(ngModel)]="local_data.mois">
+        <mat-option *ngFor="let mois of moiss" [value]="mois">
+          {{mois}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline"> 
+      <mat-label>Année</mat-label>
+      <mat-select [(ngModel)]="local_data.annee">
+        <mat-option *ngFor="let annee of annees" [value]="annee">
+          {{annee}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+      
+
+    <app-upload></app-upload>
+
         <!-- <input matInput [disabled]="true" [matDatepicker]="dp" [(ngModel)]="local_data.date">
         <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
         <mat-datepicker #dp

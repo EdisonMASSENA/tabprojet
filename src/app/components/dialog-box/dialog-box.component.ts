@@ -49,11 +49,11 @@ export class DialogBoxComponent {
 
   
   types= [
-    {value: 'Technique', disp:'Technique' },
-    {value: 'Numérique', disp:'Numérique' },
-    {value: 'Métier', disp:'Métier' },
-    {value: 'Étude', disp:'Étude' },
-    {value: 'Documentation', disp:'Documentation' },
+    {value: 'Technique' },
+    {value: 'Numérique' },
+    {value: 'Métier' },
+    {value: 'Étude' },
+    {value: 'Documentation' },
   ];
   action: string;
   local_data: any;

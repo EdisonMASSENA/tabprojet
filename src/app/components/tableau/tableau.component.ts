@@ -26,7 +26,6 @@ import { Tab } from "src/app/interface/tab";
 import { TableauService } from "src/app/services/tableau.service";
 import { DialogBoxComponent } from 'src/app/components/dialog-box/dialog-box.component';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
-import { Observable } from 'rxjs';
 
 
 
@@ -84,11 +83,11 @@ export class TableauComponent implements OnInit {
   dataSource = new MatTableDataSource<Tab>();
   editBlock: boolean;
   types = [
-    { value: 'Technique', disp: 'Technique' },
-    { value: 'Numérique', disp: 'Numérique' },
-    { value: 'Métier', disp: 'Métier' },
-    { value: 'Étude', disp: 'Étude' },
-    { value: 'Documentation', disp: 'Documentation' },
+    { value: 'Technique' },
+    { value: 'Numérique' },
+    { value: 'Métier' },
+    { value: 'Étude' },
+    { value: 'Documentation' },
   ];
   moiss: number[] = [];
   annees: number[] = [];
@@ -96,7 +95,7 @@ export class TableauComponent implements OnInit {
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(private _ngZone: NgZone, private tokenStorage: TokenStorageService, private _snackBar: MatSnackBar, private service: TableauService, public dialog: MatDialog, private router: Router, private breakpointObserver: BreakpointObserver) { }
+  constructor(private _ngZone: NgZone, private tokenStorage: TokenStorageService, private _snackBar: MatSnackBar,private tabservice: TableauService, public dialog: MatDialog, private router: Router, private breakpointObserver: BreakpointObserver) { }
 
 
   ngOnInit(): void {
@@ -218,7 +217,7 @@ export class TableauComponent implements OnInit {
 
     // data.date = data.mois + '/' + data.annee;
 
-    this.service.create(data)
+    this.tabservice.create(data)
       .subscribe(
         response => {
           // console.log(response);
@@ -238,7 +237,7 @@ export class TableauComponent implements OnInit {
   };
 
   doneEditTab(data: Tab): void {
-    this.service.update(data.id, data)
+    this.tabservice.update(data.id, data)
       .subscribe(
         response => {
           this.recupTab();
@@ -258,7 +257,7 @@ export class TableauComponent implements OnInit {
 
   //////////////////// Suppression Projet ////////////////////
   deleteTableau(data: Tab) {
-    this.service.delete(data.id)
+    this.tabservice.delete(data.id)
       .subscribe(
         response => {
           // console.log(response);
@@ -283,7 +282,7 @@ export class TableauComponent implements OnInit {
 
   ///////////////////// Data Tableau ////////////////////////
   recupTab(): void {
-    this.service.getAll()
+    this.tabservice.getAll()
       .subscribe(
         data => {
           if (this.username == 'Consultation') {
