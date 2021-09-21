@@ -106,11 +106,11 @@ export class DialogBoxComponent {
   openSnackBar(nom: string, action: string) {
 
     switch (action) {
-      case 'Ajouter': this.msg = 'Le projet ' + nom + ' à été ajouté'
+      case 'Ajouter': this.msg = 'Le projet ' + nom + ' a été ajouté'
 
         break;
 
-      case 'Supprimer': this.msg = 'Le projet ' + nom + ' à été supprimé'
+      case 'Supprimer': this.msg = 'Le projet ' + nom + ' a été supprimé'
 
         break;
 

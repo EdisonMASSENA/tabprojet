@@ -295,7 +295,27 @@
 
         <span class="actionPill"> 
 
-          <button mat-icon-button matTooltip="Modifier" color="primary" [disabled]="editBlock" *ngIf="!tabs.editing; else editingTab" (click)="editTab(tabs)">
+          <button mat-icon-button [matMenuTriggerFor]="menu" matTooltip="Pièces jointes" color="accent">
+            <mat-icon>attachment</mat-icon>
+          </button>
+
+          <mat-menu #menu="matMenu" xPosition="before" yPosition="above">
+            <button mat-menu-item>
+              <mat-icon>add</mat-icon>
+              <span>Ajouter pièces jointes</span>
+            </button>
+            <button mat-menu-item *ngFor="let doc of docs">
+              <mat-icon>file_download</mat-icon>
+              <span>{{doc}}</span>
+              <!-- <button mat-icon-button color="warn">
+                <mat-icon>delete</mat-icon>
+              </button> -->
+            </button>
+            
+          </mat-menu>
+
+
+          <button mat-icon-button [matTooltip]="consult ? 'Vous n\'avez pas les droits' : 'Modifier' " color="primary" (click)="editTab(tabs)" [disabled]="editBlock || consult" *ngIf="!tabs.editing; else editingTab" >
             <mat-icon >edit</mat-icon>
           </button>
 
@@ -305,9 +325,9 @@
             </button>
           </ng-template>
 
-          <span class="spacer"></span>
+          <!-- <span class="spacer"></span> -->
 
-          <button mat-icon-button matTooltip="Supprimer" color="warn" (click)="openDialog('Supprimer',tabs)">
+          <button mat-icon-button matTooltip="Supprimer" color="warn" [matTooltip]="consult ? 'Vous n\'avez pas les droits' : 'Supprimer' " [disabled]="consult" (click)="openDialog('Supprimer',tabs)">
             <mat-icon>delete</mat-icon>
           </button>
 
@@ -340,7 +360,7 @@
 
             <span class="textPills">Date de fin prévue : </span>
             <div *ngIf="!tabs.editing; else editingTabDa">
-              {{tabs.mois}}/{{tabs.annee}}
+              {{tabs.mois}}/{{tabs.annee}}  <!-- {{tabs.date}} -->
             </div>
             <ng-template #editingTabDa>
               <mat-form-field class="textInp" appearance="outline">

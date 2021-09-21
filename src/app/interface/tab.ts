@@ -4,11 +4,11 @@ export interface Tab {
     chef:String;
     direction:String;
     priorite:String;
-    projet:String;
+    projet:any;
     mois:any;
     annee:any;
     date:any;
-    type:String;
+    type:any;
     accompli:String;
     attention:String;
     encours:String;
@@ -28,5 +28,5 @@ export interface Upload{
     id:Number;
     data:Blob;
     type:String;
-    
+    projetId:Number;
 };

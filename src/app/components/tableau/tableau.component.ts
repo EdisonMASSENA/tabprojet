@@ -23,6 +23,7 @@ import autoTable from 'jspdf-autotable'
 
 
 import { Tab } from "src/app/interface/tab";
+import { UploadService } from 'src/app/services/upload.service';
 import { TableauService } from "src/app/services/tableau.service";
 import { DialogBoxComponent } from 'src/app/components/dialog-box/dialog-box.component';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
@@ -91,11 +92,11 @@ export class TableauComponent implements OnInit {
   ];
   moiss: number[] = [];
   annees: number[] = [];
-
+  docs = [];
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(private _ngZone: NgZone, private tokenStorage: TokenStorageService, private _snackBar: MatSnackBar,private tabservice: TableauService, public dialog: MatDialog, private router: Router, private breakpointObserver: BreakpointObserver) { }
+  constructor(private _ngZone: NgZone, private uploadService: UploadService, private tokenStorage: TokenStorageService, private _snackBar: MatSnackBar, private tabservice: TableauService, public dialog: MatDialog, private router: Router, private breakpointObserver: BreakpointObserver) { }
 
 
   ngOnInit(): void {
@@ -124,6 +125,7 @@ export class TableauComponent implements OnInit {
     ////// Affichage responsive//////
     this.tabDisplay();
 
+    this.recupFile();
 
   }
 
@@ -171,7 +173,7 @@ export class TableauComponent implements OnInit {
         }
         else if (this.consult) {
           this.medium = false;
-          this.displayedColumns = ['chef', 'direction', 'priorite', 'projet', 'date', 'etat', 'tendance', 'accompli', 'attention', 'enCours'];
+          this.displayedColumns = ['chef', 'direction', 'priorite', 'projet', 'date', 'etat', 'tendance', 'accompli', 'attention', 'enCours', 'action'];
         }
         else {
           this.medium = false;
@@ -298,6 +300,23 @@ export class TableauComponent implements OnInit {
 
   };
 
+
+  recupFile(): void {
+    this.uploadService.getFiles()
+      .subscribe(
+        files => {
+          for (let i = 0; i < files.length; i++) {
+            this.docs = this.docs.concat(files[i].name);
+          };
+          // console.log(this.docs);
+        },
+        error => {
+          // console.log(error);
+        });
+
+  };
+
+
   //////////////// Tableau en PDF (npm: jsPDF autotable) /////////////////
   downloadPdf() {
     let url = location.origin + '/';
@@ -308,7 +327,7 @@ export class TableauComponent implements OnInit {
       tempObj.push(e.chef);
       tempObj.push(e.direction);
       tempObj.push(e.priorite);
-      tempObj.push(e.projet);
+      tempObj.push(e.projet + '(' + e.type + ')');
       tempObj.push(e.mois + '/' + e.annee);
       tempObj.push(e.etat);
       tempObj.push(e.tendance);

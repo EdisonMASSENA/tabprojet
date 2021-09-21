@@ -7,13 +7,13 @@
   <mat-form-field>
     <div>
       <mat-toolbar>
-        <input matInput [value]="fileName" />
+        <input matInput [value]="fileName" multiple />
         <button mat-flat-button color="primary" [disabled]="!currentFile" (click)="upload()">
           Upload
         </button>
       </mat-toolbar>
 
-      <input type="file" id="fileInput" (change)="selectFile($event)" name="fileInput" />
+      <input type="file" id="fileInput" (change)="selectFile($event)" name="fileInput" multiple/>
     </div>
   </mat-form-field>
 </div>
