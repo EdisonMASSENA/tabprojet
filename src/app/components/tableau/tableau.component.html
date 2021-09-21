@@ -237,6 +237,17 @@
             <span>
               <span class="textPills">Action:</span>
 
+              <button mat-icon-button [matMenuTriggerFor]="menu" matTooltip="Pièces jointes" color="accent">
+                <mat-icon>attachment</mat-icon>
+              </button>
+    
+              <mat-menu #menu="matMenu" xPosition="before" yPosition="above">
+                <button mat-menu-item *ngFor="let doc of docs">
+                  <mat-icon>file_download</mat-icon>
+                  <span>{{doc}}</span>
+                </button>
+              </mat-menu>
+
               <button mat-icon-button matTooltip="Modifier" color="primary" (click)="openDialog('Modifier',tabs)">
                 <mat-icon>edit</mat-icon>
               </button>
