@@ -82,7 +82,6 @@ export class TableauComponent implements OnInit {
   displayedColumns: string[];
   expandedElement: Tab | null;
   dataSource = new MatTableDataSource<Tab>();
-  editBlock: boolean;
   types = [
     { value: 'Technique' },
     { value: 'Numérique' },
@@ -133,10 +132,10 @@ export class TableauComponent implements OnInit {
 
 
 /////////////////////  Ouverture détail du projet en responsive ///////////////////////
-// sécurité pour ne pas fermer les details pendant la modification --> editBlock
+
 
   tabclick(cli) {
-    if (this.medium && !this.editBlock) {
+    if (this.medium) {
       if (this.expandedElement === cli) {
         this.expandedElement = null;
       }
@@ -194,6 +193,9 @@ export class TableauComponent implements OnInit {
       if (result.event == 'Ajouter') {
         this.createTableau(result.data);
       }
+      else if (result.event == 'Modifier') {
+        this.editTableau(result.data);
+      }
       else if (result.event == 'Supprimer') {
         this.deleteTableau(result.data);
       }
@@ -233,12 +235,8 @@ export class TableauComponent implements OnInit {
 
 
   //////////////// Modification des champs /////////////////
-  editTab(data: Tab): void {
-    data.editing = true;
-    this.editBlock = true;
-  };
 
-  doneEditTab(data: Tab): void {
+  editTableau(data: Tab): void {
     this.tabservice.update(data.id, data)
       .subscribe(
         response => {
@@ -247,12 +245,6 @@ export class TableauComponent implements OnInit {
         error => {
           // console.log(error);
         });
-
-    let msg = 'Le projet ' + data.projet + ' a été modifié'
-    this.snackbar(msg)
-
-    data.editing = false;
-    this.editBlock = false;
 
   };
 
@@ -268,8 +260,6 @@ export class TableauComponent implements OnInit {
         error => {
           // console.log(error);
         });
-
-    this.editBlock = false;
 
   };
 

@@ -14,7 +14,6 @@ export interface Tab {
     encours:String;
     etat: String;
     tendance: String; 
-    editing: Boolean;
 };
 
 export interface User{

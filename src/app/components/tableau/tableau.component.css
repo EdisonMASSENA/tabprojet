@@ -381,10 +381,11 @@ img
     display: flex;
 }
 
+/* 
 .month-picker .mat-calendar-period-button {
   pointer-events: none;
 }
 
 .month-picker .mat-calendar-arrow {
   display: none;
-}
+} */

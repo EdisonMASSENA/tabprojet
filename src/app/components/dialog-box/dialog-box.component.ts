@@ -114,6 +114,10 @@ export class DialogBoxComponent {
 
         break;
 
+      case 'Modifier': this.msg = 'Le projet ' + nom + ' a été modifié'
+
+      break;
+
       default: 'Annulé'
         break;
     }

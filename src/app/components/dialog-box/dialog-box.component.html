@@ -1,8 +1,8 @@
 <h1 mat-dialog-title> Action :: <strong>{{action}}</strong></h1>
 
-<div mat-dialog-content>
+<div mat-dialog-content [ngSwitch]="action">
 
-  <div *ngIf="action != 'Supprimer'; else elseTemplate">
+  <div *ngSwitchCase="'Ajouter'">
 
     <mat-form-field class="textInp" appearance="outline">
       <mat-label>{{action}} Chef de projet</mat-label>
@@ -14,7 +14,7 @@
 
     <mat-form-field class="textInp" appearance="outline">
       <mat-label>{{action}} Priorité</mat-label>
-      <input matInput class="textInp" [(ngModel)]="local_data.priorite" required>
+      <input matInput class="textInp" [(ngModel)]="local_data.priorite">
       <mat-error *ngIf="diaFormControl.hasError('required')">
         Priorité <strong>requis</strong>
        </mat-error>
@@ -121,9 +121,129 @@
 
   </div>
 
-  <ng-template #elseTemplate>
+
+  <div *ngSwitchCase="'Modifier'">
+
+    <mat-form-field class="textInp" appearance="outline">
+      <mat-label>{{action}} Chef de projet</mat-label>
+      <input matInput class="textInp" [(ngModel)]="local_data.chef" required>
+      <mat-error *ngIf="diaFormControl.hasError('required')">
+       Chef de projet <strong>requis</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="textInp" appearance="outline">
+      <mat-label>{{action}} Priorité</mat-label>
+      <input matInput class="textInp" [(ngModel)]="local_data.priorite">
+      <mat-error *ngIf="diaFormControl.hasError('required')">
+        Priorité <strong>requis</strong>
+       </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="textInp" appearance="outline">
+      <mat-label>{{action}} Projet</mat-label>
+      <input matInput class="textInp" [(ngModel)]="local_data.projet" required>
+      <mat-error *ngIf="diaFormControl.hasError('required')">
+        Projet <strong>requis</strong>
+       </mat-error>
+    </mat-form-field>
+
+    
+    <mat-form-field class="textInp" appearance="outline">
+      <mat-label>{{action}} Type de projet</mat-label>
+      <mat-select [(ngModel)]="local_data.type" >
+        <mat-option [value]="type.value" *ngFor="let type of types">
+          {{ type.value }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <p> {{action}} une date de fin prévue : </p>
+    <mat-form-field appearance="outline">
+      <mat-label>Mois</mat-label>
+      <mat-select [(ngModel)]="local_data.mois">
+        <mat-option *ngFor="let mois of moiss" [value]="mois">
+          {{mois}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline"> 
+      <mat-label>Année</mat-label>
+      <mat-select [(ngModel)]="local_data.annee">
+        <mat-option *ngFor="let annee of annees" [value]="annee">
+          {{annee}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+      
+
+    <app-upload></app-upload>
+
+        <!-- <input matInput [disabled]="true" [matDatepicker]="dp" [(ngModel)]="local_data.date">
+        <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+        <mat-datepicker #dp
+                        [disabled]="false"
+                        startView="multi-year"
+                        (yearSelected)="chosenYearHandler($event)"
+                        (monthSelected)="chosenMonthHandler($event, dp)"
+                        panelClass="month-picker">
+        </mat-datepicker> -->
+      
+
+    <div class="flex">
+
+      <mat-radio-group aria-labelledby="radio-group-label" class="radio-group" [(ngModel)]="local_data.etat" >
+        <mat-label>État :</mat-label>
+        <mat-radio-button class="radio-button" value="assets/1.png">
+          <img src="assets/1.png">
+        </mat-radio-button>
+        <mat-radio-button class="radio-button" value="assets/2.png">
+          <img src="assets/2.png">
+        </mat-radio-button>
+        <mat-radio-button class="radio-button" value="assets/3.png">
+          <img src="assets/3.png">
+        </mat-radio-button>
+        <mat-radio-button class="radio-button" value="assets/4.png">
+          <img src="assets/4.png">
+        </mat-radio-button>
+      </mat-radio-group>
+
+      <mat-radio-group aria-labelledby="radio-group-label" class="radio-group" [(ngModel)]="local_data.tendance" >
+        <mat-label>Tendance :</mat-label>
+        <mat-radio-button class="radio-button" value="assets/a.png">
+          <img src="assets/a.png">
+        </mat-radio-button>
+        <mat-radio-button class="radio-button" value="assets/b.png">
+          <img src="assets/b.png">
+        </mat-radio-button>
+        <mat-radio-button class="radio-button" value="assets/c.png">
+          <img src="assets/c.png">
+        </mat-radio-button>
+      </mat-radio-group>
+
+    </div>
+
+    <mat-form-field class="textInp" appearance="outline">
+      <mat-label>{{action}} Travaux faits</mat-label>
+      <textarea class="row" matInput [(ngModel)]="local_data.accompli"></textarea>
+    </mat-form-field>
+
+    <mat-form-field class="textInp" appearance="outline">
+      <mat-label>{{action}} Points d'attention</mat-label>
+      <textarea class="row" matInput [(ngModel)]="local_data.attention"></textarea>
+    </mat-form-field>
+
+
+    <mat-form-field class="textInp" appearance="outline">
+      <mat-label>{{action}} Travaux en cours / à venir</mat-label>
+      <textarea class="row" matInput [(ngModel)]="local_data.encours"></textarea>
+    </mat-form-field>
+
+  </div>
+  
+  <div *ngSwitchCase="'Supprimer'">
     <p> Êtes-vous sûr de vouloir supprimer le projet : <b>{{local_data.projet}}</b>?</p>
-  </ng-template>
+  </div>
 
 </div>
 
