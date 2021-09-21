@@ -49,11 +49,11 @@ export class DialogBoxComponent {
 
   
   types= [
-    {value: 'Technique', disp:'Technique' },
-    {value: 'Numérique', disp:'Numérique' },
-    {value: 'Métier', disp:'Métier' },
-    {value: 'Étude', disp:'Étude' },
-    {value: 'Documentation', disp:'Documentation' },
+    {value: 'Technique' },
+    {value: 'Numérique' },
+    {value: 'Métier' },
+    {value: 'Étude' },
+    {value: 'Documentation' },
   ];
   action: string;
   local_data: any;
@@ -106,13 +106,17 @@ export class DialogBoxComponent {
   openSnackBar(nom: string, action: string) {
 
     switch (action) {
-      case 'Ajouter': this.msg = 'Le projet ' + nom + ' à été ajouté'
+      case 'Ajouter': this.msg = 'Le projet ' + nom + ' a été ajouté'
 
         break;
 
-      case 'Supprimer': this.msg = 'Le projet ' + nom + ' à été supprimé'
+      case 'Supprimer': this.msg = 'Le projet ' + nom + ' a été supprimé'
 
         break;
+
+      case 'Modifier': this.msg = 'Le projet ' + nom + ' a été modifié'
+
+      break;
 
       default: 'Annulé'
         break;

@@ -3,26 +3,27 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import {animate, state, style, transition, trigger} from '@angular/animations';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Router } from '@angular/router';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { Breakpoints, BreakpointState, BreakpointObserver } from '@angular/cdk/layout';
 // import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
 // import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 // import {MatDatepicker} from '@angular/material/datepicker';
-import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 
+import { take } from 'rxjs/operators';
 
 // import * as _moment from 'moment';
 // import {default as _rollupMoment, Moment} from 'moment';
 // const moment = _rollupMoment || _moment;
 
 
-import {take} from 'rxjs/operators';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable'
 
 
 import { Tab } from "src/app/interface/tab";
+import { UploadService } from 'src/app/services/upload.service';
 import { TableauService } from "src/app/services/tableau.service";
 import { DialogBoxComponent } from 'src/app/components/dialog-box/dialog-box.component';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
@@ -50,8 +51,8 @@ import { TokenStorageService } from 'src/app/services/token-storage.service';
   styleUrls: ['./tableau.component.css'],
   animations: [
     trigger('detailExpand', [
-      state('collapsed', style({height: '0px', minHeight: '0'})),
-      state('expanded', style({height: '*'})),
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
       transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
     ]),
   ],
@@ -68,8 +69,8 @@ import { TokenStorageService } from 'src/app/services/token-storage.service';
 
 
 export class TableauComponent implements OnInit {
-  
-  
+
+
   // date = new FormControl(moment());
   username: string;
   isLoggedIn = false;
@@ -79,23 +80,22 @@ export class TableauComponent implements OnInit {
   startShowing = 100;
   medium: boolean;
   displayedColumns: string[];
-  expandedElement: Tab|null;
+  expandedElement: Tab | null;
   dataSource = new MatTableDataSource<Tab>();
-  editBlock: boolean;
-  types= [
-    {value: 'Technique', disp:'Technique' },
-    {value: 'Numérique', disp:'Numérique' },
-    {value: 'Métier', disp:'Métier' },
-    {value: 'Étude', disp:'Étude' },
-    {value: 'Documentation', disp:'Documentation' },
+  types = [
+    { value: 'Technique' },
+    { value: 'Numérique' },
+    { value: 'Métier' },
+    { value: 'Étude' },
+    { value: 'Documentation' },
   ];
   moiss: number[] = [];
   annees: number[] = [];
-
+  docs = [];
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-  
-  constructor(private _ngZone: NgZone, private tokenStorage: TokenStorageService, private _snackBar: MatSnackBar, private service: TableauService, public dialog: MatDialog, private router: Router, private breakpointObserver: BreakpointObserver) {  }
+
+  constructor(private _ngZone: NgZone, private uploadService: UploadService, private tokenStorage: TokenStorageService, private _snackBar: MatSnackBar, private tabservice: TableauService, public dialog: MatDialog, private router: Router, private breakpointObserver: BreakpointObserver) { }
 
 
   ngOnInit(): void {
@@ -112,7 +112,7 @@ export class TableauComponent implements OnInit {
 
     /////récupération du tableau/////
     this.recupTab();
-    
+
     //////////////////// Bar de recherche filtré par projet ////////////////////////////
     this.dataSource.filterPredicate = function (tab, filter: string): boolean {
       return tab.projet.toLowerCase().includes(filter);
@@ -120,10 +120,11 @@ export class TableauComponent implements OnInit {
 
     ///////////////////////// Tri colonne ////////////////////////
     this.dataSource.sort = this.sort;
-    
+
     ////// Affichage responsive//////
     this.tabDisplay();
 
+    this.recupFile();
 
   }
 
@@ -131,10 +132,10 @@ export class TableauComponent implements OnInit {
 
 
 /////////////////////  Ouverture détail du projet en responsive ///////////////////////
-// sécurité pour ne pas fermer les details pendant la modification --> editBlock
+
 
   tabclick(cli) {
-    if (this.medium && !this.editBlock) {
+    if (this.medium) {
       if (this.expandedElement === cli) {
         this.expandedElement = null;
       }
@@ -158,22 +159,22 @@ export class TableauComponent implements OnInit {
     };
   };
 
-////////////////// Affichage tableau en responsive ///////////////////  
+////////////////// Affichage tableau en responsive ///////////////////
 
   tabDisplay() {
     this.breakpointObserver
-      .observe([Breakpoints.Medium,Breakpoints.Small,Breakpoints.HandsetPortrait,Breakpoints.XSmall])
+      .observe([Breakpoints.Medium, Breakpoints.Small, Breakpoints.HandsetPortrait, Breakpoints.XSmall])
       .subscribe((state: BreakpointState) => {
-        
+
         if (state.matches) {
           this.medium = true;
           this.displayedColumns = ['chef', 'direction', 'projet', 'etat', 'tendance'];
         }
         else if (this.consult) {
           this.medium = false;
-          this.displayedColumns = ['chef', 'direction', 'priorite', 'projet', 'date', 'etat', 'tendance', 'accompli', 'attention', 'enCours'];
+          this.displayedColumns = ['chef', 'direction', 'priorite', 'projet', 'date', 'etat', 'tendance', 'accompli', 'attention', 'enCours', 'action'];
         }
-         else {
+        else {
           this.medium = false;
           this.displayedColumns = ['chef', 'direction', 'priorite', 'projet', 'date', 'etat', 'tendance', 'accompli', 'attention', 'enCours', 'action'];
         }
@@ -191,6 +192,9 @@ export class TableauComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result.event == 'Ajouter') {
         this.createTableau(result.data);
+      }
+      else if (result.event == 'Modifier') {
+        this.editTableau(result.data);
       }
       else if (result.event == 'Supprimer') {
         this.deleteTableau(result.data);
@@ -217,7 +221,7 @@ export class TableauComponent implements OnInit {
 
     // data.date = data.mois + '/' + data.annee;
 
-    this.service.create(data)
+    this.tabservice.create(data)
       .subscribe(
         response => {
           // console.log(response);
@@ -231,13 +235,9 @@ export class TableauComponent implements OnInit {
 
 
   //////////////// Modification des champs /////////////////
-  editTab(data: Tab): void {
-    data.editing = true;
-    this.editBlock = true;
-  };
 
-  doneEditTab(data: Tab): void {
-    this.service.update(data.id, data)
+  editTableau(data: Tab): void {
+    this.tabservice.update(data.id, data)
       .subscribe(
         response => {
           this.recupTab();
@@ -246,18 +246,12 @@ export class TableauComponent implements OnInit {
           // console.log(error);
         });
 
-    let msg = 'Le projet ' + data.projet + ' a été modifié'
-    this.snackbar(msg)
-
-    data.editing = false;
-    this.editBlock = false;
-    
   };
 
 
   //////////////////// Suppression Projet ////////////////////
   deleteTableau(data: Tab) {
-    this.service.delete(data.id)
+    this.tabservice.delete(data.id)
       .subscribe(
         response => {
           // console.log(response);
@@ -265,9 +259,7 @@ export class TableauComponent implements OnInit {
         },
         error => {
           // console.log(error);
-        });  
-
-    this.editBlock = false;
+        });
 
   };
 
@@ -282,7 +274,7 @@ export class TableauComponent implements OnInit {
 
   ///////////////////// Data Tableau ////////////////////////
   recupTab(): void {
-    this.service.getAll()
+    this.tabservice.getAll()
       .subscribe(
         data => {
           if (this.username == 'Consultation') {
@@ -295,10 +287,27 @@ export class TableauComponent implements OnInit {
         error => {
           // console.log(error);
         });
-    
+
   };
 
-//////////////// Tableau en PDF (npm: jsPDF autotable) /////////////////
+
+  recupFile(): void {
+    this.uploadService.getFiles()
+      .subscribe(
+        files => {
+          for (let i = 0; i < files.length; i++) {
+            this.docs = this.docs.concat(files[i].name);
+          };
+          // console.log(this.docs);
+        },
+        error => {
+          // console.log(error);
+        });
+
+  };
+
+
+  //////////////// Tableau en PDF (npm: jsPDF autotable) /////////////////
   downloadPdf() {
     let url = location.origin + '/';
 
@@ -308,7 +317,7 @@ export class TableauComponent implements OnInit {
       tempObj.push(e.chef);
       tempObj.push(e.direction);
       tempObj.push(e.priorite);
-      tempObj.push(e.projet);
+      tempObj.push(e.projet + '(' + e.type + ')');
       tempObj.push(e.mois + '/' + e.annee);
       tempObj.push(e.etat);
       tempObj.push(e.tendance);
@@ -389,9 +398,9 @@ export class TableauComponent implements OnInit {
 
 
 
-/////////////////// Snackbar //////////////////////
+  /////////////////// Snackbar //////////////////////
 
-  snackbar(msg){
+  snackbar(msg) {
     this._snackBar.open(msg, 'Fermer', {
       duration: 3000,
       horizontalPosition: "center",
@@ -400,33 +409,33 @@ export class TableauComponent implements OnInit {
   };
 
 
-//////////////////// Datepicker ////////////////////////////
+  //////////////////// Datepicker ////////////////////////////
 
-// chosenYearHandler(normalizedYear: Moment) {
-//   const ctrlValue = this.date.value;
-//   ctrlValue.year(normalizedYear.year());
-//   this.date.setValue(ctrlValue);
-// }
+  // chosenYearHandler(normalizedYear: Moment) {
+  //   const ctrlValue = this.date.value;
+  //   ctrlValue.year(normalizedYear.year());
+  //   this.date.setValue(ctrlValue);
+  // }
 
-// chosenMonthHandler(normalizedMonth: Moment, datepicker: MatDatepicker<Moment>) {
-//   const ctrlValue = this.date.value;
-//   ctrlValue.month(normalizedMonth.month());
-//   this.date.setValue(ctrlValue);
-//   datepicker.close();
-// }
+  // chosenMonthHandler(normalizedMonth: Moment, datepicker: MatDatepicker<Moment>) {
+  //   const ctrlValue = this.date.value;
+  //   ctrlValue.month(normalizedMonth.month());
+  //   this.date.setValue(ctrlValue);
+  //   datepicker.close();
+  // }
 
-///////////////// Autosize Textarea ////////////////////
+  ///////////////// Autosize Textarea ////////////////////
 
-@ViewChild('autosize') autosize: CdkTextareaAutosize;
+  @ViewChild('autosize') autosize: CdkTextareaAutosize;
 
   triggerResize() {
     // Wait for changes to be applied, then trigger textarea resize.
     this._ngZone.onStable.pipe(take(1))
-        .subscribe(() => this.autosize.resizeToFitContent(true));
+      .subscribe(() => this.autosize.resizeToFitContent(true));
   };
 
 
-/////////////////////////////////
+  /////////////////////////////////
 
 
 

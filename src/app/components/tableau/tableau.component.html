@@ -45,15 +45,9 @@
         projet </mat-header-cell>
       <mat-cell [ngClass]="!medium ? 'chef' : 'chefM' " *matCellDef="let tabs">
 
-        <div *ngIf="!tabs.editing; else editingTab">
+        <div>
           {{tabs.chef}}
         </div>
-
-        <ng-template #editingTab>
-          <mat-form-field class="textInp" appearance="outline">
-            <textarea matInput [(ngModel)]="tabs.chef"></textarea>
-          </mat-form-field>
-        </ng-template>
 
       </mat-cell>
     </ng-container>
@@ -64,15 +58,9 @@
         [ngClass]="!medium ? 'direction' : 'directionM' "> Direction </mat-header-cell>
       <mat-cell *matCellDef="let tabs" [ngClass]="!medium ? 'direction' : 'directionM' ">
 
-        <div *ngIf="!tabs.editing; else editingTab">
+        <div>
           {{tabs.direction}}
         </div>
-
-        <ng-template #editingTab>
-          <mat-form-field class="textInp" appearance="outline">
-            <textarea disabled matInput [(ngModel)]="tabs.direction"></textarea>
-          </mat-form-field>
-        </ng-template>
 
       </mat-cell>
     </ng-container>
@@ -82,15 +70,9 @@
       <mat-header-cell *matHeaderCellDef mat-sort-header class="white"> Priorité </mat-header-cell>
       <mat-cell *matCellDef="let tabs">
 
-        <div *ngIf="!tabs.editing; else editingTab">
+        <div>
           {{tabs.priorite}}
         </div>
-
-        <ng-template #editingTab>
-          <mat-form-field class="textInp" appearance="outline">
-            <textarea matInput [(ngModel)]="tabs.priorite"></textarea>
-          </mat-form-field>
-        </ng-template>
 
       </mat-cell>
     </ng-container>
@@ -100,68 +82,21 @@
       <mat-header-cell *matHeaderCellDef mat-sort-header class="white projetHea" > Projet </mat-header-cell>
       <mat-cell *matCellDef="let tabs" [ngClass]="!medium ? 'projet' : 'projetM' ">
 
-        <div *ngIf="!tabs.editing; else editingTab">
+        <div>
           {{tabs.projet}} <span [ngClass]="!medium ? 'typePills' : 'typePillsM' ">{{tabs.type}}</span>
         </div>
-
-        <ng-template #editingTab>
-          <mat-form-field class="textInp" appearance="outline">
-            <textarea matInput [(ngModel)]="tabs.projet"
-                      cdkTextareaAutosize
-                      #autosize="cdkTextareaAutosize"
-                      cdkAutosizeMinRows="1"
-                      cdkAutosizeMaxRows="9"></textarea>
-          </mat-form-field>
-          <mat-form-field class="textInp" appearance="outline">
-            <mat-select [(ngModel)]="tabs.type" required>
-              <mat-option [value]="type.value" *ngFor="let type of types">
-                {{ type.disp }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </ng-template>
 
       </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="date">
-      <mat-header-cell *matHeaderCellDef mat-sort-header class="white dateHea">
+      <mat-header-cell *matHeaderCellDef class="white dateHea">
         Date de fin prévue </mat-header-cell>
       <mat-cell *matCellDef="let tabs" [ngClass]="!medium ? 'date' : 'dateM' ">
 
-        <div *ngIf="!tabs.editing; else editingTab">
-          {{tabs.mois}}/{{tabs.annee}}
+        <div>
+          {{tabs.mois}}/{{tabs.annee}} <!-- {{tabs.date}} -->
         </div>
-
-        <ng-template #editingTab>
-          <mat-form-field class="textInp" appearance="outline">
-          <mat-label>Mois</mat-label>
-          <mat-select [(ngModel)]="tabs.mois">
-            <mat-option *ngFor="let mois of moiss" [value]="mois">
-              {{mois}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-        <mat-form-field class="textInp" appearance="outline"> 
-          <mat-label>Année</mat-label>
-          <mat-select [(ngModel)]="tabs.annee">
-            <mat-option *ngFor="let annee of annees" [value]="annee">
-              {{annee}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      
-            <!-- <input matInput [disabled]="true" [matDatepicker]="dp" [(ngModel)]="tabs.date">
-            <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
-            <mat-datepicker #dp
-                            [disabled]="false"
-                            startView="multi-year"
-                            (yearSelected)="chosenYearHandler($event)"
-                            (monthSelected)="chosenMonthHandler($event, dp)"
-                            panelClass="month-picker">
-            </mat-datepicker> -->
-
-        </ng-template>
 
       </mat-cell>
     </ng-container>
@@ -171,26 +106,9 @@
       </mat-header-cell>
       <mat-cell *matCellDef="let tabs" [ngClass]="!medium ? 'etat' : 'etatM' ">
 
-        <div *ngIf="!tabs.editing; else editingTab">
+        <div>
           <img [ngClass]="!medium ? 'imgr' : 'imgrM' " [src]="tabs.etat" />
         </div>
-
-        <ng-template #editingTab>
-          <mat-radio-group [(ngModel)]="tabs.etat" class="radioGrp">
-            <mat-radio-button value="assets/1.png">
-              <img [ngClass]="!medium ? 'imgr' : 'imgrM' " src="assets/1.png">
-            </mat-radio-button>
-            <mat-radio-button value="assets/2.png">
-              <img [ngClass]="!medium ? 'imgr' : 'imgrM' " src="assets/2.png">
-            </mat-radio-button>
-            <mat-radio-button value="assets/3.png">
-              <img [ngClass]="!medium ? 'imgr' : 'imgrM' " src="assets/3.png">
-            </mat-radio-button>
-            <mat-radio-button value="assets/4.png">
-              <img [ngClass]="!medium ? 'imgr' : 'imgrM' " src="assets/4.png">
-            </mat-radio-button>
-          </mat-radio-group>
-        </ng-template>
 
       </mat-cell>
     </ng-container>
@@ -199,25 +117,11 @@
     <ng-container matColumnDef="tendance">
       <mat-header-cell *matHeaderCellDef mat-sort-header class="white" [ngClass]="!medium ? 'tendance' : 'tendanceM' ">
         Tendance </mat-header-cell>
-      <mat-cell *matCellDef="let tabs" [ngClass]="!medium ? 'tendance' : 'tendanceM' ">
+      <mat-cell *matCellDef="let tabs" [ngClass]="!medium ? 'tendance' : 'tendanceM'">
 
-        <div *ngIf="!tabs.editing; else editingTab">
+        <div>
           <img [ngClass]="!medium ? 'imgr' : 'imgrM' " [src]="tabs.tendance" />
         </div>
-
-        <ng-template #editingTab>
-          <mat-radio-group [(ngModel)]="tabs.tendance">
-            <mat-radio-button value="assets/a.png">
-              <img [ngClass]="!medium ? 'imgr' : 'imgrM' " src="assets/a.png">
-            </mat-radio-button>
-            <mat-radio-button value="assets/b.png">
-              <img [ngClass]="!medium ? 'imgr' : 'imgrM' " src="assets/b.png">
-            </mat-radio-button>
-            <mat-radio-button value="assets/c.png">
-              <img [ngClass]="!medium ? 'imgr' : 'imgrM' " src="assets/c.png">
-            </mat-radio-button>
-          </mat-radio-group>
-        </ng-template>
 
       </mat-cell>
     </ng-container>
@@ -227,19 +131,9 @@
       <mat-header-cell *matHeaderCellDef class="white"> Travaux faits </mat-header-cell>
       <mat-cell *matCellDef="let tabs">
 
-        <div *ngIf="!tabs.editing; else editingTab">
+        <div>
           {{tabs.accompli}}
         </div>
-
-        <ng-template #editingTab>
-          <mat-form-field class="textInp" appearance="outline">
-            <textarea matInput  [(ngModel)]="tabs.accompli" 
-                      cdkTextareaAutosize
-                      #autosize="cdkTextareaAutosize"
-                      cdkAutosizeMinRows="1"
-                      cdkAutosizeMaxRows="9" ></textarea>
-          </mat-form-field>
-        </ng-template>
 
       </mat-cell>
     </ng-container>
@@ -249,19 +143,9 @@
       <mat-header-cell *matHeaderCellDef class="white"> Points d'attention </mat-header-cell>
       <mat-cell *matCellDef="let tabs">
 
-        <div *ngIf="!tabs.editing; else editingTab">
+        <div>
           {{tabs.attention}}
         </div>
-
-        <ng-template #editingTab>
-          <mat-form-field class="textInp" appearance="outline">
-            <textarea matInput [(ngModel)]="tabs.attention"
-                      cdkTextareaAutosize
-                      #autosize="cdkTextareaAutosize"
-                      cdkAutosizeMinRows="1"
-                      cdkAutosizeMaxRows="9"></textarea>
-          </mat-form-field>
-        </ng-template>
 
       </mat-cell>
     </ng-container>
@@ -271,19 +155,9 @@
       <mat-header-cell *matHeaderCellDef class="white"> Travaux en cours / à venir </mat-header-cell>
       <mat-cell *matCellDef="let tabs">
 
-        <div *ngIf="!tabs.editing; else editingTab">
+        <div>
           {{tabs.encours}}
         </div>
-
-        <ng-template #editingTab>
-          <mat-form-field class="textInp" appearance="outline">
-            <textarea matInput [(ngModel)]="tabs.encours"
-                      cdkTextareaAutosize
-                      #autosize="cdkTextareaAutosize"
-                      cdkAutosizeMinRows="1"
-                      cdkAutosizeMaxRows="9"></textarea>
-          </mat-form-field>
-        </ng-template>
 
       </mat-cell>
     </ng-container>
@@ -295,19 +169,22 @@
 
         <span class="actionPill"> 
 
-          <button mat-icon-button matTooltip="Modifier" color="primary" [disabled]="editBlock" *ngIf="!tabs.editing; else editingTab" (click)="editTab(tabs)">
-            <mat-icon >edit</mat-icon>
+          <button mat-icon-button [matMenuTriggerFor]="menu" matTooltip="Pièces jointes" color="accent">
+            <mat-icon>attachment</mat-icon>
           </button>
 
-          <ng-template #editingTab>
-            <button mat-icon-button matTooltip="Valider" class="vert" (click)="doneEditTab(tabs)">
-              <mat-icon>check</mat-icon>
+          <mat-menu #menu="matMenu" xPosition="before" yPosition="above">
+            <button mat-menu-item *ngFor="let doc of docs">
+              <mat-icon>file_download</mat-icon>
+              <span>{{doc}}</span>
             </button>
-          </ng-template>
+          </mat-menu>
 
-          <span class="spacer"></span>
+          <button mat-icon-button [matTooltip]="consult ? 'Vous n\'avez pas les droits' : 'Modifier'" color="primary" (click)="openDialog('Modifier',tabs)">
+            <mat-icon>edit</mat-icon>
+          </button>
 
-          <button mat-icon-button matTooltip="Supprimer" color="warn" (click)="openDialog('Supprimer',tabs)">
+          <button mat-icon-button matTooltip="Supprimer" color="warn" [matTooltip]="consult ? 'Vous n\'avez pas les droits' : 'Supprimer' " [disabled]="consult" (click)="openDialog('Supprimer',tabs)">
             <mat-icon>delete</mat-icon>
           </button>
 
@@ -321,122 +198,53 @@
         [@detailExpand]="tabs == expandedElement ? 'expanded' : 'collapsed' ">
 
         <div class="exp">
-
           <div class="expR">
-
             <span class="textPills">Priorité: </span>
-            <div *ngIf="!tabs.editing; else editingTabPr">
+            <div>
               {{tabs.priorite}}
             </div>
-            <ng-template #editingTabPr>
-              <mat-form-field class="textInp" appearance="outline">
-                <textarea matInput [(ngModel)]="tabs.priorite"></textarea>
-              </mat-form-field>
-            </ng-template>
-
           </div>
 
           <div class="expR">
-
             <span class="textPills">Date de fin prévue : </span>
-            <div *ngIf="!tabs.editing; else editingTabDa">
-              {{tabs.mois}}/{{tabs.annee}}
+            <div>
+              {{tabs.mois}}/{{tabs.annee}}  <!-- {{tabs.date}} -->
             </div>
-            <ng-template #editingTabDa>
-              <mat-form-field class="textInp" appearance="outline">
-                <mat-label>Mois</mat-label>
-                <mat-select [(ngModel)]="tabs.mois">
-                  <mat-option *ngFor="let mois of moiss" [value]="mois">
-                    {{mois}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-              <mat-form-field class="textInp" appearance="outline"> 
-                <mat-label>Année</mat-label>
-                <mat-select [(ngModel)]="tabs.annee">
-                  <mat-option *ngFor="let annee of annees" [value]="annee">
-                    {{annee}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </ng-template>
-
           </div>
 
           <div class="expR">
-
             <span class="textPills">Travaux faits: </span>
-            <div *ngIf="!tabs.editing; else editingTabAc">
+            <div>
               {{tabs.accompli}}
             </div>
-            <ng-template #editingTabAc>
-              <mat-form-field class="textInp" appearance="outline">
-                <textarea matInput [(ngModel)]="tabs.accompli"
-                          cdkTextareaAutosize
-                          #autosize="cdkTextareaAutosize"
-                          cdkAutosizeMinRows="1"
-                          cdkAutosizeMaxRows="9"></textarea>
-              </mat-form-field>
-            </ng-template>
-
           </div>
 
           <div class="expR">
-
             <span class="textPills">Points d'attention: </span>
-            <div *ngIf="!tabs.editing; else editingTabAt">
+            <div>
               {{tabs.attention}}
             </div>
-            <ng-template #editingTabAt>
-              <mat-form-field class="textInp" appearance="outline">
-                <textarea matInput [(ngModel)]="tabs.attention"
-                          cdkTextareaAutosize
-                          #autosize="cdkTextareaAutosize"
-                          cdkAutosizeMinRows="1"
-                          cdkAutosizeMaxRows="9"></textarea>
-              </mat-form-field>
-            </ng-template>
-
           </div>
 
           <div class="expR">
-
             <span class="textPills">Travaux en cours / à venir: </span>
-            <div *ngIf="!tabs.editing; else editingTabEn">
+            <div>
               {{tabs.encours}}
             </div>
-            <ng-template #editingTabEn>
-              <mat-form-field class="textInp" appearance="outline">
-                <textarea matInput  [(ngModel)]="tabs.encours"
-                          cdkTextareaAutosize
-                          #autosize="cdkTextareaAutosize"
-                          cdkAutosizeMinRows="1"
-                          cdkAutosizeMaxRows="9"></textarea>
-              </mat-form-field>
-            </ng-template>
-
           </div>
 
           <div *ngIf="!consult" class="expR">
             <span>
               <span class="textPills">Action:</span>
-              <button mat-icon-button matTooltip="Modifier" color="primary"
-                *ngIf="!tabs.editing; else editingTabAct" (click)="editTab(tabs)">
+
+              <button mat-icon-button matTooltip="Modifier" color="primary" (click)="openDialog('Modifier',tabs)">
                 <mat-icon>edit</mat-icon>
               </button>
-
-              <ng-template #editingTabAct>
-                <button mat-icon-button matTooltip="Valider" class="vert" (click)="doneEditTab(tabs)">
-                  <mat-icon>check</mat-icon>
-                </button>
-              </ng-template>
-
-              <span class="spacer"></span>
 
               <button mat-icon-button matTooltip="Supprimer" color="warn" (click)="openDialog('Supprimer',tabs)">
                 <mat-icon>delete</mat-icon>
               </button>
-
+              
             </span>
           </div>
 

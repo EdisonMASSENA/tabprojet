@@ -1,26 +1,31 @@
 
 export interface Tab {
-    id:number;
-    chef:string;
-    direction:string;
-    priorite:string;
-    projet:string;
+    id:Number;
+    chef:String;
+    direction:String;
+    priorite:String;
+    projet:any;
     mois:any;
     annee:any;
     date:any;
-    type:string;
-    accompli:string;
-    attention:string;
-    encours:string;
-    etat: string;
-    tendance: string; 
-    editing: boolean;
+    type:any;
+    accompli:String;
+    attention:String;
+    encours:String;
+    etat: String;
+    tendance: String; 
 };
 
 export interface User{
-    id:number;
-    direction:string;
-    mdp:string;
+    id:Number;
+    direction:String;
+    mdp:String;
     
 };
 
+export interface Upload{
+    id:Number;
+    data:Blob;
+    type:String;
+    projetId:Number;
+};
