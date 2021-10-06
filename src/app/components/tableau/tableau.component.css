@@ -115,6 +115,7 @@ img
 .rech
 {
     width: 70%;
+    color: white ;
 }
 
 .scroll
@@ -153,6 +154,16 @@ img
     
 }
 
+.type
+{
+    flex: 0 0 8% !important;
+}
+
+.typecell
+{
+    flex: 0 0 0% !important;
+}
+
 .direction
 {
     padding: 10px;
@@ -174,12 +185,17 @@ img
 .mat-column-priorite
 {
     padding: 10px 10px;
-    flex: 0 0 3% !important;
+    flex: 0 0 3.5% !important;
 }
 
-.projetHea
+.prohea
 {
-    justify-content: center;
+    flex: 0 0 4% !important;
+}
+
+.proheaM
+{
+    flex: 0 0 11% !important;
 }
 
 .projet
@@ -189,7 +205,6 @@ img
     overflow-wrap: break-word;
     word-wrap: break-word;
     word-break: break-word;
-    flex-direction: column;
 }
 
 .projetM
@@ -200,14 +215,6 @@ img
     overflow-wrap: break-word;
     word-wrap: break-word;
     word-break: break-word;
-    flex-direction: column;
-
-}
-
-.dateHea
-{
-    flex: 0 0 8% !important;
-    justify-content: center;
 }
 
 .date
@@ -219,7 +226,6 @@ img
     overflow-wrap: break-word;
     word-wrap: break-word;
     word-break: break-word;
-    flex-direction: column;
 }
 
 .etat
@@ -344,7 +350,16 @@ img
     background: #495bbe ;
     padding: 4px 10px;
     border-radius: 20px;
-    
+}
+
+.typePill
+{
+    font-size: 12px;
+    color: white;
+    background: #495bbe ;
+    padding: 4px 10px;
+    border-radius: 20px;
+    visibility: hidden;
 }
 
 .typePillsM

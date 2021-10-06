@@ -23,6 +23,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatCardModule} from '@angular/material/card';
 import {MatListModule} from '@angular/material/list';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { DatePipe } from '@angular/common'
 
 
 
@@ -33,7 +34,6 @@ import { DialogBoxComponent } from './components/dialog-box/dialog-box.component
 import { TableauService } from './services/tableau.service';
 import { LoginComponent } from './components/login/login.component';
 import { authInterceptorProviders } from './helpers/auth.interceptor';
-import { UploadComponent } from './components/upload/upload.component';
 
 
 
@@ -43,7 +43,6 @@ import { UploadComponent } from './components/upload/upload.component';
     TableauComponent,
     DialogBoxComponent,
     LoginComponent,
-    UploadComponent
   ],
   imports: [
     BrowserModule,
@@ -78,7 +77,8 @@ import { UploadComponent } from './components/upload/upload.component';
   ],
   providers: [
     TableauService,
-    authInterceptorProviders
+    authInterceptorProviders,
+    DatePipe
   ],
   bootstrap: [AppComponent]
 })
