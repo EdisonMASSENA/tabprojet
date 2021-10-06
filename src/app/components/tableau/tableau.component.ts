@@ -5,13 +5,13 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Router } from '@angular/router';
-import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { Breakpoints, BreakpointState, BreakpointObserver } from '@angular/cdk/layout';
+import { environment } from 'src/environments/environment';
+import { Observable } from 'rxjs';
 // import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
 // import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 // import {MatDatepicker} from '@angular/material/datepicker';
 
-import { take } from 'rxjs/operators';
 
 // import * as _moment from 'moment';
 // import {default as _rollupMoment, Moment} from 'moment';
@@ -82,36 +82,33 @@ export class TableauComponent implements OnInit {
   displayedColumns: string[];
   expandedElement: Tab | null;
   dataSource = new MatTableDataSource<Tab>();
-  types = [
-    { value: 'Technique' },
-    { value: 'Numérique' },
-    { value: 'Métier' },
-    { value: 'Étude' },
-    { value: 'Documentation' },
-  ];
   moiss: number[] = [];
   annees: number[] = [];
   docs = [];
+  fileInfos?: Observable<any>;
+  url = environment.Url;
+
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
+  
 
   constructor(private _ngZone: NgZone, private uploadService: UploadService, private tokenStorage: TokenStorageService, private _snackBar: MatSnackBar, private tabservice: TableauService, public dialog: MatDialog, private router: Router, private breakpointObserver: BreakpointObserver) { }
 
 
   ngOnInit(): void {
 
-    for (let i = 1; i <= 12; i++) {
-      this.moiss.push(i);
-    }
-    for (let i = 2020; i <= 2075; i++) {
-      this.annees.push(i);
-    }
-
     /////vérification si session déjà connecté////
     this.isLogged();
 
     /////récupération du tableau/////
     this.recupTab();
+
+    ////// Affichage responsive//////
+    this.tabDisplay();
+
+
+    this.recupFile();
+
 
     //////////////////// Bar de recherche filtré par projet ////////////////////////////
     this.dataSource.filterPredicate = function (tab, filter: string): boolean {
@@ -120,11 +117,6 @@ export class TableauComponent implements OnInit {
 
     ///////////////////////// Tri colonne ////////////////////////
     this.dataSource.sort = this.sort;
-
-    ////// Affichage responsive//////
-    this.tabDisplay();
-
-    this.recupFile();
 
   }
 
@@ -168,15 +160,15 @@ export class TableauComponent implements OnInit {
 
         if (state.matches) {
           this.medium = true;
-          this.displayedColumns = ['chef', 'direction', 'projet', 'etat', 'tendance'];
+          this.displayedColumns = ['projet', 'type', 'direction', 'chef', 'etat', 'tendance'];
         }
-        else if (this.consult) {
-          this.medium = false;
-          this.displayedColumns = ['chef', 'direction', 'priorite', 'projet', 'date', 'etat', 'tendance', 'accompli', 'attention', 'enCours', 'action'];
-        }
+        // else if (this.consult) {
+        //   this.medium = false;
+        //   this.displayedColumns = ['chef', 'direction', 'priorite', 'projet', 'date', 'etat', 'tendance', 'accompli', 'attention', 'enCours', 'action'];
+        // }
         else {
           this.medium = false;
-          this.displayedColumns = ['chef', 'direction', 'priorite', 'projet', 'date', 'etat', 'tendance', 'accompli', 'attention', 'enCours', 'action'];
+          this.displayedColumns = ['projet', 'type', 'direction', 'priorite', 'chef', 'date', 'etat', 'tendance', 'accompli', 'attention', 'enCours', 'action'];
         }
       });
   };
@@ -219,13 +211,12 @@ export class TableauComponent implements OnInit {
   /////////////////////// Ajout Projet ////////////////////
   createTableau(data: Tab): void {
 
-    // data.date = data.mois + '/' + data.annee;
-
     this.tabservice.create(data)
       .subscribe(
         response => {
           // console.log(response);
-          this.recupTab()
+          this.recupTab();
+          this.recupFile();
         },
         error => {
           // console.log(error);
@@ -240,7 +231,9 @@ export class TableauComponent implements OnInit {
     this.tabservice.update(data.id, data)
       .subscribe(
         response => {
+          console.log(data.date);
           this.recupTab();
+          this.recupFile();
         },
         error => {
           // console.log(error);
@@ -282,7 +275,7 @@ export class TableauComponent implements OnInit {
           }
           else {
             this.dataSource.data = data.filter(item => item.direction === this.username);
-          }
+          };
         },
         error => {
           // console.log(error);
@@ -295,9 +288,7 @@ export class TableauComponent implements OnInit {
     this.uploadService.getFiles()
       .subscribe(
         files => {
-          for (let i = 0; i < files.length; i++) {
-            this.docs = this.docs.concat(files[i].name);
-          };
+            this.docs = files;
           // console.log(this.docs);
         },
         error => {
@@ -317,8 +308,8 @@ export class TableauComponent implements OnInit {
       tempObj.push(e.chef);
       tempObj.push(e.direction);
       tempObj.push(e.priorite);
-      tempObj.push(e.projet + '(' + e.type + ')');
-      tempObj.push(e.mois + '/' + e.annee);
+      tempObj.push(e.projet + '  (' + e.type + ')');
+      tempObj.push(e.date);
       tempObj.push(e.etat);
       tempObj.push(e.tendance);
       tempObj.push(e.accompli);
@@ -424,15 +415,6 @@ export class TableauComponent implements OnInit {
   //   datepicker.close();
   // }
 
-  ///////////////// Autosize Textarea ////////////////////
-
-  @ViewChild('autosize') autosize: CdkTextareaAutosize;
-
-  triggerResize() {
-    // Wait for changes to be applied, then trigger textarea resize.
-    this._ngZone.onStable.pipe(take(1))
-      .subscribe(() => this.autosize.resizeToFitContent(true));
-  };
 
 
   /////////////////////////////////

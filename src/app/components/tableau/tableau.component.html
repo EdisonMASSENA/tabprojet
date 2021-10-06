@@ -17,7 +17,7 @@
 
   <div class="center">
 
-    <span [matTooltip]=" consult ? 'Vous n\'avez pas les droits' : null " >
+    <span [matTooltip]=" consult ? 'Vous n\'avez pas les droits' : null ">
       <button mat-raised-button [disabled]="consult" color="accent" [ngClass]="!medium ? 'add' : 'addM' " (click)="openDialog('Ajouter',{})"> Nouveau Projet</button>
     </span>
     
@@ -40,18 +40,27 @@
     </mat-row>
     <mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></mat-row>
 
-    <ng-container matColumnDef="chef">
-      <mat-header-cell *matHeaderCellDef mat-sort-header class="white" [ngClass]="!medium ? 'chef' : 'chefM' "> Chef de
-        projet </mat-header-cell>
-      <mat-cell [ngClass]="!medium ? 'chef' : 'chefM' " *matCellDef="let tabs">
+    <ng-container matColumnDef="projet">
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="white" [ngClass]="!medium ? 'projet prohea' : 'projetM proheaM' "> Projet </mat-header-cell>
+      <mat-cell *matCellDef="let tabs" [ngClass]="!medium ? 'projet' : 'projetM' ">
 
         <div>
-          {{tabs.chef}}
+          {{tabs.projet}} <span [ngClass]="!medium ? 'typePills' : 'typePillsM' ">{{tabs.type}}</span>
         </div>
 
       </mat-cell>
     </ng-container>
 
+    <ng-container matColumnDef="type">
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="white type"> Type </mat-header-cell>
+      <mat-cell *matCellDef="let tabs" class="typecell">
+
+        <div>
+          <span [ngClass]="!medium ? 'typePill' : 'typePill' ">{{tabs.type}}</span>
+        </div>
+
+      </mat-cell>
+    </ng-container>
 
     <ng-container matColumnDef="direction">
       <mat-header-cell *matHeaderCellDef mat-sort-header class="white"
@@ -77,25 +86,25 @@
       </mat-cell>
     </ng-container>
 
-
-    <ng-container matColumnDef="projet">
-      <mat-header-cell *matHeaderCellDef mat-sort-header class="white projetHea" > Projet </mat-header-cell>
-      <mat-cell *matCellDef="let tabs" [ngClass]="!medium ? 'projet' : 'projetM' ">
+    <ng-container matColumnDef="chef">
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="white" [ngClass]="!medium ? 'chef' : 'chefM' "> Chef de
+        projet </mat-header-cell>
+      <mat-cell [ngClass]="!medium ? 'chef' : 'chefM' " *matCellDef="let tabs">
 
         <div>
-          {{tabs.projet}} <span [ngClass]="!medium ? 'typePills' : 'typePillsM' ">{{tabs.type}}</span>
+          {{tabs.chef}}
         </div>
 
       </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="date">
-      <mat-header-cell *matHeaderCellDef class="white dateHea">
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="white" [ngClass]="!medium ? 'date' : 'dateM' ">
         Date de fin prévue </mat-header-cell>
       <mat-cell *matCellDef="let tabs" [ngClass]="!medium ? 'date' : 'dateM' ">
 
         <div>
-          {{tabs.mois}}/{{tabs.annee}} <!-- {{tabs.date}} -->
+          {{tabs.date}}
         </div>
 
       </mat-cell>
@@ -120,7 +129,7 @@
       <mat-cell *matCellDef="let tabs" [ngClass]="!medium ? 'tendance' : 'tendanceM'">
 
         <div>
-          <img [ngClass]="!medium ? 'imgr' : 'imgrM' " [src]="tabs.tendance" />
+          <img [ngClass]="!medium ? 'imgr' : 'imgrM' " [src]="tabs.tendance"/>
         </div>
 
       </mat-cell>
@@ -174,13 +183,13 @@
           </button>
 
           <mat-menu #menu="matMenu" xPosition="before" yPosition="above">
-            <button mat-menu-item *ngFor="let doc of docs">
+            <a href="{{url}}api/file/{{doc.id}}" mat-menu-item *ngFor="let doc of docs">
               <mat-icon>file_download</mat-icon>
-              <span>{{doc}}</span>
-            </button>
+              <span>{{doc.name}}</span>
+            </a>
           </mat-menu>
 
-          <button mat-icon-button [matTooltip]="consult ? 'Vous n\'avez pas les droits' : 'Modifier'" color="primary" (click)="openDialog('Modifier',tabs)">
+          <button mat-icon-button [matTooltip]="consult ? 'Vous n\'avez pas les droits' : 'Modifier'" [disabled]="consult" color="primary" (click)="openDialog('Modifier',tabs)">
             <mat-icon>edit</mat-icon>
           </button>
 
@@ -208,7 +217,7 @@
           <div class="expR">
             <span class="textPills">Date de fin prévue : </span>
             <div>
-              {{tabs.mois}}/{{tabs.annee}}  <!-- {{tabs.date}} -->
+              {{tabs.date}}
             </div>
           </div>
 
@@ -233,7 +242,7 @@
             </div>
           </div>
 
-          <div *ngIf="!consult" class="expR">
+          <div class="expR">
             <span>
               <span class="textPills">Action:</span>
 
@@ -242,17 +251,17 @@
               </button>
     
               <mat-menu #menu="matMenu" xPosition="before" yPosition="above">
-                <button mat-menu-item *ngFor="let doc of docs">
+                <a href="{{url +'api/file/'+ doc.id}}" mat-menu-item *ngFor="let doc of docs">
                   <mat-icon>file_download</mat-icon>
-                  <span>{{doc}}</span>
-                </button>
+                  <span>{{doc.name}}</span>
+                </a>
               </mat-menu>
 
-              <button mat-icon-button matTooltip="Modifier" color="primary" (click)="openDialog('Modifier',tabs)">
+              <button mat-icon-button matTooltip="Modifier" color="primary" [matTooltip]="consult ? 'Vous n\'avez pas les droits' : 'Modifier'" [disabled]="consult" (click)="openDialog('Modifier',tabs)">
                 <mat-icon>edit</mat-icon>
               </button>
 
-              <button mat-icon-button matTooltip="Supprimer" color="warn" (click)="openDialog('Supprimer',tabs)">
+              <button mat-icon-button matTooltip="Supprimer" color="warn" [matTooltip]="consult ? 'Vous n\'avez pas les droits' : 'Supprimer'" [disabled]="consult" (click)="openDialog('Supprimer',tabs)">
                 <mat-icon>delete</mat-icon>
               </button>
               

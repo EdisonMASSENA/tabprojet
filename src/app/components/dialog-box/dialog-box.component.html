@@ -5,11 +5,11 @@
   <div *ngSwitchCase="'Ajouter'">
 
     <mat-form-field class="textInp" appearance="outline">
-      <mat-label>{{action}} Chef de projet</mat-label>
-      <input matInput class="textInp" [(ngModel)]="local_data.chef" required>
+      <mat-label>{{action}} Projet</mat-label>
+      <input matInput class="textInp" [(ngModel)]="local_data.projet" required>
       <mat-error *ngIf="diaFormControl.hasError('required')">
-       Chef de projet <strong>requis</strong>
-      </mat-error>
+        Projet <strong>requis</strong>
+       </mat-error>
     </mat-form-field>
 
     <mat-form-field class="textInp" appearance="outline">
@@ -21,14 +21,13 @@
     </mat-form-field>
 
     <mat-form-field class="textInp" appearance="outline">
-      <mat-label>{{action}} Projet</mat-label>
-      <input matInput class="textInp" [(ngModel)]="local_data.projet" required>
+      <mat-label>{{action}} Chef de projet</mat-label>
+      <input matInput class="textInp" [(ngModel)]="local_data.chef" required>
       <mat-error *ngIf="diaFormControl.hasError('required')">
-        Projet <strong>requis</strong>
-       </mat-error>
+       Chef de projet <strong>requis</strong>
+      </mat-error>
     </mat-form-field>
 
-    
     <mat-form-field class="textInp" appearance="outline">
       <mat-label>{{action}} Type de projet</mat-label>
       <mat-select [(ngModel)]="local_data.type" >
@@ -38,7 +37,7 @@
       </mat-select>
     </mat-form-field>
 
-    <p> {{action}} une date de fin prévue : </p>
+    <!-- <p> {{action}} la date d'échéance prévue : </p>
     <mat-form-field appearance="outline">
       <mat-label>Mois</mat-label>
       <mat-select [(ngModel)]="local_data.mois">
@@ -54,20 +53,30 @@
           {{annee}}
         </mat-option>
       </mat-select>
-    </mat-form-field>
+    </mat-form-field> -->
       
 
-    <app-upload></app-upload>
-
-        <!-- <input matInput [disabled]="true" [matDatepicker]="dp" [(ngModel)]="local_data.date">
-        <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
-        <mat-datepicker #dp
-                        [disabled]="false"
-                        startView="multi-year"
-                        (yearSelected)="chosenYearHandler($event)"
-                        (monthSelected)="chosenMonthHandler($event, dp)"
-                        panelClass="month-picker">
-        </mat-datepicker> -->
+    <mat-form-field appearance="outline">
+      <mat-label>Choisir date de fin prévue</mat-label>
+      <input matInput [matDatepicker]="dp" [formControl]="date">
+      <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+      <mat-datepicker #dp
+                      startView="multi-year"
+                      (yearSelected)="chosenYearHandler($event)"
+                      (monthSelected)="chosenMonthHandler($event, dp)"
+                      panelClass="example-month-picker">
+      </mat-datepicker>
+    </mat-form-field>
+    
+    <mat-form-field class="textInp">
+      <div>
+        <mat-toolbar>
+          <input matInput [value]="selectedFileNames.length ? selectedFileNames : 'Choisir Pièces Jointes'" />
+        </mat-toolbar>
+    
+        <input type="file" id="fileInput" name="fileInput" multiple (change)="selectFiles($event)"/>
+      </div>
+    </mat-form-field>
       
 
     <div class="flex">
@@ -125,11 +134,11 @@
   <div *ngSwitchCase="'Modifier'">
 
     <mat-form-field class="textInp" appearance="outline">
-      <mat-label>{{action}} Chef de projet</mat-label>
-      <input matInput class="textInp" [(ngModel)]="local_data.chef" required>
+      <mat-label>{{action}} Projet</mat-label>
+      <input matInput class="textInp" [(ngModel)]="local_data.projet" required>
       <mat-error *ngIf="diaFormControl.hasError('required')">
-       Chef de projet <strong>requis</strong>
-      </mat-error>
+        Projet <strong>requis</strong>
+       </mat-error>
     </mat-form-field>
 
     <mat-form-field class="textInp" appearance="outline">
@@ -141,13 +150,12 @@
     </mat-form-field>
 
     <mat-form-field class="textInp" appearance="outline">
-      <mat-label>{{action}} Projet</mat-label>
-      <input matInput class="textInp" [(ngModel)]="local_data.projet" required>
+      <mat-label>{{action}} Chef de projet</mat-label>
+      <input matInput class="textInp" [(ngModel)]="local_data.chef" required>
       <mat-error *ngIf="diaFormControl.hasError('required')">
-        Projet <strong>requis</strong>
-       </mat-error>
+       Chef de projet <strong>requis</strong>
+      </mat-error>
     </mat-form-field>
-
     
     <mat-form-field class="textInp" appearance="outline">
       <mat-label>{{action}} Type de projet</mat-label>
@@ -158,7 +166,7 @@
       </mat-select>
     </mat-form-field>
 
-    <p> {{action}} une date de fin prévue : </p>
+    <!-- <p> {{action}} la date d'échéance prévue : </p>
     <mat-form-field appearance="outline">
       <mat-label>Mois</mat-label>
       <mat-select [(ngModel)]="local_data.mois">
@@ -174,21 +182,50 @@
           {{annee}}
         </mat-option>
       </mat-select>
+    </mat-form-field> -->
+
+    
+    <mat-form-field appearance="outline">
+      <mat-label>Choisir date de fin prévue</mat-label>
+      <input matInput [matDatepicker]="dp" [formControl]="date">
+      <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+      <mat-datepicker #dp
+                      startView="multi-year"
+                      (yearSelected)="chosenYearHandler($event)"
+                      (monthSelected)="chosenMonthHandler($event, dp)"
+                      panelClass="example-month-picker">
+      </mat-datepicker>
     </mat-form-field>
-      
-
-    <app-upload></app-upload>
-
-        <!-- <input matInput [disabled]="true" [matDatepicker]="dp" [(ngModel)]="local_data.date">
-        <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
-        <mat-datepicker #dp
-                        [disabled]="false"
-                        startView="multi-year"
-                        (yearSelected)="chosenYearHandler($event)"
-                        (monthSelected)="chosenMonthHandler($event, dp)"
-                        panelClass="month-picker">
-        </mat-datepicker> -->
-      
+       
+    
+    <mat-form-field class="textInp">
+      <div>
+        <mat-toolbar>
+          <input matInput [value]="selectedFileNames.length ? selectedFileNames : 'Choisir Pièces Jointes'"/>
+        </mat-toolbar>
+    
+        <input type="file" id="fileInput" name="fileInput" multiple (change)="selectFiles($event)"/>
+      </div>
+    </mat-form-field>
+    
+    <mat-card class="list-card">
+      <mat-card-header>
+        <mat-card-title>Liste de fichier :</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-list role="list">
+          <mat-list-item role="listitem" *ngFor="let doc of docs | async" class="list-item">
+            <p matLine>
+              <a href="{{ url+'api/file/'+doc.id }}">{{ doc.name }}</a>
+              <button mat-icon-button color="warn" (click)="deleteUp(doc.id)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </p>
+          </mat-list-item>
+        </mat-list>
+      </mat-card-content>
+    </mat-card>
+     
 
     <div class="flex">
 
