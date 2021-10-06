@@ -38,7 +38,7 @@
     <mat-row *matRowDef="let tabs; columns: displayedColumns;" class="element-row"
       (click)="tabclick(tabs)" [class.expanded-row]="expandedElement === tabs">
     </mat-row>
-    <mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></mat-row>
+    <mat-row *matRowDef="let row; columns: ['expandedDetail','progress']" class="detail-row"></mat-row>
 
     <ng-container matColumnDef="projet">
       <mat-header-cell *matHeaderCellDef mat-sort-header class="white" [ngClass]="!medium ? 'projet prohea' : 'projetM proheaM' "> Projet </mat-header-cell>
@@ -200,6 +200,14 @@
         </span>
 
       </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="progress">
+      <mat-cell *matCellDef="let tabs">
+          
+        <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
+        
+        </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="expandedDetail">
