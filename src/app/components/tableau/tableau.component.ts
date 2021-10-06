@@ -210,7 +210,6 @@ export class TableauComponent implements OnInit {
 
   /////////////////////// Ajout Projet ////////////////////
   createTableau(data: Tab): void {
-
     this.tabservice.create(data)
       .subscribe(
         response => {
@@ -231,7 +230,7 @@ export class TableauComponent implements OnInit {
     this.tabservice.update(data.id, data)
       .subscribe(
         response => {
-          console.log(data.date);
+          // console.log(data.date);
           this.recupTab();
           this.recupFile();
         },
@@ -261,7 +260,7 @@ export class TableauComponent implements OnInit {
   //////////////////// Bar de recherche /////////////////////
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase()
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   };
 
 
@@ -309,7 +308,8 @@ export class TableauComponent implements OnInit {
       tempObj.push(e.direction);
       tempObj.push(e.priorite);
       tempObj.push(e.projet + '  (' + e.type + ')');
-      tempObj.push(e.date);
+      tempObj.push(e.mois + '/' + e.annee);
+      // tempObj.push(e.date);
       tempObj.push(e.etat);
       tempObj.push(e.tendance);
       tempObj.push(e.accompli);
@@ -348,7 +348,7 @@ export class TableauComponent implements OnInit {
           let textPosx = data.cell.x;
           let textPosy = data.cell.y;
           if (td !== null) {
-            doc.addImage(url + td, 'png', textPosx + 0.5, textPosy + 0.5, 20, 14);
+            doc.addImage(url + td, 'png', textPosx + 0.5, textPosy + 0.5, 18, 12);
           }
         }
         if (data.column.index === 6 && data.cell.section === 'body') {
@@ -356,7 +356,7 @@ export class TableauComponent implements OnInit {
           let textPosx = data.cell.x;
           let textPosy = data.cell.y;
           if (td !== null) {
-            doc.addImage(url + td, 'png', textPosx + 1, textPosy + 1, 20, 13);
+            doc.addImage(url + td, 'png', textPosx + 1, textPosy + 1, 18, 11);
           }
         }
       }

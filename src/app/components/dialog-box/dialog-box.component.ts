@@ -95,10 +95,8 @@ export class DialogBoxComponent {
     }
     this.local_data.projet = this.local_data.projet.charAt(0).toUpperCase() + this.local_data.projet.slice(1);
     this.local_data.direction = user.username;
-    // let date = new Date(this.local_data.annee,this.local_data.mois,0,0,0,0) 
-    // this.local_data.date = this.datepipe.transform(date, 'MM-yyyy');
     this.dialogRef.close({ event: this.action, data: this.local_data });
-    this.uploadFiles();
+    // this.uploadFiles();
   }
 
   closeDialog() {
@@ -133,69 +131,69 @@ export class DialogBoxComponent {
   }
 
   
-  selectFiles(event: any): void {
-    this.message = [];
-    this.progressInfos = [];
-    this.selectedFileNames = [];
-    this.selectedFiles = event.target.files;
+  // selectFiles(event: any): void {
+  //   this.message = [];
+  //   this.progressInfos = [];
+  //   this.selectedFileNames = [];
+  //   this.selectedFiles = event.target.files;
   
 
-    if (this.selectedFiles && this.selectedFiles[0]) {
-      const numberOfFiles = this.selectedFiles.length;
-      for (let i = 0; i < numberOfFiles; i++) {  
-        this.selectedFileNames.push(this.selectedFiles[i].name);
-      }
-    }
-  }
+  //   if (this.selectedFiles && this.selectedFiles[0]) {
+  //     const numberOfFiles = this.selectedFiles.length;
+  //     for (let i = 0; i < numberOfFiles; i++) {  
+  //       this.selectedFileNames.push(this.selectedFiles[i].name);
+  //     }
+  //   }
+  // }
   
 
-  uploadFiles(): void {
-    this.message = [];
+  // uploadFiles(): void {
+  //   this.message = [];
   
-    if (this.selectedFiles) {
-      for (let i = 0; i < this.selectedFiles.length; i++) {
-        this.upload(i, this.selectedFiles[i]);
-      }
-    }
-  }
-  
-
-  upload(idx: number, file: File): void {
-    this.progressInfos[idx] = { value: 0, fileName: file.name };
-  
-    if (file) {
-      this.uploadService.upload(file).subscribe(
-        (event: any) => {
-          if (event.type === HttpEventType.UploadProgress) {
-            this.progressInfos[idx].value = Math.round(100 * event.loaded / event.total);
-          } else if (event instanceof HttpResponse) {
-            const msg = 'Uploaded the file successfully: ' + file.name;
-            this.message.push(msg);
-            this.docs = this.uploadService.getFiles();
-          }
-        },
-        (err: any) => {
-          this.progressInfos[idx].value = 0;
-          const msg = 'Could not upload the file: ' + file.name;
-          this.message.push(msg);
-        });
-    }
-  }
-  
+  //   if (this.selectedFiles) {
+  //     for (let i = 0; i < this.selectedFiles.length; i++) {
+  //       this.upload(i, this.selectedFiles[i]);
+  //     }
+  //   }
+  // }
   
 
-  deleteUp(id) {
-    this.uploadService.delete(id)
-      .subscribe(
-        response => {
-          // console.log(response);
-          this.docs = this.uploadService.getFiles();
-        },
-        error => {
-          // console.log(error);
-        });
+  // upload(idx: number, file: File): void {
+  //   this.progressInfos[idx] = { value: 0, fileName: file.name };
+  
+  //   if (file) {
+  //     this.uploadService.upload(file).subscribe(
+  //       (event: any) => {
+  //         if (event.type === HttpEventType.UploadProgress) {
+  //           this.progressInfos[idx].value = Math.round(100 * event.loaded / event.total);
+  //         } else if (event instanceof HttpResponse) {
+  //           const msg = 'Uploaded the file successfully: ' + file.name;
+  //           this.message.push(msg);
+  //           this.docs = this.uploadService.getFiles();
+  //         }
+  //       },
+  //       (err: any) => {
+  //         this.progressInfos[idx].value = 0;
+  //         const msg = 'Could not upload the file: ' + file.name;
+  //         this.message.push(msg);
+  //       });
+  //   }
+  // }
+  
+  
 
-  };
+  // deleteUp(id) {
+  //   this.uploadService.delete(id)
+  //     .subscribe(
+  //       response => {
+  //         // console.log(response);
+  //         this.docs = this.uploadService.getFiles();
+  //       },
+  //       error => {
+  //         // console.log(error);
+  //       });
+
+  // };
 
 
 

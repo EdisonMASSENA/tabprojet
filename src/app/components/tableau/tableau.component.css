@@ -294,7 +294,7 @@ img
 
 .mat-column-action
 {
-    flex: 0 0 8% !important;
+    flex: 0 0 6% !important;
     padding: 5px 5px ;
     justify-content: center;
     word-wrap: break-word !important;
