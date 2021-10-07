@@ -118,12 +118,6 @@ export class TableauComponent implements OnInit {
     ///////////////////////// Tri colonne ////////////////////////
     this.dataSource.sort = this.sort;
 
-    this.dataSource.sortingDataAccessor = (item, property) => {
-      switch (property) {
-        case 'date': return new Date(item.date), console.log(new Date(item.date));
-        default: return item[property];
-      }
-    };
 
   }
 
