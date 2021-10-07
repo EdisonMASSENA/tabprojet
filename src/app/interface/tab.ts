@@ -7,7 +7,7 @@ export interface Tab {
     projet:any;
     mois:any;
     annee:any;
-    // date:any;
+    date:any;
     type:any;
     accompli:String;
     attention:String;
