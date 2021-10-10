@@ -231,7 +231,7 @@ export class TableauComponent implements OnInit {
     this.tabservice.update(data.id, data)
       .subscribe(
         response => {
-          console.log(data.date);
+          // console.log(data.date);
           this.recupTab();
           this.recupFile();
         },

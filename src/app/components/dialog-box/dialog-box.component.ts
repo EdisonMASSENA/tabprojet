@@ -210,7 +210,8 @@ export class DialogBoxComponent {
     ctrlValue.month(normalizedMonth.month());
     this.date.setValue(ctrlValue);
     let da = this.date.value;
-    this.local_data.date = this.datepipe.transform(da, 'MM-yyyy');
+    // this.local_data.date = da;
+    this.local_data.date = this.datepipe.transform(da, 'MM/yyyy');
     // console.log(this.local_data.date);
     datepicker.close();
   }
