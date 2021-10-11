@@ -72,7 +72,7 @@ export class DialogBoxComponent {
   selectedFiles?: FileList;
   selectedFileNames: string[] = [];
 
-  progressInfos: any[] = [];
+  // progressInfos: any[] = [];
   message: string[] = [];
 
   docs?: Observable<any>;
@@ -133,7 +133,7 @@ export class DialogBoxComponent {
   
   selectFiles(event: any): void {
     this.message = [];
-    this.progressInfos = [];
+    // this.progressInfos = [];
     this.selectedFileNames = [];
     this.selectedFiles = event.target.files;
   
@@ -159,13 +159,13 @@ export class DialogBoxComponent {
   
 
   upload(idx: number, file: File): void {
-    this.progressInfos[idx] = { value: 0, fileName: file.name };
+    // this.progressInfos[idx] = { value: 0, fileName: file.name };
   
     if (file) {
       this.uploadService.upload(file).subscribe(
         (event: any) => {
           if (event.type === HttpEventType.UploadProgress) {
-            this.progressInfos[idx].value = Math.round(100 * event.loaded / event.total);
+            // this.progressInfos[idx].value = Math.round(100 * event.loaded / event.total);
           } else if (event instanceof HttpResponse) {
             const msg = 'Uploaded the file successfully: ' + file.name;
             this.message.push(msg);
@@ -173,7 +173,7 @@ export class DialogBoxComponent {
           }
         },
         (err: any) => {
-          this.progressInfos[idx].value = 0;
+          // this.progressInfos[idx].value = 0;
           const msg = 'Could not upload the file: ' + file.name;
           this.message.push(msg);
         });
@@ -209,10 +209,7 @@ export class DialogBoxComponent {
     const ctrlValue = this.date.value;
     ctrlValue.month(normalizedMonth.month());
     this.date.setValue(ctrlValue);
-    let da = this.date.value;
-    // this.local_data.date = da;
-    this.local_data.date = this.datepipe.transform(da, 'MM/yyyy');
-    // console.log(this.local_data.date);
+    this.local_data.date = this.date.value;
     datepicker.close();
   }
 
