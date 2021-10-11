@@ -5,15 +5,16 @@ export interface Tab {
     direction:String;
     priorite:String;
     projet:any;
-    mois:any;
-    annee:any;
+    // mois:any;
+    // annee:any;
     date:any;
     type:any;
     accompli:String;
     attention:String;
     encours:String;
-    etat: String;
-    tendance: String; 
+    etat:String;
+    tendance:String; 
+    progress:Number;
 };
 
 export interface User{

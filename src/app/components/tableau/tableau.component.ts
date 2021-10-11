@@ -107,7 +107,7 @@ export class TableauComponent implements OnInit {
     this.tabDisplay();
 
 
-    this.recupFile();
+    // this.recupFile();
 
 
     //////////////////// Bar de recherche filtré par projet ////////////////////////////
@@ -216,7 +216,7 @@ export class TableauComponent implements OnInit {
         response => {
           // console.log(response);
           this.recupTab();
-          this.recupFile();
+          // this.recupFile();
         },
         error => {
           // console.log(error);
@@ -233,7 +233,7 @@ export class TableauComponent implements OnInit {
         response => {
           // console.log(data.date);
           this.recupTab();
-          this.recupFile();
+          // this.recupFile();
         },
         error => {
           // console.log(error);
@@ -284,18 +284,18 @@ export class TableauComponent implements OnInit {
   };
 
 
-  recupFile(): void {
-    this.uploadService.getFiles()
-      .subscribe(
-        files => {
-            this.docs = files;
-          // console.log(this.docs);
-        },
-        error => {
-          // console.log(error);
-        });
+  // recupFile(): void {
+  //   this.uploadService.getFiles()
+  //     .subscribe(
+  //       files => {
+  //           this.docs = files;
+  //         // console.log(this.docs);
+  //       },
+  //       error => {
+  //         // console.log(error);
+  //       });
 
-  };
+  // };
 
 
   //////////////// Tableau en PDF (npm: jsPDF autotable) /////////////////
@@ -309,8 +309,8 @@ export class TableauComponent implements OnInit {
       tempObj.push(e.direction);
       tempObj.push(e.priorite);
       tempObj.push(e.projet + '  (' + e.type + ')');
-      tempObj.push(e.mois + '/' + e.annee);
-      // tempObj.push(e.date);
+      // tempObj.push(e.mois + '/' + e.annee);
+      tempObj.push(e.date);
       tempObj.push(e.etat);
       tempObj.push(e.tendance);
       tempObj.push(e.accompli);
@@ -401,20 +401,6 @@ export class TableauComponent implements OnInit {
   };
 
 
-  //////////////////// Datepicker ////////////////////////////
-
-  // chosenYearHandler(normalizedYear: Moment) {
-  //   const ctrlValue = this.date.value;
-  //   ctrlValue.year(normalizedYear.year());
-  //   this.date.setValue(ctrlValue);
-  // }
-
-  // chosenMonthHandler(normalizedMonth: Moment, datepicker: MatDatepicker<Moment>) {
-  //   const ctrlValue = this.date.value;
-  //   ctrlValue.month(normalizedMonth.month());
-  //   this.date.setValue(ctrlValue);
-  //   datepicker.close();
-  // }
 
 
 
