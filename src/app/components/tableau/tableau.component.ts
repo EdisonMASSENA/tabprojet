@@ -400,22 +400,6 @@ export class TableauComponent implements OnInit {
   };
 
 
-  //////////////////// Datepicker ////////////////////////////
-
-  // chosenYearHandler(normalizedYear: Moment) {
-  //   const ctrlValue = this.date.value;
-  //   ctrlValue.year(normalizedYear.year());
-  //   this.date.setValue(ctrlValue);
-  // }
-
-  // chosenMonthHandler(normalizedMonth: Moment, datepicker: MatDatepicker<Moment>) {
-  //   const ctrlValue = this.date.value;
-  //   ctrlValue.month(normalizedMonth.month());
-  //   this.date.setValue(ctrlValue);
-  //   datepicker.close();
-  // }
-
-
 
   /////////////////////////////////
 
