@@ -62,3 +62,11 @@ img
 .month-picker .mat-calendar-arrow {
   display: none;
 }
+
+.prog{
+  margin-left: 10px;
+}
+
+.lab{
+  margin-left: 25px;
+}

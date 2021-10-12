@@ -49,7 +49,10 @@
                       panelClass="example-month-picker">
       </mat-datepicker>
     </mat-form-field>
-    
+
+    <label class="lab">Avancement:</label>
+    <mat-slider class="prog" [(ngModel)]="local_data.progress"></mat-slider>
+
     <mat-form-field class="textInp">
       <div>
         <mat-toolbar>
@@ -160,8 +163,11 @@
                       panelClass="example-month-picker">
       </mat-datepicker>
     </mat-form-field>
+
+    <label class="lab">Avancement:</label>
+    <mat-slider class="prog" [(ngModel)]="local_data.progress"></mat-slider>
        
-    
+
     <mat-form-field class="textInp">
       <div>
         <mat-toolbar>

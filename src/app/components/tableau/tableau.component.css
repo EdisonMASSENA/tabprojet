@@ -38,8 +38,13 @@
     width: 100%;
     border-collapse: collapse;
     border-radius: 20px;
+    background: none;
 }
 
+.mat-elevation-z8
+{
+    box-shadow: none;
+}
 
 .add
 {
@@ -61,6 +66,7 @@
     background-color: #495bbe;
     border-collapse: collapse;
     border-radius: 20px;
+    margin-bottom: 10px;
 
 }
 
@@ -207,6 +213,8 @@ img
 
 .projetM
 {
+    padding: 5px;
+    flex: 0 0 19% !important;
     font-size: 12px;
     word-wrap: break-word !important;
     white-space: pre-wrap !important;
@@ -306,6 +314,7 @@ img
 .detail-row {
     min-height: 0;
     border-style: none;
+    background: rgb(255, 255, 255);
 }
 
 .element-row
@@ -313,15 +322,23 @@ img
     /* border-bottom-width: 0; */
     border-bottom-style: none;
     padding: 5px 0;
+    border-radius: 30px 30px 0px 0px;
+    background: white;
+    box-shadow: 0 5px 5px -3px #0003,0 8px 10px 1px #00000024,0 3px 14px 2px #0000001f;
 }
 
 .prog
 {
     border-top-style: none;
+    padding: 5px 0;
+    border-radius: 0px 0px 30px 30px;
+    margin-bottom: 20px;
+    background: white;
+    box-shadow: 0 5px 5px -3px #0003,0 8px 10px 1px #00000024;
 }
 
 .element-row:not(.expanded-row):hover {
-    background: #ff408007;
+    background: #ff40803b;
 }
 
 .element-row:not(.expanded-row):active {
@@ -411,12 +428,3 @@ img
     overflow: hidden;
     display: flex;
 }
-
-/* 
-.month-picker .mat-calendar-period-button {
-  pointer-events: none;
-}
-
-.month-picker .mat-calendar-arrow {
-  display: none;
-} */

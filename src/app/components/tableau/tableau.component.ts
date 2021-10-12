@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { Breakpoints, BreakpointState, BreakpointObserver } from '@angular/cdk/layout';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
+import { DatePipe } from '@angular/common'
 // import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
 // import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 // import {MatDatepicker} from '@angular/material/datepicker';
@@ -92,7 +93,7 @@ export class TableauComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   
 
-  constructor(private _ngZone: NgZone, private uploadService: UploadService, private tokenStorage: TokenStorageService, private _snackBar: MatSnackBar, private tabservice: TableauService, public dialog: MatDialog, private router: Router, private breakpointObserver: BreakpointObserver) { }
+  constructor(private datepipe: DatePipe, private _ngZone: NgZone, private uploadService: UploadService, private tokenStorage: TokenStorageService, private _snackBar: MatSnackBar, private tabservice: TableauService, public dialog: MatDialog, private router: Router, private breakpointObserver: BreakpointObserver) { }
 
 
   ngOnInit(): void {
@@ -160,7 +161,7 @@ export class TableauComponent implements OnInit {
 
         if (state.matches) {
           this.medium = true;
-          this.displayedColumns = ['projet', 'type', 'direction', 'chef', 'etat', 'tendance'];
+          this.displayedColumns = ['projet', 'direction', 'chef', 'etat', 'tendance'];
         }
         // else if (this.consult) {
         //   this.medium = false;
@@ -309,7 +310,8 @@ export class TableauComponent implements OnInit {
       tempObj.push(e.direction);
       tempObj.push(e.priorite);
       tempObj.push(e.projet + '  (' + e.type + ')');
-      tempObj.push(e.date);
+      tempObj.push(e.date = this.datepipe.transform(e.date, 'MM/yyyy') );
+      tempObj.push(e.progress);
       tempObj.push(e.etat);
       tempObj.push(e.tendance);
       tempObj.push(e.accompli);
@@ -333,17 +335,18 @@ export class TableauComponent implements OnInit {
         2: { cellWidth: 17 },
         3: { cellWidth: 35 },
         4: { cellWidth: 30 },
-        5: { cellWidth: 21, minCellHeight: 15, textColor: 255 },
+        5: { cellWidth: 25 },
         6: { cellWidth: 21, minCellHeight: 15, textColor: 255 },
-        7: { cellWidth: 70 },
-        8: { cellWidth: 70 },
-        9: { cellWidth: 70 },
+        7: { cellWidth: 21, minCellHeight: 15, textColor: 255 },
+        8: { cellWidth: 65 },
+        9: { cellWidth: 65 },
+        10: { cellWidth: 65 }
       },
       theme: "grid",
-      head: [['Chef de projet', 'Direction', 'Priorité', 'Projet', 'Fin prévue', 'État', 'Tendance', 'Travaux faits', 'Points d\'attention', 'Travaux en cours / à venir ']],
+      head: [['Chef de projet', 'Direction', 'Priorité', 'Projet', 'Fin prévue', 'Avancement', 'État', 'Tendance', 'Travaux faits', 'Points d\'attention', 'Travaux en cours / à venir ']],
       body: prepare,
       didDrawCell: function (data) {
-        if (data.column.index === 5 && data.cell.section === 'body') {
+        if (data.column.index === 6 && data.cell.section === 'body') {
           let td = data.cell.raw;
           let textPosx = data.cell.x;
           let textPosy = data.cell.y;
@@ -351,7 +354,7 @@ export class TableauComponent implements OnInit {
             doc.addImage(url + td, 'png', textPosx + 0.5, textPosy + 0.5, 20, 14);
           }
         }
-        if (data.column.index === 6 && data.cell.section === 'body') {
+        if (data.column.index === 7 && data.cell.section === 'body') {
           let td = data.cell.raw;
           let textPosx = data.cell.x;
           let textPosy = data.cell.y;

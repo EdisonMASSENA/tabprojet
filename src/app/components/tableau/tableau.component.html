@@ -104,7 +104,7 @@
       <mat-cell *matCellDef="let tabs" [ngClass]="!medium ? 'date' : 'dateM' ">
 
         <div>
-          {{tabs.date | date:'MM/yyyy'  }}
+          {{tabs.date | date:'MM/yyyy'}}
         </div>
 
       </mat-cell>
@@ -205,7 +205,7 @@
     <ng-container matColumnDef="progress">
       <mat-cell *matCellDef="let tabs">
           <span class="spacer">Avancement:</span>
-          <mat-progress-bar mode="determinate" color="accent" [value]="65"></mat-progress-bar>
+          <mat-progress-bar mode="determinate" color="accent" [value]="tabs.progress"></mat-progress-bar>
       </mat-cell>
     </ng-container>
 

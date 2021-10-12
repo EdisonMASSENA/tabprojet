@@ -23,6 +23,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatCardModule} from '@angular/material/card';
 import {MatListModule} from '@angular/material/list';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatSliderModule} from '@angular/material/slider';
 import { DatePipe } from '@angular/common'
 
 
@@ -70,7 +71,8 @@ import { authInterceptorProviders } from './helpers/auth.interceptor';
     MatDatepickerModule,
     MatCardModule,
     MatListModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatSliderModule
   ],
   entryComponents: [
     DialogBoxComponent
