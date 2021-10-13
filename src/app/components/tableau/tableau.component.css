@@ -344,11 +344,11 @@ img
     background: linear-gradient(90deg, rgba(249, 139, 139, 0.212) 0%, rgba(232, 132, 247, 0.616) 100%);
 }
 
-.element-row:not(.expanded-row):hover ~ .prog {
+.element-row:not(.expanded-row):hover + .detail-row + .prog {
     background: linear-gradient(90deg, rgba(249, 139, 139, 0.103) 0%, hsla(292.2, 87.8%, 74.3%, 0.79) 100%);
 }
 
-.element-row:not(.expanded-row):active ~ .prog {
+.element-row:not(.expanded-row):active + .detail-row + .prog  {
     background: linear-gradient(90deg, rgba(249, 139, 139, 0.212) 0%, rgba(232, 132, 247, 0.616) 100%);
 }
 
@@ -374,6 +374,16 @@ img
     border-radius: 20px;
 }
 
+.spacerM
+{
+    margin-right: 5px ;
+    font-size: 10px;
+    color: white;
+    background: #ff4081 ;
+    padding: 3px 8px;
+    border-radius: 20px;
+}
+
 .textPills
 {
     color: white;
@@ -392,22 +402,12 @@ img
     border-radius: 20px;
 }
 
-.typePill
-{
-    font-size: 12px;
-    color: white;
-    background: #495bbe ;
-    padding: 4px 10px;
-    border-radius: 20px;
-    visibility: hidden;
-}
-
 .typePillsM
 {
     font-size: 9px;
     color: white;
     background: #495bbe ;
-    padding: 4px 10px;
+    padding: 4px 7px;
     border-radius: 20px;
     
 }

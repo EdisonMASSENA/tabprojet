@@ -56,7 +56,7 @@
       <mat-cell *matCellDef="let tabs" class="typecell">
 
         <div>
-          <span [ngClass]="!medium ? 'typePill' : 'typePill' ">{{tabs.type}}</span>
+          <span>{{tabs.type}}</span>
         </div>
 
       </mat-cell>
@@ -204,7 +204,7 @@
 
     <ng-container matColumnDef="progress">
       <mat-cell *matCellDef="let tabs">
-          <span class="spacer">Avancement:</span>
+          <span [ngClass]="!medium ? 'spacer' : 'spacerM' ">Avancement:</span>
           <mat-progress-bar mode="determinate" color="accent" [value]="tabs.progress"></mat-progress-bar>
       </mat-cell>
     </ng-container>
