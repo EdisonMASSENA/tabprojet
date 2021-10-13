@@ -95,8 +95,9 @@ export class DialogBoxComponent {
     }
     this.local_data.projet = this.local_data.projet.charAt(0).toUpperCase() + this.local_data.projet.slice(1);
     this.local_data.direction = user.username;
-    this.dialogRef.close({ event: this.action, data: this.local_data });
+    this.local_data.date = new Date(this.local_data.annee,this.local_data.mois,0,0,0,0);
     this.uploadFiles();
+    this.dialogRef.close({ event: this.action, data: this.local_data });
   }
 
   closeDialog() {
@@ -197,21 +198,21 @@ export class DialogBoxComponent {
 
 
 
-  date = new FormControl(moment());
+  // date = new FormControl(moment());
 
-  chosenYearHandler(normalizedYear: Moment) {
-    const ctrlValue = this.date.value;
-    ctrlValue.year(normalizedYear.year());
-    this.date.setValue(ctrlValue);
-  }
+  // chosenYearHandler(normalizedYear: Moment) {
+  //   const ctrlValue = this.date.value;
+  //   ctrlValue.year(normalizedYear.year());
+  //   this.date.setValue(ctrlValue);
+  // }
 
-  chosenMonthHandler(normalizedMonth: Moment, datepicker: MatDatepicker<Moment>) {
-    const ctrlValue = this.date.value;
-    ctrlValue.month(normalizedMonth.month());
-    this.date.setValue(ctrlValue);
-    this.local_data.date = this.date.value;
-    datepicker.close();
-  }
+  // chosenMonthHandler(normalizedMonth: Moment, datepicker: MatDatepicker<Moment>) {
+  //   const ctrlValue = this.date.value;
+  //   ctrlValue.month(normalizedMonth.month());
+  //   this.date.setValue(ctrlValue);
+  //   this.local_data.date = this.date.value;
+  //   datepicker.close();
+  // }
 
 
 

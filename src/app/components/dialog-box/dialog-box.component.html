@@ -37,8 +37,26 @@
       </mat-select>
     </mat-form-field>
       
-
+ <p> {{action}} la date d'échéance prévue : </p>
     <mat-form-field appearance="outline">
+      <mat-label>Mois</mat-label>
+      <mat-select [(ngModel)]="local_data.mois">
+        <mat-option *ngFor="let mois of moiss" [value]="mois">
+          {{mois}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline"> 
+      <mat-label>Année</mat-label>
+      <mat-select [(ngModel)]="local_data.annee">
+        <mat-option *ngFor="let annee of annees" [value]="annee">
+          {{annee}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+
+    <!-- <mat-form-field appearance="outline">
       <mat-label>Choisir date de fin prévue</mat-label>
       <input matInput [matDatepicker]="dp" [formControl]="date">
       <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
@@ -48,9 +66,9 @@
                       (monthSelected)="chosenMonthHandler($event, dp)"
                       panelClass="example-month-picker">
       </mat-datepicker>
-    </mat-form-field>
+    </mat-form-field> -->
 
-    <label class="lab">Avancement:</label>
+    <p class="lab">Avancement:</p>
     <mat-slider class="prog" thumbLabel="true" tickInterval="25" [(ngModel)]="local_data.progress"></mat-slider>
 
     <mat-form-field class="textInp">
@@ -151,8 +169,25 @@
       </mat-select>
     </mat-form-field>
 
-    
+     <p> {{action}} la date d'échéance prévue : </p>
     <mat-form-field appearance="outline">
+      <mat-label>Mois</mat-label>
+      <mat-select [(ngModel)]="local_data.mois">
+        <mat-option *ngFor="let mois of moiss" [value]="mois">
+          {{mois}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline"> 
+      <mat-label>Année</mat-label>
+      <mat-select [(ngModel)]="local_data.annee">
+        <mat-option *ngFor="let annee of annees" [value]="annee">
+          {{annee}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    
+    <!-- <mat-form-field appearance="outline">
       <mat-label>Choisir date de fin prévue</mat-label>
       <input matInput [matDatepicker]="dp" [formControl]="date">
       <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
@@ -162,7 +197,7 @@
                       (monthSelected)="chosenMonthHandler($event, dp)"
                       panelClass="example-month-picker">
       </mat-datepicker>
-    </mat-form-field>
+    </mat-form-field> -->
 
     <label class="lab">Avancement:</label>
     <mat-slider class="prog" thumbLabel="true" tickInterval="25" [(ngModel)]="local_data.progress"></mat-slider>

@@ -311,7 +311,7 @@ export class TableauComponent implements OnInit {
       tempObj.push(e.priorite);
       tempObj.push(e.projet + '  (' + e.type + ')');
       tempObj.push(e.date = this.datepipe.transform(e.date, 'MM/yyyy') );
-      tempObj.push(e.progress);
+      tempObj.push(e.progress + '%');
       tempObj.push(e.etat);
       tempObj.push(e.tendance);
       tempObj.push(e.accompli);
