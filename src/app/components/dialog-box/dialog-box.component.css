@@ -70,3 +70,7 @@ img
 .lab{
   margin-left: 25px;
 }
+
+.mat-slider-horizontal{
+  min-width: 175px;
+}

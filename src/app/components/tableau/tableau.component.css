@@ -147,7 +147,7 @@ img
 .chefM
 {
     padding: 10px 5px;
-    font-size: 12px;
+    font-size: 10px;
     word-wrap: break-word !important;
     white-space: pre-wrap !important;
     overflow-wrap: break-word;
@@ -180,7 +180,7 @@ img
 
 .directionM
 {
-    font-size: 12px;
+    font-size: 10px;
     
 }
 
@@ -215,7 +215,7 @@ img
 {
     padding: 5px;
     flex: 0 0 19% !important;
-    font-size: 12px;
+    font-size: 10px;
     word-wrap: break-word !important;
     white-space: pre-wrap !important;
     overflow-wrap: break-word;
@@ -319,7 +319,6 @@ img
 
 .element-row
 {
-    /* border-bottom-width: 0; */
     border-bottom-style: none;
     padding: 5px 0;
     border-radius: 30px 30px 0px 0px;
@@ -338,11 +337,19 @@ img
 }
 
 .element-row:not(.expanded-row):hover {
-    background: #ff40803b;
+    background: linear-gradient(90deg, rgba(249, 139, 139, 0.103) 0%, hsla(292.2, 87.8%, 74.3%, 0.79) 100%);
 }
 
 .element-row:not(.expanded-row):active {
-    background: #ff408026;
+    background: linear-gradient(90deg, rgba(249, 139, 139, 0.212) 0%, rgba(232, 132, 247, 0.616) 100%);
+}
+
+.element-row:not(.expanded-row):hover ~ .prog {
+    background: linear-gradient(90deg, rgba(249, 139, 139, 0.103) 0%, hsla(292.2, 87.8%, 74.3%, 0.79) 100%);
+}
+
+.element-row:not(.expanded-row):active ~ .prog {
+    background: linear-gradient(90deg, rgba(249, 139, 139, 0.212) 0%, rgba(232, 132, 247, 0.616) 100%);
 }
 
 .exp
