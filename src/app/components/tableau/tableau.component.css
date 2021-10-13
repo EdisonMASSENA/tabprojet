@@ -362,6 +362,7 @@ img
 .expR
 {
     padding: 10px 0;
+    font-size: 10px;
 }
 
 .spacer
@@ -390,7 +391,6 @@ img
     background: #495bbe ;
     padding: 4px 10px;
     border-radius: 20px;
-    
 }
 
 .typePills
