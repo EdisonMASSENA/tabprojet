@@ -92,7 +92,10 @@ export class DialogBoxComponent {
     this.local_data.chef = this.local_data.chef.charAt(0).toUpperCase() + this.local_data.chef.slice(1);
     if (this.local_data.priorite) {
       this.local_data.priorite = this.local_data.priorite.charAt(0).toUpperCase() + this.local_data.priorite.slice(1);
-    }
+    };
+    if (this.local_data.progress == null) {
+      this.local_data.progress = 0;
+    };
     this.local_data.projet = this.local_data.projet.charAt(0).toUpperCase() + this.local_data.projet.slice(1);
     this.local_data.direction = user.username;
     this.local_data.date = new Date(this.local_data.annee,this.local_data.mois,0,0,0,0);

@@ -29,7 +29,7 @@
     </mat-form-field>
 
     <mat-form-field class="textInp" appearance="outline">
-      <mat-label>{{action}} Type de projet</mat-label>
+      <mat-label>{{action}} Axe du projet</mat-label>
       <mat-select [(ngModel)]="local_data.type" >
         <mat-option [value]="type.value" *ngFor="let type of types">
           {{ type.value }}
@@ -161,7 +161,7 @@
     </mat-form-field>
     
     <mat-form-field class="textInp" appearance="outline">
-      <mat-label>{{action}} Type de projet</mat-label>
+      <mat-label>{{action}} Axe du projet</mat-label>
       <mat-select [(ngModel)]="local_data.type" >
         <mat-option [value]="type.value" *ngFor="let type of types">
           {{ type.value }}
@@ -199,7 +199,7 @@
       </mat-datepicker>
     </mat-form-field> -->
 
-    <label class="lab">Avancement:</label>
+    <p class="lab">Avancement:</p>
     <mat-slider class="prog" thumbLabel="true" tickInterval="25" [(ngModel)]="local_data.progress"></mat-slider>
        
 

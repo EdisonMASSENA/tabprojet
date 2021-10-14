@@ -52,7 +52,7 @@
     </ng-container>
 
     <ng-container matColumnDef="type">
-      <mat-header-cell *matHeaderCellDef mat-sort-header class="white type"> Type </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="white type"> Axe </mat-header-cell>
       <mat-cell *matCellDef="let tabs" class="typecell">
 
         <div>
@@ -204,9 +204,10 @@
 
     <ng-container matColumnDef="progress">
       <mat-cell *matCellDef="let tabs">
-          <span [ngClass]="!medium ? 'spacer' : 'spacerM' ">Avancement:</span>
-          <mat-progress-bar mode="determinate" color="accent" [value]="tabs.progress"></mat-progress-bar>
-      </mat-cell>
+        <span> {{tabs.progress}}% </span>
+        <span [ngClass]="!medium ? 'spacer' : 'spacerM' ">Avancement: </span>
+        <mat-progress-bar mode="determinate" color="accent" [value]="tabs.progress"></mat-progress-bar>
+       </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="expandedDetail">
