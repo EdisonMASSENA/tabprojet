@@ -4,6 +4,36 @@
     margin: 10px auto;
 }
 
+.bigdrawer{
+    background: none;
+}
+
+.sidenav{
+    background: #495bbea6;
+    font-size: 16px;
+    color: white ;
+    padding: 30px;
+}
+
+.tri{
+    font-size: 20px;
+    margin-bottom: 30px;
+}
+
+.sect{
+    display: flex;
+    flex-direction: row;
+}
+
+.sect button{
+    padding: 0;
+}
+
+.card{
+    width: 40px;
+    margin: 5px;
+}
+
 .center
 {
     text-align: center;
@@ -158,7 +188,7 @@ img
 
 .type
 {
-    flex: 0 0 8% !important;
+    flex: 0 0 7% !important;
 }
 
 .typecell
@@ -226,7 +256,7 @@ img
 .date
 {
     padding: 10px ;
-    flex: 0 0 7% !important;
+    flex: 0 0 4.5% !important;
     word-wrap: break-word !important;
     white-space: pre-wrap !important;
     overflow-wrap: break-word;
@@ -326,7 +356,7 @@ img
     box-shadow: 0 5px 5px -3px #0003,0 8px 10px 1px #00000024,0 3px 14px 2px #0000001f;
 }
 
-.prog
+.progRow
 {
     border-top-style: none;
     padding: 5px 0;
@@ -344,11 +374,11 @@ img
     background: linear-gradient(90deg, rgba(249, 139, 139, 0.212) 0%, rgba(232, 132, 247, 0.616) 100%);
 }
 
-.element-row:not(.expanded-row):hover + .detail-row + .prog {
+.element-row:not(.expanded-row):hover + .detail-row + .progRow {
     background: linear-gradient(90deg, rgba(249, 139, 139, 0.103) 0%, hsla(292.2, 87.8%, 74.3%, 0.79) 100%);
 }
 
-.element-row:not(.expanded-row):active + .detail-row + .prog  {
+.element-row:not(.expanded-row):active + .detail-row + .progRow  {
     background: linear-gradient(90deg, rgba(249, 139, 139, 0.212) 0%, rgba(232, 132, 247, 0.616) 100%);
 }
 
@@ -434,4 +464,14 @@ img
 {
     overflow: hidden;
     display: flex;
+}
+
+.pourcent{
+    /* padding-right: 100px; */
+    color: #ff4081;
+    /* font-size: 16px; */
+}
+
+.wid{
+    width: 100%;
 }

@@ -37,10 +37,10 @@
       </mat-select>
     </mat-form-field>
       
- <p> {{action}} la date d'échéance prévue : </p>
+    <p> {{action}} date de début : </p>
     <mat-form-field appearance="outline">
       <mat-label>Mois</mat-label>
-      <mat-select [(ngModel)]="local_data.mois">
+      <mat-select [(ngModel)]="local_data.debmois">
         <mat-option *ngFor="let mois of moiss" [value]="mois">
           {{mois}}
         </mat-option>
@@ -48,7 +48,7 @@
     </mat-form-field>
     <mat-form-field appearance="outline"> 
       <mat-label>Année</mat-label>
-      <mat-select [(ngModel)]="local_data.annee">
+      <mat-select [(ngModel)]="local_data.debannee">
         <mat-option *ngFor="let annee of annees" [value]="annee">
           {{annee}}
         </mat-option>
@@ -56,6 +56,24 @@
     </mat-form-field>
 
 
+ <p> {{action}} date de fin prévue : </p>
+    <mat-form-field appearance="outline">
+      <mat-label>Mois</mat-label>
+      <mat-select [(ngModel)]="local_data.finmois">
+        <mat-option *ngFor="let mois of moiss" [value]="mois">
+          {{mois}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline"> 
+      <mat-label>Année</mat-label>
+      <mat-select [(ngModel)]="local_data.finannee">
+        <mat-option *ngFor="let annee of annees" [value]="annee">
+          {{annee}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+ 
     <!-- <mat-form-field appearance="outline">
       <mat-label>Choisir date de fin prévue</mat-label>
       <input matInput [matDatepicker]="dp" [formControl]="date">
@@ -69,7 +87,7 @@
     </mat-form-field> -->
 
     <p class="lab">Avancement:</p>
-    <mat-slider class="prog" thumbLabel="true" tickInterval="25" [(ngModel)]="local_data.progress"></mat-slider>
+    <mat-slider class="progRow" thumbLabel="true" tickInterval="25" [(ngModel)]="local_data.progress"></mat-slider>
 
     <mat-form-field class="textInp">
       <div>
@@ -169,10 +187,10 @@
       </mat-select>
     </mat-form-field>
 
-     <p> {{action}} la date d'échéance prévue : </p>
+    <p> {{action}} date de début : </p>
     <mat-form-field appearance="outline">
       <mat-label>Mois</mat-label>
-      <mat-select [(ngModel)]="local_data.mois">
+      <mat-select [(ngModel)]="local_data.debmois">
         <mat-option *ngFor="let mois of moiss" [value]="mois">
           {{mois}}
         </mat-option>
@@ -180,7 +198,25 @@
     </mat-form-field>
     <mat-form-field appearance="outline"> 
       <mat-label>Année</mat-label>
-      <mat-select [(ngModel)]="local_data.annee">
+      <mat-select [(ngModel)]="local_data.debannee">
+        <mat-option *ngFor="let annee of annees" [value]="annee">
+          {{annee}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+   <p> {{action}} date de fin prévue : </p>
+    <mat-form-field appearance="outline">
+      <mat-label>Mois</mat-label>
+      <mat-select [(ngModel)]="local_data.finmois">
+        <mat-option *ngFor="let mois of moiss" [value]="mois">
+          {{mois}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline"> 
+      <mat-label>Année</mat-label>
+      <mat-select [(ngModel)]="local_data.finannee">
         <mat-option *ngFor="let annee of annees" [value]="annee">
           {{annee}}
         </mat-option>
@@ -200,7 +236,7 @@
     </mat-form-field> -->
 
     <p class="lab">Avancement:</p>
-    <mat-slider class="prog" thumbLabel="true" tickInterval="25" [(ngModel)]="local_data.progress"></mat-slider>
+    <mat-slider class="progRow" thumbLabel="true" tickInterval="25" [(ngModel)]="local_data.progress"></mat-slider>
        
 
     <mat-form-field class="textInp">

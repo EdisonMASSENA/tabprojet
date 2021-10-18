@@ -25,7 +25,7 @@ import {MatListModule} from '@angular/material/list';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatSliderModule} from '@angular/material/slider';
 import { DatePipe } from '@angular/common'
-
+import {MatSidenavModule} from '@angular/material/sidenav';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -72,7 +72,8 @@ import { authInterceptorProviders } from './helpers/auth.interceptor';
     MatCardModule,
     MatListModule,
     MatProgressBarModule,
-    MatSliderModule
+    MatSliderModule,
+    MatSidenavModule
   ],
   entryComponents: [
     DialogBoxComponent

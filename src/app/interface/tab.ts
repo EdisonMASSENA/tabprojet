@@ -5,7 +5,8 @@ export interface Tab {
     direction:String;
     priorite:String;
     projet:any;
-    date:any;
+    debut:any;
+    fin:any;
     type:any;
     accompli:String;
     attention:String;

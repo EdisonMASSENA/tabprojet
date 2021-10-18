@@ -5,7 +5,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { environment } from 'src/environments/environment';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { DatePipe } from '@angular/common'
 
 
 import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
@@ -78,7 +77,7 @@ export class DialogBoxComponent {
   docs?: Observable<any>;
 
 
-  constructor(private datepipe: DatePipe, private uploadService: UploadService, private tokenStorageService: TokenStorageService, private _snackBar: MatSnackBar, public dialogRef: MatDialogRef<DialogBoxComponent>,
+  constructor(private uploadService: UploadService, private tokenStorageService: TokenStorageService, private _snackBar: MatSnackBar, public dialogRef: MatDialogRef<DialogBoxComponent>,
     @Optional() @Inject(MAT_DIALOG_DATA) public data: Tab) { this.local_data = { ...data }; this.action = this.local_data.action; for (let i = 1; i <= 12; i++) {this.moiss.push(i)}for (let i = 2020; i <= 2075; i++) {this.annees.push(i)}; this.docs = this.uploadService.getFiles();}
 
 
@@ -98,7 +97,8 @@ export class DialogBoxComponent {
     };
     this.local_data.projet = this.local_data.projet.charAt(0).toUpperCase() + this.local_data.projet.slice(1);
     this.local_data.direction = user.username;
-    this.local_data.date = new Date(this.local_data.annee,this.local_data.mois,0,0,0,0);
+    this.local_data.debut = new Date(this.local_data.debannee,this.local_data.debmois,0,0,0,0);
+    this.local_data.fin = new Date(this.local_data.finannee,this.local_data.finmois,0,0,0,0);
     this.uploadFiles();
     this.dialogRef.close({ event: this.action, data: this.local_data });
   }

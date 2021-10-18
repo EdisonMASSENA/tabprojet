@@ -54,7 +54,7 @@ import { TokenStorageService } from 'src/app/services/token-storage.service';
     trigger('detailExpand', [
       state('collapsed', style({ height: '0px', minHeight: '0' })),
       state('expanded', style({ height: '*' })),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+      transition('expanded <=> collapsed', animate('300ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
     ]),
   ],
   providers: [
@@ -83,8 +83,6 @@ export class TableauComponent implements OnInit {
   displayedColumns: string[];
   expandedElement: Tab | null;
   dataSource = new MatTableDataSource<Tab>();
-  moiss: number[] = [];
-  annees: number[] = [];
   docs = [];
   fileInfos?: Observable<any>;
   url = environment.Url;
@@ -169,7 +167,7 @@ export class TableauComponent implements OnInit {
         // }
         else {
           this.medium = false;
-          this.displayedColumns = ['projet', 'type', 'direction', 'priorite', 'chef', 'date', 'etat', 'tendance', 'accompli', 'attention', 'enCours', 'action'];
+          this.displayedColumns = ['projet', 'type', 'direction', 'priorite', 'chef', 'debut', 'fin', 'etat', 'tendance', 'accompli', 'attention', 'enCours', 'action'];
         }
       });
   };
@@ -310,7 +308,8 @@ export class TableauComponent implements OnInit {
       tempObj.push(e.direction);
       tempObj.push(e.priorite);
       tempObj.push(e.projet + '  (' + e.type + ')');
-      tempObj.push(e.date = this.datepipe.transform(e.date, 'MM/yyyy') );
+      tempObj.push(e.debut = this.datepipe.transform(e.debut, 'MM/yyyy') );
+      tempObj.push(e.fin = this.datepipe.transform(e.fin, 'MM/yyyy') );
       tempObj.push(e.progress + '%');
       tempObj.push(e.etat);
       tempObj.push(e.tendance);
@@ -404,9 +403,33 @@ export class TableauComponent implements OnInit {
 
 
 
+tri(tri){
+  this.tabservice.getAll()
+      .subscribe(
+        data => {
+          switch (tri) {
+            case 'assets/1.png': case 'assets/2.png': case 'assets/3.png': case 'assets/4.png':
+              this.dataSource.data = data.filter(item => item.etat === tri);
+              break;
+         
+            case 'assets/a.png': case 'assets/b.png': case 'assets/c.png':
+              this.dataSource.data = data.filter(item => item.tendance === tri);
+              break;
+         
+            default:
+              this.recupTab();
+              break;
+          }
+        },
+        error => {
+          // console.log(error);
+        });
+ 
+   
+}
+
+
   /////////////////////////////////
-
-
 
 
 };
