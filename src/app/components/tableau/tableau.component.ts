@@ -308,8 +308,8 @@ export class TableauComponent implements OnInit {
       tempObj.push(e.direction);
       tempObj.push(e.priorite);
       tempObj.push(e.projet + '  (' + e.type + ')');
-      tempObj.push(e.debut = this.datepipe.transform(e.debut, 'MM/yyyy') );
-      tempObj.push(e.fin = this.datepipe.transform(e.fin, 'MM/yyyy') );
+      tempObj.push(this.datepipe.transform(e.debut, 'MM/yyyy'));
+      // tempObj.push(this.datepipe.transform(e.fin, 'MM/yyyy'));
       tempObj.push(e.progress + '%');
       tempObj.push(e.etat);
       tempObj.push(e.tendance);

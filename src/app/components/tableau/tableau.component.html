@@ -21,8 +21,9 @@
 <mat-drawer-container class="bigdrawer" autosize>
 
   <mat-drawer #drawer class="sidenav" mode="over">
+    
     <p class="tri">Tri:</p>
-    <button mat-raised-button color="primary" (click)="tri(null)">Réinitialiser</button>
+    <button mat-raised-button color="primary" (click)="tri(null)" class="reset">Réinitialiser</button>
     <p>État:</p>
     <div class="sect">
 
@@ -60,6 +61,35 @@
 
     </div>
 
+    <p>Tendance:</p>
+    <div class="sect">
+
+      <button mat-button color="accent" (click)="tri('assets/a.png')">
+        <mat-card class="card">
+            <mat-card-content>
+              <img mat-card-sm-image src="assets/a.png" >
+            </mat-card-content>
+        </mat-card>
+      </button>
+
+      <button mat-button color="accent" (click)="tri('assets/b.png')">
+        <mat-card class="card">
+          <mat-card-content>
+            <img mat-card-sm-image src="assets/b.png" >
+          </mat-card-content>
+        </mat-card>
+      </button>
+
+      <button mat-button color="accent" (click)="tri('assets/c.png')">
+        <mat-card class="card">
+          <mat-card-content>
+            <img mat-card-sm-image src="assets/c.png" >
+          </mat-card-content>
+        </mat-card>
+      </button>
+
+    </div>
+
   </mat-drawer>
 
 
@@ -84,7 +114,7 @@
 
     <mat-table id="table" multiTemplateDataRows matSort #table class="mat-elevation-z8" [dataSource]="dataSource">
 
-      <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true" class="blue"></mat-header-row>
+      <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true " class="blue"></mat-header-row>
       <mat-row *matRowDef="let tabs; columns: displayedColumns;" class="element-row"
         (click)="tabclick(tabs)" [class.expanded-row]="expandedElement === tabs"></mat-row>
       <mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></mat-row>

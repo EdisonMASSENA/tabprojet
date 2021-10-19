@@ -6,6 +6,7 @@
 
 .bigdrawer{
     background: none;
+    min-height: 900px;
 }
 
 .sidenav{
@@ -17,7 +18,10 @@
 
 .tri{
     font-size: 20px;
-    margin-bottom: 30px;
+}
+
+.reset{
+    margin: 10px 0 15px 105px;
 }
 
 .sect{
