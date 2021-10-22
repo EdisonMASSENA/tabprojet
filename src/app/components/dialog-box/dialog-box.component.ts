@@ -94,7 +94,7 @@ export class DialogBoxComponent implements OnInit {
       this.annees.push(i)
     }; 
 
-    this.docs = this.uploadService.getFiles();
+    // this.docs = this.uploadService.getFiles();
 
   }
 
@@ -117,15 +117,19 @@ export class DialogBoxComponent implements OnInit {
     };
 
     
-
-    if (this.local_data.action == 'Modifier' && this.local_data.debannee == null && this.local_data.debmois == null  ) {
+    if (this.local_data.action == 'Modifier' && this.local_data.debannee == null && this.local_data.debmois == null) {
       this.recupdate(this.local_data.id);
     } else {
       this.local_data.debut = new Date(this.local_data.debannee,this.local_data.debmois,0,0,0,0);
+    }
+
+    if (this.local_data.action == 'Modifier' &&  this.local_data.finannee == null && this.local_data.finmois == null) {
+      this.recupdate(this.local_data.id);
+    } else {
       this.local_data.fin = new Date(this.local_data.finannee,this.local_data.finmois,0,0,0,0);
     }
 
-    this.uploadFiles();
+    // this.uploadFiles();
     this.dialogRef.close({ event: this.action, data: this.local_data });
 
   }
@@ -165,70 +169,6 @@ export class DialogBoxComponent implements OnInit {
 
   }
 
-  
-  selectFiles(event: any): void {
-    this.message = [];
-    // this.progressInfos = [];
-    this.selectedFileNames = [];
-    this.selectedFiles = event.target.files;
-  
-
-    if (this.selectedFiles && this.selectedFiles[0]) {
-      const numberOfFiles = this.selectedFiles.length;
-      for (let i = 0; i < numberOfFiles; i++) {  
-        this.selectedFileNames.push(this.selectedFiles[i].name);
-      }
-    }
-  }
-  
-
-  uploadFiles(): void {
-    this.message = [];
-  
-    if (this.selectedFiles) {
-      for (let i = 0; i < this.selectedFiles.length; i++) {
-        this.upload(i, this.selectedFiles[i]);
-      }
-    }
-  }
-  
-
-  upload(idx: number, file: File): void {
-    // this.progressInfos[idx] = { value: 0, fileName: file.name };
-  
-    if (file) {
-      this.uploadService.upload(file).subscribe(
-        (event: any) => {
-          if (event.type === HttpEventType.UploadProgress) {
-            // this.progressInfos[idx].value = Math.round(100 * event.loaded / event.total);
-          } else if (event instanceof HttpResponse) {
-            const msg = 'Uploaded the file successfully: ' + file.name;
-            this.message.push(msg);
-            this.docs = this.uploadService.getFiles();
-          }
-        },
-        (err: any) => {
-          // this.progressInfos[idx].value = 0;
-          const msg = 'Could not upload the file: ' + file.name;
-          this.message.push(msg);
-        });
-    }
-  }
-  
-  
-
-  deleteUp(id) {
-    this.uploadService.delete(id)
-      .subscribe(
-        response => {
-          // console.log(response);
-          this.docs = this.uploadService.getFiles();
-        },
-        error => {
-          // console.log(error);
-        });
-
-  };
 
   recupdate(id) {
     this.tableauService.getAll()
@@ -236,13 +176,88 @@ export class DialogBoxComponent implements OnInit {
       data => {
         // console.log(response);
         let date = data.filter(item => item.id == id);
-        this.local_data.debannee = date[0]['debut'].slice(0,4);
-        this.local_data.debmois = date[0]['debut'].slice(5,7);
+        if (date[0]['debut'] !== null) {
+          this.local_data.debannee = date[0]['debut'].slice(0,4);
+          this.local_data.debmois = date[0]['debut'].slice(5,7);
+        };
+        if (date[0]['fin'] !== null) {
+          this.local_data.finannee = date[0]['fin'].slice(0,4);
+          this.local_data.finmois = date[0]['fin'].slice(5,7);
+        };
       },
       error => {
         // console.log(error);
       });
   };
+
+
+  ///////////////// not in prod /////////////////////
+  
+  // selectFiles(event: any): void {
+  //   this.message = [];
+  //   // this.progressInfos = [];
+  //   this.selectedFileNames = [];
+  //   this.selectedFiles = event.target.files;
+  
+
+  //   if (this.selectedFiles && this.selectedFiles[0]) {
+  //     const numberOfFiles = this.selectedFiles.length;
+  //     for (let i = 0; i < numberOfFiles; i++) {  
+  //       this.selectedFileNames.push(this.selectedFiles[i].name);
+  //     }
+  //   }
+  // }
+  
+
+  // uploadFiles(): void {
+  //   this.message = [];
+  
+  //   if (this.selectedFiles) {
+  //     for (let i = 0; i < this.selectedFiles.length; i++) {
+  //       this.upload(i, this.selectedFiles[i]);
+  //     }
+  //   }
+  // }
+  
+
+  // upload(idx: number, file: File): void {
+  //   // this.progressInfos[idx] = { value: 0, fileName: file.name };
+  
+  //   if (file) {
+  //     this.uploadService.upload(file).subscribe(
+  //       (event: any) => {
+  //         if (event.type === HttpEventType.UploadProgress) {
+  //           // this.progressInfos[idx].value = Math.round(100 * event.loaded / event.total);
+  //         } else if (event instanceof HttpResponse) {
+  //           const msg = 'Uploaded the file successfully: ' + file.name;
+  //           this.message.push(msg);
+  //           this.docs = this.uploadService.getFiles();
+  //         }
+  //       },
+  //       (err: any) => {
+  //         // this.progressInfos[idx].value = 0;
+  //         const msg = 'Could not upload the file: ' + file.name;
+  //         this.message.push(msg);
+  //       });
+  //   }
+  // }
+  
+  
+
+  // deleteUp(id) {
+  //   this.uploadService.delete(id)
+  //     .subscribe(
+  //       response => {
+  //         // console.log(response);
+  //         this.docs = this.uploadService.getFiles();
+  //       },
+  //       error => {
+  //         // console.log(error);
+  //       });
+
+  // };
+
+  ///////////////////////////////////////////
 
 
   // date = new FormControl(moment());
@@ -263,7 +278,7 @@ export class DialogBoxComponent implements OnInit {
 
 
 
-/////////////////////////////////////////////  
+//////////////////// END /////////////////////////  
 
 
 }

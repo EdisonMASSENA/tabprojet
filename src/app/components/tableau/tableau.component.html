@@ -270,7 +270,8 @@
 
           <span class="actionPill"> 
 
-            <button mat-icon-button [matMenuTriggerFor]="menu" matTooltip="Pièces jointes" color="accent">
+        <!-- fileupload not prod -->
+            <!-- <button mat-icon-button [matMenuTriggerFor]="menu" matTooltip="Pièces jointes" color="accent">
               <mat-icon>attachment</mat-icon>
             </button>
 
@@ -279,7 +280,8 @@
                 <mat-icon>file_download</mat-icon>
                 <span>{{doc.name}}</span>
               </a>
-            </mat-menu>
+            </mat-menu> -->
+        <!--  -->
 
             <button mat-icon-button [matTooltip]="consult ? 'Vous n\'avez pas les droits' : 'Modifier'" [disabled]="consult" color="primary" (click)="openDialog('Modifier',tabs)">
               <mat-icon>edit</mat-icon>
@@ -355,7 +357,9 @@
               <span>
                 <span class="textPills">Action:</span>
 
-                <button mat-icon-button [matMenuTriggerFor]="menu" matTooltip="Pièces jointes" color="accent">
+        <!-- fileupload not prod -->
+
+                <!-- <button mat-icon-button [matMenuTriggerFor]="menu" matTooltip="Pièces jointes" color="accent">
                   <mat-icon>attachment</mat-icon>
                 </button>
       
@@ -364,8 +368,9 @@
                     <mat-icon>file_download</mat-icon>
                     <span>{{doc.name}}</span>
                   </a>
-                </mat-menu>
-
+                </mat-menu> -->
+        <!--  -->
+        
                 <button mat-icon-button matTooltip="Modifier" color="primary" [matTooltip]="consult ? 'Vous n\'avez pas les droits' : 'Modifier'" [disabled]="consult" (click)="openDialog('Modifier',tabs)">
                   <mat-icon>edit</mat-icon>
                 </button>

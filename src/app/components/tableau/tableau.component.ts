@@ -106,7 +106,7 @@ export class TableauComponent implements OnInit {
     this.tabDisplay();
 
 
-    this.recupFile();
+    // this.recupFile();
 
 
     //////////////////// Bar de recherche filtré par projet ////////////////////////////
@@ -215,7 +215,7 @@ export class TableauComponent implements OnInit {
         response => {
           // console.log(response);
           this.recupTab();
-          this.recupFile();
+          // this.recupFile();
         },
         error => {
           // console.log(error);
@@ -232,7 +232,7 @@ export class TableauComponent implements OnInit {
         response => {
           // console.log(data.date);
           this.recupTab();
-          this.recupFile();
+          // this.recupFile();
         },
         error => {
           // console.log(error);
@@ -282,19 +282,22 @@ export class TableauComponent implements OnInit {
 
   };
 
+  /////////// not in prod ////////////////
 
-  recupFile(): void {
-    this.uploadService.getFiles()
-      .subscribe(
-        files => {
-            this.docs = files;
-          // console.log(this.docs);
-        },
-        error => {
-          // console.log(error);
-        });
+  // recupFile(): void {
+  //   this.uploadService.getFiles()
+  //     .subscribe(
+  //       files => {
+  //           this.docs = files;
+  //         // console.log(this.docs);
+  //       },
+  //       error => {
+  //         // console.log(error);
+  //       });
 
-  };
+  // };
+
+  //////////////////////////////////////
 
 
   //////////////// Tableau en PDF (npm: jsPDF autotable) /////////////////
@@ -309,7 +312,7 @@ export class TableauComponent implements OnInit {
       tempObj.push(e.priorite);
       tempObj.push(e.projet + '  (' + e.type + ')');
       tempObj.push(this.datepipe.transform(e.debut, 'MM/yyyy'));
-      // tempObj.push(this.datepipe.transform(e.fin, 'MM/yyyy'));
+      tempObj.push(this.datepipe.transform(e.fin, 'MM/yyyy'));
       tempObj.push(e.progress + '%');
       tempObj.push(e.etat);
       tempObj.push(e.tendance);
@@ -333,19 +336,21 @@ export class TableauComponent implements OnInit {
         1: { cellWidth: 19 },
         2: { cellWidth: 17 },
         3: { cellWidth: 35 },
-        4: { cellWidth: 30 },
-        5: { cellWidth: 25 },
-        6: { cellWidth: 21, minCellHeight: 15, textColor: 255 },
+        4: { cellWidth: 20 },
+        5: { cellWidth: 20 },
+        6: { cellWidth: 20 },
         7: { cellWidth: 21, minCellHeight: 15, textColor: 255 },
-        8: { cellWidth: 65 },
+        8: { cellWidth: 21, minCellHeight: 15, textColor: 255 },
         9: { cellWidth: 65 },
-        10: { cellWidth: 65 }
+        10: { cellWidth: 65 },
+        11: { cellWidth: 60 }
       },
-      theme: "grid",
-      head: [['Chef de projet', 'Direction', 'Priorité', 'Projet', 'Fin prévue', 'Avancement', 'État', 'Tendance', 'Travaux faits', 'Points d\'attention', 'Travaux en cours / à venir ']],
+      rowPageBreak: 'avoid',
+      theme: "striped",
+      head: [['Chef de projet', 'Direction', 'Priorité', 'Projet', 'Début', 'Fin prévue', 'Avancement', 'État', 'Tendance', 'Travaux faits', 'Points d\'attention', 'Travaux en cours / à venir ']],
       body: prepare,
       didDrawCell: function (data) {
-        if (data.column.index === 6 && data.cell.section === 'body') {
+        if (data.column.index === 7 && data.cell.section === 'body') {
           let td = data.cell.raw;
           let textPosx = data.cell.x;
           let textPosy = data.cell.y;
@@ -353,7 +358,7 @@ export class TableauComponent implements OnInit {
             doc.addImage(url + td, 'png', textPosx + 0.5, textPosy + 0.5, 20, 14);
           }
         }
-        if (data.column.index === 7 && data.cell.section === 'body') {
+        if (data.column.index === 8 && data.cell.section === 'body') {
           let td = data.cell.raw;
           let textPosx = data.cell.x;
           let textPosy = data.cell.y;
