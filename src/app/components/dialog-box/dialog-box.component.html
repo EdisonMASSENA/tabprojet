@@ -29,18 +29,18 @@
     </mat-form-field>
 
     <mat-form-field class="textInp" appearance="outline">
-      <mat-label>{{action}} Type de projet</mat-label>
+      <mat-label>{{action}} Axe du projet</mat-label>
       <mat-select [(ngModel)]="local_data.type" >
         <mat-option [value]="type.value" *ngFor="let type of types">
           {{ type.value }}
         </mat-option>
       </mat-select>
     </mat-form-field>
-
-    <!-- <p> {{action}} la date d'échéance prévue : </p>
+      
+    <p> {{action}} date de début : </p>
     <mat-form-field appearance="outline">
       <mat-label>Mois</mat-label>
-      <mat-select [(ngModel)]="local_data.mois">
+      <mat-select [(ngModel)]="local_data.debmois">
         <mat-option *ngFor="let mois of moiss" [value]="mois">
           {{mois}}
         </mat-option>
@@ -48,15 +48,33 @@
     </mat-form-field>
     <mat-form-field appearance="outline"> 
       <mat-label>Année</mat-label>
-      <mat-select [(ngModel)]="local_data.annee">
+      <mat-select [(ngModel)]="local_data.debannee">
         <mat-option *ngFor="let annee of annees" [value]="annee">
           {{annee}}
         </mat-option>
       </mat-select>
-    </mat-form-field> -->
-      
+    </mat-form-field>
 
+
+ <p> {{action}} date de fin prévue : </p>
     <mat-form-field appearance="outline">
+      <mat-label>Mois</mat-label>
+      <mat-select [(ngModel)]="local_data.finmois">
+        <mat-option *ngFor="let mois of moiss" [value]="mois">
+          {{mois}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline"> 
+      <mat-label>Année</mat-label>
+      <mat-select [(ngModel)]="local_data.finannee">
+        <mat-option *ngFor="let annee of annees" [value]="annee">
+          {{annee}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+ 
+    <!-- <mat-form-field appearance="outline">
       <mat-label>Choisir date de fin prévue</mat-label>
       <input matInput [matDatepicker]="dp" [formControl]="date">
       <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
@@ -66,9 +84,13 @@
                       (monthSelected)="chosenMonthHandler($event, dp)"
                       panelClass="example-month-picker">
       </mat-datepicker>
-    </mat-form-field>
-    
-    <mat-form-field class="textInp">
+    </mat-form-field> -->
+
+    <p class="lab">Avancement:</p>
+    <mat-slider class="progRow" thumbLabel="true" tickInterval="25" [(ngModel)]="local_data.progress"></mat-slider>
+
+    <!-- not in prod -->
+    <!-- <mat-form-field class="textInp">
       <div>
         <mat-toolbar>
           <input matInput [value]="selectedFileNames.length ? selectedFileNames : 'Choisir Pièces Jointes'" />
@@ -76,8 +98,8 @@
     
         <input type="file" id="fileInput" name="fileInput" multiple (change)="selectFiles($event)"/>
       </div>
-    </mat-form-field>
-      
+    </mat-form-field> -->
+    <!--  -->
 
     <div class="flex">
 
@@ -158,7 +180,7 @@
     </mat-form-field>
     
     <mat-form-field class="textInp" appearance="outline">
-      <mat-label>{{action}} Type de projet</mat-label>
+      <mat-label>{{action}} Axe du projet</mat-label>
       <mat-select [(ngModel)]="local_data.type" >
         <mat-option [value]="type.value" *ngFor="let type of types">
           {{ type.value }}
@@ -166,10 +188,10 @@
       </mat-select>
     </mat-form-field>
 
-    <!-- <p> {{action}} la date d'échéance prévue : </p>
+    <p> {{action}} date de début : </p>
     <mat-form-field appearance="outline">
       <mat-label>Mois</mat-label>
-      <mat-select [(ngModel)]="local_data.mois">
+      <mat-select [(ngModel)]="local_data.debmois">
         <mat-option *ngFor="let mois of moiss" [value]="mois">
           {{mois}}
         </mat-option>
@@ -177,15 +199,32 @@
     </mat-form-field>
     <mat-form-field appearance="outline"> 
       <mat-label>Année</mat-label>
-      <mat-select [(ngModel)]="local_data.annee">
+      <mat-select [(ngModel)]="local_data.debannee">
         <mat-option *ngFor="let annee of annees" [value]="annee">
           {{annee}}
         </mat-option>
       </mat-select>
-    </mat-form-field> -->
+    </mat-form-field>
 
-    
+   <p> {{action}} date de fin prévue : </p>
     <mat-form-field appearance="outline">
+      <mat-label>Mois</mat-label>
+      <mat-select [(ngModel)]="local_data.finmois">
+        <mat-option *ngFor="let mois of moiss" [value]="mois">
+          {{mois}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline"> 
+      <mat-label>Année</mat-label>
+      <mat-select [(ngModel)]="local_data.finannee">
+        <mat-option *ngFor="let annee of annees" [value]="annee">
+          {{annee}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    
+    <!-- <mat-form-field appearance="outline">
       <mat-label>Choisir date de fin prévue</mat-label>
       <input matInput [matDatepicker]="dp" [formControl]="date">
       <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
@@ -195,10 +234,13 @@
                       (monthSelected)="chosenMonthHandler($event, dp)"
                       panelClass="example-month-picker">
       </mat-datepicker>
-    </mat-form-field>
+    </mat-form-field> -->
+
+    <p class="lab">Avancement:</p>
+    <mat-slider class="progRow" thumbLabel="true" tickInterval="25" [(ngModel)]="local_data.progress"></mat-slider>
        
-    
-    <mat-form-field class="textInp">
+<!-- not in prod -->
+    <!-- <mat-form-field class="textInp">
       <div>
         <mat-toolbar>
           <input matInput [value]="selectedFileNames.length ? selectedFileNames : 'Choisir Pièces Jointes'"/>
@@ -224,8 +266,8 @@
           </mat-list-item>
         </mat-list>
       </mat-card-content>
-    </mat-card>
-     
+    </mat-card> -->
+  <!--  -->
 
     <div class="flex">
 

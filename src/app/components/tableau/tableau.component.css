@@ -4,6 +4,40 @@
     margin: 10px auto;
 }
 
+.bigdrawer{
+    background: none;
+    min-height: 900px;
+}
+
+.sidenav{
+    background: #495bbea6;
+    font-size: 16px;
+    color: white ;
+    padding: 30px;
+}
+
+.tri{
+    font-size: 20px;
+}
+
+.reset{
+    margin: 10px 0 15px 105px;
+}
+
+.sect{
+    display: flex;
+    flex-direction: row;
+}
+
+.sect button{
+    padding: 0;
+}
+
+.card{
+    width: 40px;
+    margin: 5px;
+}
+
 .center
 {
     text-align: center;
@@ -38,8 +72,13 @@
     width: 100%;
     border-collapse: collapse;
     border-radius: 20px;
+    background: none;
 }
 
+.mat-elevation-z8
+{
+    box-shadow: none;
+}
 
 .add
 {
@@ -61,6 +100,7 @@
     background-color: #495bbe;
     border-collapse: collapse;
     border-radius: 20px;
+    margin-bottom: 10px;
 
 }
 
@@ -74,10 +114,6 @@
     background-color: rgb(180, 1, 1);
 }
 
-.spacer
-{
-    margin: 0 1px ;
-}
 
 .radioGrp{
     padding-left: 10px;
@@ -132,7 +168,7 @@ img
 
 .chef
 {
-    padding: 10px 0px 10px 20px;
+    padding: 10px;
     flex: 0 0 8% !important;
     word-wrap: break-word !important;
     white-space: pre-wrap !important;
@@ -145,7 +181,7 @@ img
 .chefM
 {
     padding: 10px 5px;
-    font-size: 12px;
+    font-size: 10px;
     word-wrap: break-word !important;
     white-space: pre-wrap !important;
     overflow-wrap: break-word;
@@ -156,7 +192,7 @@ img
 
 .type
 {
-    flex: 0 0 8% !important;
+    flex: 0 0 7% !important;
 }
 
 .typecell
@@ -178,13 +214,13 @@ img
 
 .directionM
 {
-    font-size: 12px;
+    font-size: 10px;
     
 }
 
 .mat-column-priorite
 {
-    padding: 10px 10px;
+    padding: 10px;
     flex: 0 0 3.5% !important;
 }
 
@@ -200,6 +236,8 @@ img
 
 .projet
 {
+    padding: 10px;
+    padding-left: 20px;
     word-wrap: break-word !important;
     white-space: pre-wrap !important;
     overflow-wrap: break-word;
@@ -209,7 +247,9 @@ img
 
 .projetM
 {
-    font-size: 12px;
+    padding: 5px;
+    flex: 0 0 19% !important;
+    font-size: 10px;
     word-wrap: break-word !important;
     white-space: pre-wrap !important;
     overflow-wrap: break-word;
@@ -219,8 +259,8 @@ img
 
 .date
 {
-    padding: 10px 10px ;
-    flex: 0 0 7% !important;
+    padding: 10px ;
+    flex: 0 0 4.5% !important;
     word-wrap: break-word !important;
     white-space: pre-wrap !important;
     overflow-wrap: break-word;
@@ -238,7 +278,7 @@ img
 .etatM
 {
     justify-content: center;
-    font-size: 12px;
+    font-size: 10px;
     
 }
 
@@ -254,14 +294,14 @@ img
 {
     justify-content: center;
     padding-right: 5px;
-    font-size: 12px;
+    font-size: 10px;
 
 }
 
 
 .mat-column-accompli
 {
-    padding: 10px 10px ;
+    padding: 10px ;
     word-wrap: break-word !important;
     white-space: pre-wrap !important;
     overflow-wrap: break-word;
@@ -272,7 +312,7 @@ img
 
 .mat-column-attention
 { 
-    padding: 10px 10px ;
+    padding: 10px ;
     word-wrap: break-word !important;
     white-space: pre-wrap !important;
     overflow-wrap: break-word;
@@ -283,7 +323,7 @@ img
 
 .mat-column-enCours
 {
-    padding: 10px 10px ;
+    padding: 10px ;
     word-wrap: break-word !important;
     white-space: pre-wrap !important;
     overflow-wrap: break-word;
@@ -307,19 +347,43 @@ img
 
 .detail-row {
     min-height: 0;
+    border-style: none;
+    background: rgb(255, 255, 255);
 }
 
 .element-row
 {
-    border-bottom-width: 0;
+    border-bottom-style: none;
+    padding: 5px 0;
+    border-radius: 30px 30px 0px 0px;
+    background: white;
+    box-shadow: 0 5px 5px -3px #0003,0 8px 10px 1px #00000024,0 3px 14px 2px #0000001f;
+}
+
+.progRow
+{
+    border-top-style: none;
+    padding: 5px 0;
+    border-radius: 0px 0px 30px 30px;
+    margin-bottom: 20px;
+    background: white;
+    box-shadow: 0 5px 5px -3px #0003,0 8px 10px 1px #00000024;
 }
 
 .element-row:not(.expanded-row):hover {
-    background: #ff408007;
+    background: linear-gradient(90deg, rgba(249, 139, 139, 0.103) 0%, hsla(292.2, 87.8%, 74.3%, 0.79) 100%);
 }
 
 .element-row:not(.expanded-row):active {
-    background: #ff408026;
+    background: linear-gradient(90deg, rgba(249, 139, 139, 0.212) 0%, rgba(232, 132, 247, 0.616) 100%);
+}
+
+.element-row:not(.expanded-row):hover + .detail-row + .progRow {
+    background: linear-gradient(90deg, rgba(249, 139, 139, 0.103) 0%, hsla(292.2, 87.8%, 74.3%, 0.79) 100%);
+}
+
+.element-row:not(.expanded-row):active + .detail-row + .progRow  {
+    background: linear-gradient(90deg, rgba(249, 139, 139, 0.212) 0%, rgba(232, 132, 247, 0.616) 100%);
 }
 
 .exp
@@ -332,6 +396,27 @@ img
 .expR
 {
     padding: 10px 0;
+    font-size: 10px;
+}
+
+.spacer
+{
+    margin-right: 5px ;
+    font-size: 12px;
+    color: white;
+    background: #ff4081 ;
+    padding: 4px 10px;
+    border-radius: 20px;
+}
+
+.spacerM
+{
+    margin-right: 5px ;
+    font-size: 10px;
+    color: white;
+    background: #ff4081 ;
+    padding: 3px 8px;
+    border-radius: 20px;
 }
 
 .textPills
@@ -340,7 +425,6 @@ img
     background: #495bbe ;
     padding: 4px 10px;
     border-radius: 20px;
-    
 }
 
 .typePills
@@ -352,22 +436,12 @@ img
     border-radius: 20px;
 }
 
-.typePill
-{
-    font-size: 12px;
-    color: white;
-    background: #495bbe ;
-    padding: 4px 10px;
-    border-radius: 20px;
-    visibility: hidden;
-}
-
 .typePillsM
 {
     font-size: 9px;
     color: white;
     background: #495bbe ;
-    padding: 4px 10px;
+    padding: 4px 7px;
     border-radius: 20px;
     
 }
@@ -396,11 +470,12 @@ img
     display: flex;
 }
 
-/* 
-.month-picker .mat-calendar-period-button {
-  pointer-events: none;
+.pourcent{
+    /* padding-right: 100px; */
+    color: #ff4081;
+    /* font-size: 16px; */
 }
 
-.month-picker .mat-calendar-arrow {
-  display: none;
-} */
+.wid{
+    width: 100%;
+}

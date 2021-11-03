@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { Breakpoints, BreakpointState, BreakpointObserver } from '@angular/cdk/layout';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
+import { DatePipe } from '@angular/common'
 // import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
 // import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 // import {MatDatepicker} from '@angular/material/datepicker';
@@ -53,7 +54,7 @@ import { TokenStorageService } from 'src/app/services/token-storage.service';
     trigger('detailExpand', [
       state('collapsed', style({ height: '0px', minHeight: '0' })),
       state('expanded', style({ height: '*' })),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+      transition('expanded <=> collapsed', animate('300ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
     ]),
   ],
   providers: [
@@ -82,8 +83,6 @@ export class TableauComponent implements OnInit {
   displayedColumns: string[];
   expandedElement: Tab | null;
   dataSource = new MatTableDataSource<Tab>();
-  moiss: number[] = [];
-  annees: number[] = [];
   docs = [];
   fileInfos?: Observable<any>;
   url = environment.Url;
@@ -92,7 +91,7 @@ export class TableauComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   
 
-  constructor(private _ngZone: NgZone, private uploadService: UploadService, private tokenStorage: TokenStorageService, private _snackBar: MatSnackBar, private tabservice: TableauService, public dialog: MatDialog, private router: Router, private breakpointObserver: BreakpointObserver) { }
+  constructor(private datepipe: DatePipe, private _ngZone: NgZone, private uploadService: UploadService, private tokenStorage: TokenStorageService, private _snackBar: MatSnackBar, private tabservice: TableauService, public dialog: MatDialog, private router: Router, private breakpointObserver: BreakpointObserver) { }
 
 
   ngOnInit(): void {
@@ -107,7 +106,7 @@ export class TableauComponent implements OnInit {
     this.tabDisplay();
 
 
-    this.recupFile();
+    // this.recupFile();
 
 
     //////////////////// Bar de recherche filtré par projet ////////////////////////////
@@ -160,7 +159,7 @@ export class TableauComponent implements OnInit {
 
         if (state.matches) {
           this.medium = true;
-          this.displayedColumns = ['projet', 'type', 'direction', 'chef', 'etat', 'tendance'];
+          this.displayedColumns = ['projet', 'direction', 'chef', 'etat', 'tendance'];
         }
         // else if (this.consult) {
         //   this.medium = false;
@@ -168,7 +167,7 @@ export class TableauComponent implements OnInit {
         // }
         else {
           this.medium = false;
-          this.displayedColumns = ['projet', 'type', 'direction', 'priorite', 'chef', 'date', 'etat', 'tendance', 'accompli', 'attention', 'enCours', 'action'];
+          this.displayedColumns = ['projet', 'type', 'direction', 'priorite', 'chef', 'debut', 'fin', 'etat', 'tendance', 'accompli', 'attention', 'enCours', 'action'];
         }
       });
   };
@@ -216,7 +215,7 @@ export class TableauComponent implements OnInit {
         response => {
           // console.log(response);
           this.recupTab();
-          this.recupFile();
+          // this.recupFile();
         },
         error => {
           // console.log(error);
@@ -231,9 +230,9 @@ export class TableauComponent implements OnInit {
     this.tabservice.update(data.id, data)
       .subscribe(
         response => {
-          console.log(data.date);
+          // console.log(data.date);
           this.recupTab();
-          this.recupFile();
+          // this.recupFile();
         },
         error => {
           // console.log(error);
@@ -283,19 +282,22 @@ export class TableauComponent implements OnInit {
 
   };
 
+  /////////// not in prod ////////////////
 
-  recupFile(): void {
-    this.uploadService.getFiles()
-      .subscribe(
-        files => {
-            this.docs = files;
-          // console.log(this.docs);
-        },
-        error => {
-          // console.log(error);
-        });
+  // recupFile(): void {
+  //   this.uploadService.getFiles()
+  //     .subscribe(
+  //       files => {
+  //           this.docs = files;
+  //         // console.log(this.docs);
+  //       },
+  //       error => {
+  //         // console.log(error);
+  //       });
 
-  };
+  // };
+
+  //////////////////////////////////////
 
 
   //////////////// Tableau en PDF (npm: jsPDF autotable) /////////////////
@@ -309,7 +311,9 @@ export class TableauComponent implements OnInit {
       tempObj.push(e.direction);
       tempObj.push(e.priorite);
       tempObj.push(e.projet + '  (' + e.type + ')');
-      tempObj.push(e.date);
+      tempObj.push(this.datepipe.transform(e.debut, 'MM/yyyy'));
+      tempObj.push(this.datepipe.transform(e.fin, 'MM/yyyy'));
+      tempObj.push(e.progress + '%');
       tempObj.push(e.etat);
       tempObj.push(e.tendance);
       tempObj.push(e.accompli);
@@ -332,18 +336,21 @@ export class TableauComponent implements OnInit {
         1: { cellWidth: 19 },
         2: { cellWidth: 17 },
         3: { cellWidth: 35 },
-        4: { cellWidth: 30 },
-        5: { cellWidth: 21, minCellHeight: 15, textColor: 255 },
-        6: { cellWidth: 21, minCellHeight: 15, textColor: 255 },
-        7: { cellWidth: 70 },
-        8: { cellWidth: 70 },
-        9: { cellWidth: 70 },
+        4: { cellWidth: 20 },
+        5: { cellWidth: 20 },
+        6: { cellWidth: 20 },
+        7: { cellWidth: 21, minCellHeight: 15, textColor: 255 },
+        8: { cellWidth: 21, minCellHeight: 15, textColor: 255 },
+        9: { cellWidth: 65 },
+        10: { cellWidth: 65 },
+        11: { cellWidth: 60 }
       },
-      theme: "grid",
-      head: [['Chef de projet', 'Direction', 'Priorité', 'Projet', 'Fin prévue', 'État', 'Tendance', 'Travaux faits', 'Points d\'attention', 'Travaux en cours / à venir ']],
+      rowPageBreak: 'avoid',
+      theme: "striped",
+      head: [['Chef de projet', 'Direction', 'Priorité', 'Projet', 'Début', 'Fin prévue', 'Avancement', 'État', 'Tendance', 'Travaux faits', 'Points d\'attention', 'Travaux en cours / à venir ']],
       body: prepare,
       didDrawCell: function (data) {
-        if (data.column.index === 5 && data.cell.section === 'body') {
+        if (data.column.index === 7 && data.cell.section === 'body') {
           let td = data.cell.raw;
           let textPosx = data.cell.x;
           let textPosy = data.cell.y;
@@ -351,7 +358,7 @@ export class TableauComponent implements OnInit {
             doc.addImage(url + td, 'png', textPosx + 0.5, textPosy + 0.5, 20, 14);
           }
         }
-        if (data.column.index === 6 && data.cell.section === 'body') {
+        if (data.column.index === 8 && data.cell.section === 'body') {
           let td = data.cell.raw;
           let textPosx = data.cell.x;
           let textPosy = data.cell.y;
@@ -400,26 +407,34 @@ export class TableauComponent implements OnInit {
   };
 
 
-  //////////////////// Datepicker ////////////////////////////
 
-  // chosenYearHandler(normalizedYear: Moment) {
-  //   const ctrlValue = this.date.value;
-  //   ctrlValue.year(normalizedYear.year());
-  //   this.date.setValue(ctrlValue);
-  // }
-
-  // chosenMonthHandler(normalizedMonth: Moment, datepicker: MatDatepicker<Moment>) {
-  //   const ctrlValue = this.date.value;
-  //   ctrlValue.month(normalizedMonth.month());
-  //   this.date.setValue(ctrlValue);
-  //   datepicker.close();
-  // }
-
+tri(tri){
+  this.tabservice.getAll()
+      .subscribe(
+        data => {
+          switch (tri) {
+            case 'assets/1.png': case 'assets/2.png': case 'assets/3.png': case 'assets/4.png':
+              this.dataSource.data = data.filter(item => item.etat === tri);
+              break;
+         
+            case 'assets/a.png': case 'assets/b.png': case 'assets/c.png':
+              this.dataSource.data = data.filter(item => item.tendance === tri);
+              break;
+         
+            default:
+              this.recupTab();
+              break;
+          }
+        },
+        error => {
+          // console.log(error);
+        });
+ 
+   
+}
 
 
   /////////////////////////////////
-
-
 
 
 };
