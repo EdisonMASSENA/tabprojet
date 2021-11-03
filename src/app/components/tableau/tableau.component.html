@@ -4,7 +4,7 @@
     <button mat-icon-button (click)="drawer.toggle()">
       <mat-icon>menu</mat-icon>
     </button>
-    <span *ngIf="isLoggedIn">{{ username }}</span>
+    <span *ngIf="isLoggedIn && !medium">{{ username }}</span>
   </span>
   
   <span class="user"> 
@@ -21,6 +21,8 @@
 <mat-drawer-container class="bigdrawer" autosize>
 
   <mat-drawer #drawer class="sidenav" mode="over">
+
+    <p class="tri" *ngIf="medium">{{ username }}:</p>
     
     <p class="tri">Tri:</p>
     <button mat-raised-button color="primary" (click)="tri(null)" class="reset">Réinitialiser</button>
