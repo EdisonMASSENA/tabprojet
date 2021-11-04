@@ -201,7 +201,7 @@ export class TableauComponent implements OnInit {
   //////////////////// Deconnexion //////////////////////////
   logout(): void {
     this.tokenStorage.signOut();
-    this.router.navigate(['/login']);
+    this.router.navigate(['']);
     let msg = 'Déconnexion';
     this.snackbar(msg);
   };
