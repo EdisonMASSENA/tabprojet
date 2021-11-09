@@ -21,6 +21,8 @@ import { DatePipe } from '@angular/common'
 
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable'
+// import * as XLSX from 'xlsx';
+// type AOA = any[][];
 
 
 import { Tab } from "src/app/interface/tab";
@@ -86,7 +88,8 @@ export class TableauComponent implements OnInit {
   docs = [];
   fileInfos?: Observable<any>;
   url = environment.Url;
-
+	// wopts: XLSX.WritingOptions = { bookType: 'xlsx', type: 'array' };
+	excelName: string = 'SheetJS.xlsx';
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   
@@ -279,7 +282,6 @@ export class TableauComponent implements OnInit {
         error => {
           // console.log(error);
         });
-
   };
 
   /////////// not in prod ////////////////
@@ -372,6 +374,48 @@ export class TableauComponent implements OnInit {
     doc.save('Tableau-Projets.pdf')
 
   };
+
+
+
+
+
+  ///////////////////// Tableau Excel ////////////////// 
+
+  // downloadExcel(): void {
+
+  //   /* generate worksheet */
+  //   const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.dataSource.data);
+
+
+  //   let wscols = [
+  //     {hidden:true},
+  //     {wch:15},
+  //     {wch:8},
+  //     {wch:6},
+  //     {wch:25},
+  //     {wch:12},
+  //     {wch:10},
+  //     {wch:10},
+  //     {wch:10},
+  //     {wch:10},
+  //     {wch:30},
+  //     {wch:30},
+  //     {wch:30},
+  //   ];
+
+  //   ws['!cols'] = wscols;
+
+  //   /* generate workbook and add the worksheet */
+  //   const wb: XLSX.WorkBook = XLSX.utils.book_new();
+  //   XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+  //   /* save to file */
+  //   XLSX.writeFile(wb, this.excelName);
+  // }
+
+
+
+
 
   /////////////////// Scroll vers le haut click bouton /////////////////////
   @HostListener('window:scroll')
