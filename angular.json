@@ -16,6 +16,8 @@
             "allowedCommonJsDependencies": [
               "jspdf-autotable",
               "jspdf",
+              "raf",
+              "core-js",
               "canvg"
             ],
             "outputPath": "dist/tabprojet",
