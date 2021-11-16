@@ -89,6 +89,8 @@ export class TableauComponent implements OnInit {
   docs = [];
   fileInfos?: Observable<any>;
   url = environment.Url;
+  ndate = new Date;
+  date = this.datepipe.transform(this.ndate, 'dd/MM/yyyy');
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   
@@ -370,7 +372,7 @@ export class TableauComponent implements OnInit {
       }
     })
 
-    doc.save('Tableau-Projets.pdf')
+    doc.save('Tableau-Projets '+ this.date +'.pdf')
 
   };
 
@@ -381,9 +383,7 @@ export class TableauComponent implements OnInit {
   ///////////////////// Tableau Excel ////////////////// 
 
   downloadExcel(): void {
-    let ndate = new Date;
-    let date = this.datepipe.transform(ndate, 'dd/MM/yyyy');
-	  let excelName: string = 'Suivi de projet '+ date +'.xlsx';
+
     
     let dataExcel = [];
 
@@ -498,7 +498,7 @@ export class TableauComponent implements OnInit {
     XLSX.utils.book_append_sheet(wb, ws, 'Projets1');
 
     /* save to file */
-    XLSX.writeFile(wb, excelName);
+    XLSX.writeFile(wb, 'Suivi de projet '+ this.date +'.xlsx');
   }
 
 
