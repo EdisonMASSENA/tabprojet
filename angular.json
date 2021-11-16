@@ -18,7 +18,8 @@
               "jspdf",
               "raf",
               "core-js",
-              "canvg"
+              "canvg",
+              "xlsx"
             ],
             "outputPath": "dist/tabprojet",
             "index": "src/index.html",
