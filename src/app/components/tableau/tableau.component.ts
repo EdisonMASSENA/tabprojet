@@ -30,6 +30,7 @@ import { UploadService } from 'src/app/services/upload.service';
 import { TableauService } from "src/app/services/tableau.service";
 import { DialogBoxComponent } from 'src/app/components/dialog-box/dialog-box.component';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
+import { now } from 'lodash';
 
 
 
@@ -88,8 +89,6 @@ export class TableauComponent implements OnInit {
   docs = [];
   fileInfos?: Observable<any>;
   url = environment.Url;
-	// wopts: XLSX.WritingOptions = { bookType: 'xlsx', type: 'array' };
-	excelName: string = 'SheetJS.xlsx';
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   
@@ -382,8 +381,12 @@ export class TableauComponent implements OnInit {
   ///////////////////// Tableau Excel ////////////////// 
 
   downloadExcel(): void {
-
+    let ndate = new Date;
+    let date = this.datepipe.transform(ndate, 'dd/MM/yyyy');
+	  let excelName: string = 'Suivi de projet '+ date +'.xlsx';
+    
     let dataExcel = [];
+
     this.dataSource.data.forEach(e => {
       let tempObj = [];
       let etat : String;
@@ -492,10 +495,10 @@ export class TableauComponent implements OnInit {
 
     /* generate workbook and add the worksheet */
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+    XLSX.utils.book_append_sheet(wb, ws, 'Projets1');
 
     /* save to file */
-    XLSX.writeFile(wb, this.excelName);
+    XLSX.writeFile(wb, excelName);
   }
 
 
