@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, HostListener, NgZone } from '@angular/core';
+import { Component, OnInit, ViewChild, HostListener, NgZone, Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -21,6 +21,8 @@ import { DatePipe } from '@angular/common'
 
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable'
+import * as XLSX from 'xlsx';
+type AOA = any[][];
 
 
 import { Tab } from "src/app/interface/tab";
@@ -28,6 +30,7 @@ import { UploadService } from 'src/app/services/upload.service';
 import { TableauService } from "src/app/services/tableau.service";
 import { DialogBoxComponent } from 'src/app/components/dialog-box/dialog-box.component';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
+import { now } from 'lodash';
 
 
 
@@ -86,7 +89,6 @@ export class TableauComponent implements OnInit {
   docs = [];
   fileInfos?: Observable<any>;
   url = environment.Url;
-
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   
@@ -201,7 +203,7 @@ export class TableauComponent implements OnInit {
   //////////////////// Deconnexion //////////////////////////
   logout(): void {
     this.tokenStorage.signOut();
-    this.router.navigate(['/login']);
+    this.router.navigate(['']);
     let msg = 'Déconnexion';
     this.snackbar(msg);
   };
@@ -279,7 +281,6 @@ export class TableauComponent implements OnInit {
         error => {
           // console.log(error);
         });
-
   };
 
   /////////// not in prod ////////////////
@@ -372,6 +373,137 @@ export class TableauComponent implements OnInit {
     doc.save('Tableau-Projets.pdf')
 
   };
+
+
+
+
+
+  ///////////////////// Tableau Excel ////////////////// 
+
+  downloadExcel(): void {
+    let ndate = new Date;
+    let date = this.datepipe.transform(ndate, 'dd/MM/yyyy');
+	  let excelName: string = 'Suivi de projet '+ date +'.xlsx';
+    
+    let dataExcel = [];
+
+    this.dataSource.data.forEach(e => {
+      let tempObj = [];
+      let etat : String;
+      let tendance : String;
+
+      tempObj.push(e.chef);
+      tempObj.push(e.direction);
+      tempObj.push(e.priorite);
+      tempObj.push(e.projet + '  (' + e.type + ')');
+      tempObj.push(e.progress + '%');
+      tempObj.push(this.datepipe.transform(e.debut, 'MM/yyyy'));
+      tempObj.push(this.datepipe.transform(e.fin, 'MM/yyyy'));
+      switch (e.etat) {
+        case 'assets/1.png':
+         etat = 'Soleil';
+          break;
+
+        case 'assets/2.png':
+         etat = 'Éclaircie'
+          break;
+
+        case 'assets/3.png':
+         etat = 'Nuage'
+          break;
+
+        case 'assets/4.png':
+         etat = 'Pluie'
+          break;
+
+        default:
+          break;
+      }
+      tempObj.push(etat);
+      switch (e.tendance) {
+        case 'assets/a.png':
+         tendance = 'Bon';
+          break;
+
+        case 'assets/b.png':
+         tendance = 'Moyen'
+          break;
+
+        case 'assets/c.png':
+         tendance = 'Mauvais'
+          break;
+
+        default:
+          break;
+      }
+      tempObj.push(tendance);
+      tempObj.push(e.accompli);
+      tempObj.push(e.attention);
+      tempObj.push(e.encours);
+      dataExcel.push(tempObj);
+    });
+
+    const rename = dataExcel.map(({
+      0: Chef,
+      1: Direction,
+      2: Priorité,
+      3: Projet,
+      4: Avancement,
+      5: Début,
+      6: Fin,
+      7: État,
+      8: Tendance,
+      9: Accompli,
+      10: Attention,
+      11: Encours
+      
+    }) => ({
+      Chef,
+      Direction,
+      Priorité,
+      Projet,
+      Avancement,
+      Début,
+      Fin,
+      État,
+      Tendance,
+      Accompli,
+      Attention,
+      Encours      
+    }));
+
+    /* generate worksheet */
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(rename);
+    
+
+    let wscols = [
+      {wch:15},
+      {wch:8},
+      {wch:6},
+      {wch:30},
+      {wch:12},
+      {wch:8},
+      {wch:8},
+      {wch:10},
+      {wch:10},
+      {wch:35},
+      {wch:35},
+      {wch:35},
+    ];
+
+    ws['!cols'] = wscols;
+
+    /* generate workbook and add the worksheet */
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Projets1');
+
+    /* save to file */
+    XLSX.writeFile(wb, excelName);
+  }
+
+
+
+
 
   /////////////////// Scroll vers le haut click bouton /////////////////////
   @HostListener('window:scroll')
