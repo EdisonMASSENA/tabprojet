@@ -24,7 +24,7 @@
 
     <p class="tri" *ngIf="medium">{{ username }}:</p>
     
-    <p class="tri" *ngIf="medium">{{ username }}</p>
+    <p class="tri username" *ngIf="medium">{{ username }}</p>
 
     <p class="tri">Tri:</p>
     <button mat-raised-button color="primary" (click)="tri(null)" class="reset">Réinitialiser</button>
@@ -105,11 +105,11 @@
         <button mat-raised-button [disabled]="consult" color="accent" [ngClass]="!medium ? 'add' : 'addM' " (click)="openDialog('Ajouter',{})"> Nouveau Projet</button>
       </span>
       
-      <button class="red" (click)="downloadPdf()" mat-mini-fab matTooltip="Télécharger tableau en PDF">
+      <button class="red" (click)="downloadPdf()" mat-mini-fab matTooltip="Télécharger Tableau PDF">
         <mat-icon>picture_as_pdf</mat-icon>
       </button>
 
-      <button class="green" (click)="downloadExcel()" mat-mini-fab matTooltip="Télécharger tableau Excel">
+      <button class="green" (click)="downloadExcel()" mat-mini-fab matTooltip="Télécharger Tableau Excel">
         <mat-icon>table_chart</mat-icon>
       </button>
 

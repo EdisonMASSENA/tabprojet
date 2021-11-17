@@ -341,7 +341,7 @@ export class TableauComponent implements OnInit {
         3: { cellWidth: 35 },
         4: { cellWidth: 20 },
         5: { cellWidth: 20 },
-        6: { cellWidth: 20 },
+        6: { cellWidth: 25 },
         7: { cellWidth: 21, minCellHeight: 15, textColor: 255 },
         8: { cellWidth: 21, minCellHeight: 15, textColor: 255 },
         9: { cellWidth: 65 },
@@ -422,15 +422,15 @@ export class TableauComponent implements OnInit {
       tempObj.push(etat);
       switch (e.tendance) {
         case 'assets/a.png':
-         tendance = 'Bon';
+         tendance = 'Bonne';
           break;
 
         case 'assets/b.png':
-         tendance = 'Moyen'
+         tendance = 'Moyenne'
           break;
 
         case 'assets/c.png':
-         tendance = 'Mauvais'
+         tendance = 'Mauvaise'
           break;
 
         default:
