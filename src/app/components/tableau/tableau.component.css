@@ -16,6 +16,15 @@
     padding: 30px;
 }
 
+.username{
+    font-size: 20px;
+    color: white;
+    background: #ff4081;
+    padding: 4px 10px;
+    border-radius: 20px;
+    text-align: center;
+}
+
 .tri{
     font-size: 20px;
 }
