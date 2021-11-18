@@ -16,7 +16,10 @@
             "allowedCommonJsDependencies": [
               "jspdf-autotable",
               "jspdf",
-              "canvg"
+              "raf",
+              "core-js",
+              "canvg",
+              "xlsx"
             ],
             "outputPath": "dist/tabprojet",
             "index": "src/index.html",
@@ -44,7 +47,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,

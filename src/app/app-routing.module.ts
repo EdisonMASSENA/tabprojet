@@ -7,8 +7,8 @@ import { AuthGuard } from './helpers/auth.guard';
 
 const routes: Routes = [
   { path: 'projets', component: TableauComponent, canActivate: [AuthGuard] },
-  { path: 'login', component: LoginComponent },
-  { path: '', redirectTo: 'login', pathMatch: 'full' }
+  { path: '', component: LoginComponent },
+  // { path: 'login', redirectTo: '', pathMatch: 'full' }
 ];
 
 @NgModule({
