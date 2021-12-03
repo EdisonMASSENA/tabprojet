@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, HostListener, NgZone, Injectable } from '@angular/core';
+import { Component, OnInit, ViewChild, HostListener, NgZone} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -22,7 +22,7 @@ import { DatePipe } from '@angular/common'
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable'
 import * as XLSX from 'xlsx';
-type AOA = any[][];
+
 
 
 import { Tab } from "src/app/interface/tab";
