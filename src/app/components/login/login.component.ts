@@ -39,6 +39,10 @@ export class LoginComponent implements OnInit {
   errorMessage = '';
   small: boolean;
 
+  mdpFormControl = new FormControl('', [
+    Validators.required
+  ]);
+
   constructor(private _snackBar: MatSnackBar, private router: Router, private authService: AuthService, private tokenStorage: TokenStorageService, private breakpointObserver: BreakpointObserver) { }
 
   ngOnInit(): void {
@@ -50,6 +54,12 @@ export class LoginComponent implements OnInit {
 
     this.recupUser();
 
+    this.responsive();
+    
+  }
+
+  
+  responsive(){
     this.breakpointObserver
       .observe([Breakpoints.HandsetPortrait,Breakpoints.Small,,Breakpoints.XSmall])
       .subscribe((state: BreakpointState) => {
@@ -62,12 +72,6 @@ export class LoginComponent implements OnInit {
       });
   }
 
-  mdpFormControl = new FormControl('', [
-    Validators.required
-  ]);
-
-
-
   login(): void {
     if (this.form.username == 'Consultation') {
       this.form.password = null ;
@@ -79,7 +83,12 @@ export class LoginComponent implements OnInit {
 
         this.isLoginFailed = false;
         this.isLoggedIn = true;
-        this.router.navigate(['/projets']);
+        
+        if (data.username == 'Admin') {
+          this.router.navigate(['/admin']);
+        } else {
+          this.router.navigate(['/projets']);
+        }
 
       },
       err => {

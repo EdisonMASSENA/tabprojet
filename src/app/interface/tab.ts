@@ -18,8 +18,8 @@ export interface Tab {
 
 export interface User{
     id:Number;
-    direction:String;
-    mdp:String;
+    username:String;
+    password:String;
     
 };
 

@@ -35,6 +35,7 @@ import { DialogBoxComponent } from './components/dialog-box/dialog-box.component
 import { TableauService } from './services/tableau.service';
 import { LoginComponent } from './components/login/login.component';
 import { authInterceptorProviders } from './helpers/auth.interceptor';
+import { AdduserComponent } from './components/adduser/adduser.component';
 
 
 
@@ -44,6 +45,7 @@ import { authInterceptorProviders } from './helpers/auth.interceptor';
     TableauComponent,
     DialogBoxComponent,
     LoginComponent,
+    AdduserComponent,
   ],
   imports: [
     BrowserModule,
