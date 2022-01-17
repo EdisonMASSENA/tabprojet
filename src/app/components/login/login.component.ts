@@ -62,22 +62,23 @@ export class LoginComponent implements OnInit {
   responsive(){
     this.breakpointObserver
       .observe([Breakpoints.HandsetPortrait,Breakpoints.Small,,Breakpoints.XSmall])
-      .subscribe((state: BreakpointState) => {
-        if (state.matches) {
-           this.small = true;
-        }else{
-          this.small = false;
+        .subscribe((state: BreakpointState) => {
+          if (state.matches) {
+            this.small = true;
+          }else{
+            this.small = false;
 
         }
       });
   }
 
+
   login(): void {
     if (this.form.username == 'Consultation') {
       this.form.password = null ;
     };
-    this.authService.login(this.form).subscribe(
-      data => {
+    this.authService.login(this.form).subscribe({
+      next: (data) => {
         this.tokenStorage.saveToken(data.accessToken);
         this.tokenStorage.saveUser(data);
 
@@ -91,7 +92,7 @@ export class LoginComponent implements OnInit {
         }
 
       },
-      err => {
+      error: (err) => {
         this.errorMessage = err.error.message;
         this.isLoginFailed = true;
         console.log(err.error.message)
@@ -103,22 +104,21 @@ export class LoginComponent implements OnInit {
           horizontalPosition: "center",
           verticalPosition: "bottom",
         });
-
       }
-    );
+    });
   }
+
 
   recupUser(): void {
     this.authService.user()
-      .subscribe(
-        data => {
+      .subscribe({
+        next: (data) => {
           for (let i = 0; i < data.length; i++) {
             this.dirs = this.dirs.concat(data[i].username);
           }
         },
-        error => {
-          console.log(error);
-        });
+        error: (e) => console.error(e)
+      });
   }
 
 

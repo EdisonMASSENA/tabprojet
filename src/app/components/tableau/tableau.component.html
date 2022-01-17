@@ -31,9 +31,9 @@
 
       <button mat-button color="accent" (click)="tri('assets/1.png')">
         <mat-card class="card">
-            <mat-card-content>
-              <img mat-card-sm-image src="assets/1.png" >
-            </mat-card-content>
+          <mat-card-content>
+            <img mat-card-sm-image src="assets/1.png" >
+          </mat-card-content>
         </mat-card>
       </button>
 
@@ -68,9 +68,9 @@
 
       <button mat-button color="accent" (click)="tri('assets/a.png')">
         <mat-card class="card">
-            <mat-card-content>
-              <img mat-card-sm-image src="assets/a.png" >
-            </mat-card-content>
+          <mat-card-content>
+            <img mat-card-sm-image src="assets/a.png" >
+          </mat-card-content>
         </mat-card>
       </button>
 
@@ -112,7 +112,7 @@
       </button>
 
       <mat-form-field appearence="fill" class="rech" color="accent">
-        <mat-label>Rechercher un projet</mat-label>
+        <mat-label class="rechlab">Rechercher un projet</mat-label>
         <input matInput (keyup)="applyFilter($event)" placeholder="Nom projet" #input>
       </mat-form-field>
 
@@ -277,7 +277,7 @@
           <span class="actionPill"> 
 
         <!-- fileupload not prod -->
-            <!-- <button mat-icon-button [matMenuTriggerFor]="menu" matTooltip="Pièces jointes" color="accent">
+            <button mat-icon-button [matMenuTriggerFor]="menu" matTooltip="Pièces jointes" color="accent">
               <mat-icon>attachment</mat-icon>
             </button>
 
@@ -286,7 +286,7 @@
                 <mat-icon>file_download</mat-icon>
                 <span>{{doc.name}}</span>
               </a>
-            </mat-menu> -->
+            </mat-menu>
         <!--  -->
 
             <button mat-icon-button [matTooltip]="consult ? 'Vous n\'avez pas les droits' : 'Modifier'" [disabled]="consult" color="primary" (click)="openDialog('Modifier',tabs)">
@@ -365,7 +365,7 @@
 
         <!-- fileupload not prod -->
 
-                <!-- <button mat-icon-button [matMenuTriggerFor]="menu" matTooltip="Pièces jointes" color="accent">
+                <button mat-icon-button [matMenuTriggerFor]="menu" matTooltip="Pièces jointes" color="accent">
                   <mat-icon>attachment</mat-icon>
                 </button>
       
@@ -374,7 +374,7 @@
                     <mat-icon>file_download</mat-icon>
                     <span>{{doc.name}}</span>
                   </a>
-                </mat-menu> -->
+                </mat-menu>
         <!--  -->
         
                 <button mat-icon-button matTooltip="Modifier" color="primary" [matTooltip]="consult ? 'Vous n\'avez pas les droits' : 'Modifier'" [disabled]="consult" (click)="openDialog('Modifier',tabs)">

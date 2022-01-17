@@ -94,7 +94,7 @@ export class DialogBoxComponent implements OnInit {
       this.annees.push(i)
     }; 
 
-    // this.docs = this.uploadService.getFiles();
+    this.docs = this.uploadService.getFiles();
 
   }
 
@@ -129,7 +129,7 @@ export class DialogBoxComponent implements OnInit {
       this.local_data.fin = new Date(this.local_data.finannee,this.local_data.finmois,0,0,0,0);
     }
 
-    // this.uploadFiles();
+    this.uploadFiles();
     this.dialogRef.close({ event: this.action, data: this.local_data });
 
   }
@@ -172,8 +172,8 @@ export class DialogBoxComponent implements OnInit {
 
   recupdate(id) {
     this.tableauService.getAll()
-    .subscribe(
-      data => {
+    .subscribe({
+      next: (data) => {
         // console.log(response);
         let date = data.filter(item => item.id == id);
         if (date[0]['debut'] !== null) {
@@ -185,77 +185,77 @@ export class DialogBoxComponent implements OnInit {
           this.local_data.finmois = date[0]['fin'].slice(5,7);
         };
       },
-      error => {
-        // console.log(error);
+      error: (e) => console.error(e)
       });
   };
 
 
   ///////////////// not in prod /////////////////////
   
-  // selectFiles(event: any): void {
-  //   this.message = [];
-  //   // this.progressInfos = [];
-  //   this.selectedFileNames = [];
-  //   this.selectedFiles = event.target.files;
+  selectFiles(event: any): void {
+    this.message = [];
+    // this.progressInfos = [];
+    this.selectedFileNames = [];
+    this.selectedFiles = event.target.files;
   
 
-  //   if (this.selectedFiles && this.selectedFiles[0]) {
-  //     const numberOfFiles = this.selectedFiles.length;
-  //     for (let i = 0; i < numberOfFiles; i++) {  
-  //       this.selectedFileNames.push(this.selectedFiles[i].name);
-  //     }
-  //   }
-  // }
+    if (this.selectedFiles && this.selectedFiles[0]) {
+      const numberOfFiles = this.selectedFiles.length;
+      for (let i = 0; i < numberOfFiles; i++) {  
+        this.selectedFileNames.push(this.selectedFiles[i].name);
+      }
+    }
+  }
   
 
-  // uploadFiles(): void {
-  //   this.message = [];
+  uploadFiles(): void {
+    this.message = [];
   
-  //   if (this.selectedFiles) {
-  //     for (let i = 0; i < this.selectedFiles.length; i++) {
-  //       this.upload(i, this.selectedFiles[i]);
-  //     }
-  //   }
-  // }
-  
-
-  // upload(idx: number, file: File): void {
-  //   // this.progressInfos[idx] = { value: 0, fileName: file.name };
-  
-  //   if (file) {
-  //     this.uploadService.upload(file).subscribe(
-  //       (event: any) => {
-  //         if (event.type === HttpEventType.UploadProgress) {
-  //           // this.progressInfos[idx].value = Math.round(100 * event.loaded / event.total);
-  //         } else if (event instanceof HttpResponse) {
-  //           const msg = 'Uploaded the file successfully: ' + file.name;
-  //           this.message.push(msg);
-  //           this.docs = this.uploadService.getFiles();
-  //         }
-  //       },
-  //       (err: any) => {
-  //         // this.progressInfos[idx].value = 0;
-  //         const msg = 'Could not upload the file: ' + file.name;
-  //         this.message.push(msg);
-  //       });
-  //   }
-  // }
-  
+    if (this.selectedFiles) {
+      for (let i = 0; i < this.selectedFiles.length; i++) {
+        this.upload(i, this.selectedFiles[i]);
+      }
+    }
+  }
   
 
-  // deleteUp(id) {
-  //   this.uploadService.delete(id)
-  //     .subscribe(
-  //       response => {
-  //         // console.log(response);
-  //         this.docs = this.uploadService.getFiles();
-  //       },
-  //       error => {
-  //         // console.log(error);
-  //       });
+  upload(idx: number, file: File): void {
+    // this.progressInfos[idx] = { value: 0, fileName: file.name };
+  
+    if (file) {
+      this.uploadService.upload(file, this.local_data.id).subscribe({
+        next: (event: any) => {
+          if (event.type === HttpEventType.UploadProgress) {
+            // this.progressInfos[idx].value = Math.round(100 * event.loaded / event.total);
+          } else if (event instanceof HttpResponse) {
+            const msg = 'Uploaded the file successfully: ' + file.name;
+            this.message.push(msg);
+            this.docs = this.uploadService.getFiles();
+          }
+        },
+        error: (err: any) => {
+          // this.progressInfos[idx].value = 0;
+          const msg = 'Could not upload the file: ' + file.name;
+          this.message.push(msg);
+          console.error(err);
+        }
+      });
+    }
+  }
+  
+  
 
-  // };
+  deleteUp(id) {
+    this.uploadService.delete(id)
+      .subscribe({
+        next: (res) => {
+          // console.log(response);
+          this.docs = this.uploadService.getFiles();
+        },
+        error: (e) => console.error(e)
+      });
+  };
+
 
   ///////////////////////////////////////////
 

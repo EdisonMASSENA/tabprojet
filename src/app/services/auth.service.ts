@@ -32,7 +32,7 @@ export class AuthService {
   }
   
   create(user): Observable<any>{
-    return this.http.post(url + '/user', user);
+    return this.http.post(url + '/admin', user);
   }
 
   delete(id): Observable<any> {

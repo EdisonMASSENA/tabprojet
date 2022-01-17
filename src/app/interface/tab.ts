@@ -20,12 +20,11 @@ export interface User{
     id:Number;
     username:String;
     password:String;
-    
 };
 
 export interface Upload{
     id:Number;
     data:Blob;
     type:String;
-    projetId:Number;
+    tab_id:Number;
 };

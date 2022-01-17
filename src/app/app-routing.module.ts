@@ -9,7 +9,7 @@ import { AdduserComponent } from './components/adduser/adduser.component';
 const routes: Routes = [
   { path: 'projets', component: TableauComponent, canActivate: [AuthGuard] },
   { path: '', component: LoginComponent },
-  { path: 'admin', component: AdduserComponent, },
+  { path: 'admin', component: AdduserComponent,  }, //canActivate: [AdminGuard]
   // { path: 'login', redirectTo: '', pathMatch: 'full' }
 ];
 

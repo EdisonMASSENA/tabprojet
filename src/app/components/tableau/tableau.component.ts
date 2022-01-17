@@ -30,7 +30,8 @@ import { UploadService } from 'src/app/services/upload.service';
 import { TableauService } from "src/app/services/tableau.service";
 import { DialogBoxComponent } from 'src/app/components/dialog-box/dialog-box.component';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
-import { now } from 'lodash';
+
+// import { now } from 'lodash';
 
 
 
@@ -110,7 +111,7 @@ export class TableauComponent implements OnInit {
     this.tabDisplay();
 
 
-    // this.recupFile();
+    this.recupFile();
 
 
     //////////////////// Bar de recherche filtré par projet ////////////////////////////
@@ -213,18 +214,15 @@ export class TableauComponent implements OnInit {
 
   /////////////////////// Ajout Projet ////////////////////
   createTableau(data: Tab): void {
-
     this.tabservice.create(data)
-      .subscribe(
-        response => {
-          // console.log(response);
+      .subscribe({
+        next: (res) => {
+          // console.log(res);
           this.recupTab();
-          // this.recupFile();
+          this.recupFile();
         },
-        error => {
-          // console.log(error);
-        });
-
+        error: (e) => console.error(e)
+      });
   };
 
 
@@ -232,15 +230,14 @@ export class TableauComponent implements OnInit {
 
   editTableau(data: Tab): void {
     this.tabservice.update(data.id, data)
-      .subscribe(
-        response => {
-          // console.log(data.date);
+      .subscribe({
+        next: (res) => {
+          // console.log(res);
           this.recupTab();
-          // this.recupFile();
+          this.recupFile();
         },
-        error => {
-          // console.log(error);
-        });
+        error: (e) => console.error(e)
+      });
 
   };
 
@@ -248,14 +245,13 @@ export class TableauComponent implements OnInit {
   //////////////////// Suppression Projet ////////////////////
   deleteTableau(data: Tab) {
     this.tabservice.delete(data.id)
-      .subscribe(
-        response => {
-          // console.log(response);
+      .subscribe({
+        next: (res) => {
+          // console.log(res);
           this.recupTab();
         },
-        error => {
-          // console.log(error);
-        });
+        error: (e) => console.error(e)
+      });
 
   };
 
@@ -271,8 +267,8 @@ export class TableauComponent implements OnInit {
   ///////////////////// Data Tableau ////////////////////////
   recupTab(): void {
     this.tabservice.getAll()
-      .subscribe(
-        data => {
+      .subscribe({
+        next: (data) => {
           if (this.username == 'Consultation') {
             this.dataSource.data = data
           }
@@ -280,25 +276,22 @@ export class TableauComponent implements OnInit {
             this.dataSource.data = data.filter(item => item.direction === this.username);
           };
         },
-        error => {
-          // console.log(error);
-        });
+        error: (e) => console.error(e)
+      });
   };
 
   /////////// not in prod ////////////////
 
-  // recupFile(): void {
-  //   this.uploadService.getFiles()
-  //     .subscribe(
-  //       files => {
-  //           this.docs = files;
-  //         // console.log(this.docs);
-  //       },
-  //       error => {
-  //         // console.log(error);
-  //       });
-
-  // };
+  recupFile(): void {
+    this.uploadService.getFiles()
+      .subscribe({
+        next: (files) => {
+          this.docs = files;
+          // console.log(this.docs);
+        },
+        error: (e) => console.error(e)
+      });
+  };
 
   //////////////////////////////////////
 
@@ -309,20 +302,20 @@ export class TableauComponent implements OnInit {
 
     let prepare = [];
     this.dataSource.data.forEach(e => {
-      let tempObj = [];
-      tempObj.push(e.chef);
-      tempObj.push(e.direction);
-      tempObj.push(e.priorite);
-      tempObj.push(e.projet + '  (' + e.type + ')');
-      tempObj.push(this.datepipe.transform(e.debut, 'MM/yyyy'));
-      tempObj.push(this.datepipe.transform(e.fin, 'MM/yyyy'));
-      tempObj.push(e.progress + '%');
-      tempObj.push(e.etat);
-      tempObj.push(e.tendance);
-      tempObj.push(e.accompli);
-      tempObj.push(e.attention);
-      tempObj.push(e.encours);
-      prepare.push(tempObj);
+      let pdfData = [];
+      pdfData.push(e.chef);
+      pdfData.push(e.direction);
+      pdfData.push(e.priorite);
+      pdfData.push(e.projet + '  (' + e.type + ')');
+      pdfData.push(this.datepipe.transform(e.debut, 'MM/yyyy'));
+      pdfData.push(this.datepipe.transform(e.fin, 'MM/yyyy'));
+      pdfData.push(e.progress + '%');
+      pdfData.push(e.etat);
+      pdfData.push(e.tendance);
+      pdfData.push(e.accompli);
+      pdfData.push(e.attention);
+      pdfData.push(e.encours);
+      prepare.push(pdfData);
     });
 
     const doc = new jsPDF('l', 'mm', 'a3')
@@ -388,17 +381,17 @@ export class TableauComponent implements OnInit {
     let dataExcel = [];
 
     this.dataSource.data.forEach(e => {
-      let tempObj = [];
+      let excelData = [];
       let etat : String;
       let tendance : String;
 
-      tempObj.push(e.chef);
-      tempObj.push(e.direction);
-      tempObj.push(e.priorite);
-      tempObj.push(e.projet + '  (' + e.type + ')');
-      tempObj.push(e.progress + '%');
-      tempObj.push(this.datepipe.transform(e.debut, 'MM/yyyy'));
-      tempObj.push(this.datepipe.transform(e.fin, 'MM/yyyy'));
+      excelData.push(e.chef);
+      excelData.push(e.direction);
+      excelData.push(e.priorite);
+      excelData.push(e.projet + '  (' + e.type + ')');
+      excelData.push(e.progress + '%');
+      excelData.push(this.datepipe.transform(e.debut, 'MM/yyyy'));
+      excelData.push(this.datepipe.transform(e.fin, 'MM/yyyy'));
       switch (e.etat) {
         case 'assets/1.png':
          etat = 'Soleil';
@@ -419,7 +412,7 @@ export class TableauComponent implements OnInit {
         default:
           break;
       }
-      tempObj.push(etat);
+      excelData.push(etat);
       switch (e.tendance) {
         case 'assets/a.png':
          tendance = 'Bonne';
@@ -436,11 +429,11 @@ export class TableauComponent implements OnInit {
         default:
           break;
       }
-      tempObj.push(tendance);
-      tempObj.push(e.accompli);
-      tempObj.push(e.attention);
-      tempObj.push(e.encours);
-      dataExcel.push(tempObj);
+      excelData.push(tendance);
+      excelData.push(e.accompli);
+      excelData.push(e.attention);
+      excelData.push(e.encours);
+      dataExcel.push(excelData);
     });
 
     const rename = dataExcel.map(({
@@ -539,11 +532,12 @@ export class TableauComponent implements OnInit {
   };
 
 
+/////////////////// Sidenav Tri ////////////////////
 
 tri(tri){
   this.tabservice.getAll()
-      .subscribe(
-        data => {
+      .subscribe({
+        next: (data) => {
           switch (tri) {
             case 'assets/1.png': case 'assets/2.png': case 'assets/3.png': case 'assets/4.png':
               this.dataSource.data = data.filter(item => item.etat === tri);
@@ -558,15 +552,12 @@ tri(tri){
               break;
           }
         },
-        error => {
-          // console.log(error);
-        });
- 
-   
+        error: (e) => console.error(e)
+      });
 }
 
 
-  /////////////////////////////////
+  ////////////////END/////////////////
 
 
 };

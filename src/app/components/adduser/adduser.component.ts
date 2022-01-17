@@ -41,43 +41,39 @@ export class AdduserComponent implements OnInit {
 
   recupUser(): void {
     this.authService.admin()
-      .subscribe(
-        data => {
+      .subscribe({
+        next: (data) => {
           this.dataSource.data = data;
         },
-        error => {
-          console.log(error);
-        });
+        error: (e) => console.error(e)
+      });
   }
 
 
   createUser(): void {
 
     this.authService.create(this.user)
-      .subscribe(
-        response => {
+      .subscribe({
+        next: (res) => {
           // console.log(response);
           this.recupUser();
           // this.recupFile();
         },
-        error => {
-          // console.log(error);
-        });
+        error: (e) => console.error(e)
+      });
 
   };
 
   deleteUser(data: User) {
     
     this.authService.delete(data)
-      .subscribe(
-        response => {
+      .subscribe({
+        next: (res) => {
           // console.log(response);
           this.recupUser();
         },
-        error => {
-          // console.log(error);
-        });
-
+        error: (e) => console.error(e)
+      });
   };
 
 
