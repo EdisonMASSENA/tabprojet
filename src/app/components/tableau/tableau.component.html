@@ -276,18 +276,25 @@
 
           <span class="actionPill"> 
 
-        <!-- fileupload not prod -->
             <button mat-icon-button [matMenuTriggerFor]="menu" matTooltip="Pièces jointes" color="accent">
               <mat-icon>attachment</mat-icon>
             </button>
 
             <mat-menu #menu="matMenu" xPosition="before" yPosition="above">
-              <a href="{{url}}api/file/{{doc.id}}" mat-menu-item *ngFor="let doc of docs">
-                <mat-icon>file_download</mat-icon>
+              <button (click)="openDialog('Upload',tabs)" mat-menu-item> 
+                <mat-icon>add</mat-icon> 
+                Ajouter un document 
+              </button>
+              <a mat-menu-item *ngFor="let doc of tabs.file">
+                <a href="{{url}}api/file/{{doc.id}}" mat-icon-button>
+                  <mat-icon>file_download</mat-icon>
+                </a>
                 <span>{{doc.name}}</span>
+                <button mat-icon-button (click)="deleteUp(doc.id)">
+                  <mat-icon>delete</mat-icon>
+                </button>
               </a>
             </mat-menu>
-        <!--  -->
 
             <button mat-icon-button [matTooltip]="consult ? 'Vous n\'avez pas les droits' : 'Modifier'" [disabled]="consult" color="primary" (click)="openDialog('Modifier',tabs)">
               <mat-icon>edit</mat-icon>
@@ -363,19 +370,18 @@
               <span>
                 <span class="textPills">Action:</span>
 
-        <!-- fileupload not prod -->
 
-                <button mat-icon-button [matMenuTriggerFor]="menu" matTooltip="Pièces jointes" color="accent">
+                <button mat-icon-button (click)="consult ? menuAc : openDialog('Upload',tabs) " [matMenuTriggerFor]="menuAc ? menu : null"  matTooltip="Pièces jointes" color="accent">
                   <mat-icon>attachment</mat-icon>
                 </button>
-      
-                <mat-menu #menu="matMenu" xPosition="before" yPosition="above">
-                  <a href="{{url +'api/file/'+ doc.id}}" mat-menu-item *ngFor="let doc of docs">
+    
+                
+                <mat-menu #menu="matMenu" xPosition="before" yPosition="above" >
+                  <a href="{{url}}api/file/{{doc.id}}" mat-menu-item *ngFor="let doc of tabs.file">
                     <mat-icon>file_download</mat-icon>
                     <span>{{doc.name}}</span>
                   </a>
                 </mat-menu>
-        <!--  -->
         
                 <button mat-icon-button matTooltip="Modifier" color="primary" [matTooltip]="consult ? 'Vous n\'avez pas les droits' : 'Modifier'" [disabled]="consult" (click)="openDialog('Modifier',tabs)">
                   <mat-icon>edit</mat-icon>

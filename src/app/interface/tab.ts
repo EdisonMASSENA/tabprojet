@@ -14,6 +14,7 @@ export interface Tab {
     etat: String;
     tendance: String; 
     progress: Number;
+    file: any;
 };
 
 export interface User{

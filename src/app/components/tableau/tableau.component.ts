@@ -92,6 +92,8 @@ export class TableauComponent implements OnInit {
   url = environment.Url;
   ndate = new Date;
   date = this.datepipe.transform(this.ndate, 'dd/MM/yyyy');
+  msg: any;
+  menuAc: boolean;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   
@@ -109,10 +111,6 @@ export class TableauComponent implements OnInit {
 
     ////// Affichage responsive//////
     this.tabDisplay();
-
-
-    this.recupFile();
-
 
     //////////////////// Bar de recherche filtré par projet ////////////////////////////
     this.dataSource.filterPredicate = function (tab, filter: string): boolean {
@@ -152,6 +150,7 @@ export class TableauComponent implements OnInit {
     };
     if (this.username == 'Consultation') {
       this.consult = true;
+      this.menuAc = true;
     };
   };
 
@@ -166,10 +165,6 @@ export class TableauComponent implements OnInit {
           this.medium = true;
           this.displayedColumns = ['projet', 'direction', 'chef', 'etat', 'tendance'];
         }
-        // else if (this.consult) {
-        //   this.medium = false;
-        //   this.displayedColumns = ['chef', 'direction', 'priorite', 'projet', 'date', 'etat', 'tendance', 'accompli', 'attention', 'enCours', 'action'];
-        // }
         else {
           this.medium = false;
           this.displayedColumns = ['projet', 'type', 'direction', 'priorite', 'chef', 'debut', 'fin', 'etat', 'tendance', 'accompli', 'attention', 'enCours', 'action'];
@@ -186,20 +181,38 @@ export class TableauComponent implements OnInit {
       data: obj
     });
     dialogRef.afterClosed().subscribe(result => {
-      if (result.event == 'Ajouter') {
-        this.createTableau(result.data);
-      }
-      else if (result.event == 'Modifier') {
-        this.editTableau(result.data);
-      }
-      else if (result.event == 'Supprimer') {
-        this.deleteTableau(result.data);
-      }
-      else if (result.event == 'Annuler') {
-        let msg = 'Action annulée'
-        this.snackbar(msg)
-      }
-    });
+
+      switch (result.event) {
+        case 'Ajouter': 
+          this.createTableau(result.data);
+          this.msg = 'Le projet ' + result.projet + ' a été ajouté';
+          break;
+
+        case 'Modifier': 
+          this.editTableau(result.data);
+          this.msg = 'Le projet ' + result.projet + ' a été modifié'
+          break;
+
+        case 'Supprimer': 
+          this.deleteTableau(result.data);
+          this.msg = 'Le projet ' + result.projet + ' a été supprimé'
+          break;
+
+        case 'Upload': 
+          this.recupTab();
+          this.msg = 'Document ajouté'
+          this.snackbar(this.msg)
+          break;
+      
+        case 'Annuler': 
+          this.msg = 'Action annulée'
+          this.snackbar(this.msg)
+          break;  
+
+        default :
+          break;
+      };
+    })
   };
 
 
@@ -219,7 +232,6 @@ export class TableauComponent implements OnInit {
         next: (res) => {
           // console.log(res);
           this.recupTab();
-          this.recupFile();
         },
         error: (e) => console.error(e)
       });
@@ -229,12 +241,12 @@ export class TableauComponent implements OnInit {
   //////////////// Modification des champs /////////////////
 
   editTableau(data: Tab): void {
+    delete data.file;
     this.tabservice.update(data.id, data)
       .subscribe({
         next: (res) => {
           // console.log(res);
           this.recupTab();
-          this.recupFile();
         },
         error: (e) => console.error(e)
       });
@@ -255,6 +267,17 @@ export class TableauComponent implements OnInit {
 
   };
 
+
+  deleteUp(id) {
+    this.uploadService.delete(id)
+      .subscribe({
+        next: (res) => {
+          // console.log(response);
+          this.recupTab();
+        },
+        error: (e) => console.error(e)
+      });
+  };
 
 
   //////////////////// Bar de recherche /////////////////////
@@ -282,16 +305,16 @@ export class TableauComponent implements OnInit {
 
   /////////// not in prod ////////////////
 
-  recupFile(): void {
-    this.uploadService.getFiles()
-      .subscribe({
-        next: (files) => {
-          this.docs = files;
-          // console.log(this.docs);
-        },
-        error: (e) => console.error(e)
-      });
-  };
+  // recupFile(): void {
+  //   this.uploadService.getFiles()
+  //     .subscribe({
+  //       next: (files) => {
+  //         this.docs = files;
+  //         // console.log(this.docs);
+  //       },
+  //       error: (e) => console.error(e)
+  //     });
+  // };
 
   //////////////////////////////////////
 

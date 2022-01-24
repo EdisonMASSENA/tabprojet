@@ -1,7 +1,6 @@
 import { Component, Inject, OnInit, Optional } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormControl, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { environment } from 'src/environments/environment';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -59,7 +58,7 @@ export class DialogBoxComponent implements OnInit {
     {value: 'Métier' },
     {value: 'Étude' },
     {value: 'Documentation' },
-    { value: 'Organisationnel' }
+    {value: 'Organisationnel' }
   ];
   action: string;
   local_data: any;
@@ -67,12 +66,11 @@ export class DialogBoxComponent implements OnInit {
   moiss: number[] = [];
   annees: number[] = [];
   url = environment.Url;
-
+  user: any;
   
   selectedFiles?: FileList;
   selectedFileNames: string[] = [];
 
-  // progressInfos: any[] = [];
   message: string[] = [];
 
   docs?: Observable<any>;
@@ -80,7 +78,7 @@ export class DialogBoxComponent implements OnInit {
     Validators.required
   ]);
 
-  constructor(private tableauService: TableauService,private uploadService: UploadService, private tokenStorageService: TokenStorageService, private _snackBar: MatSnackBar, public dialogRef: MatDialogRef<DialogBoxComponent>,
+  constructor(private tabService: TableauService, private uploadService: UploadService, private tokenStorageService: TokenStorageService, public dialogRef: MatDialogRef<DialogBoxComponent>,
     @Optional() @Inject(MAT_DIALOG_DATA) public data: Tab) { this.local_data = { ...data }; this.action = this.local_data.action;  }
 
   ngOnInit(): void {
@@ -94,7 +92,8 @@ export class DialogBoxComponent implements OnInit {
       this.annees.push(i)
     }; 
 
-    this.docs = this.uploadService.getFiles();
+    this.user = this.tokenStorageService.getUser();
+    this.local_data.direction = this.user.username;
 
   }
 
@@ -103,8 +102,6 @@ export class DialogBoxComponent implements OnInit {
 
   doAction() {
 
-    const user = this.tokenStorageService.getUser();
-    this.local_data.direction = user.username;
 
     this.local_data.chef = this.local_data.chef.charAt(0).toUpperCase() + this.local_data.chef.slice(1);
     this.local_data.projet = this.local_data.projet.charAt(0).toUpperCase() + this.local_data.projet.slice(1);
@@ -112,7 +109,7 @@ export class DialogBoxComponent implements OnInit {
       this.local_data.priorite = this.local_data.priorite.charAt(0).toUpperCase() + this.local_data.priorite.slice(1);
     };
 
-    if (this.local_data.progress == null) {
+    if (!this.local_data.progress) {
       this.local_data.progress = 0;
     };
 
@@ -129,7 +126,10 @@ export class DialogBoxComponent implements OnInit {
       this.local_data.fin = new Date(this.local_data.finannee,this.local_data.finmois,0,0,0,0);
     }
 
-    this.uploadFiles();
+    if (this.local_data.action == 'Upload') {
+      this.uploadFiles();
+    }
+
     this.dialogRef.close({ event: this.action, data: this.local_data });
 
   }
@@ -142,36 +142,36 @@ export class DialogBoxComponent implements OnInit {
 
 
 
-  openSnackBar(nom: string, action: string) {
+  // openSnackBar(nom: string, action: string) {
 
-    switch (action) {
-      case 'Ajouter': this.msg = 'Le projet ' + nom + ' a été ajouté'
+  //   switch (action) {
+  //     case 'Ajouter': this.msg = 'Le projet ' + nom + ' a été ajouté'
 
-        break;
+  //       break;
 
-      case 'Supprimer': this.msg = 'Le projet ' + nom + ' a été supprimé'
+  //     case 'Supprimer': this.msg = 'Le projet ' + nom + ' a été supprimé'
 
-        break;
+  //       break;
 
-      case 'Modifier': this.msg = 'Le projet ' + nom + ' a été modifié'
+  //     case 'Modifier': this.msg = 'Le projet ' + nom + ' a été modifié'
 
-      break;
+  //     break;
 
-      default: 'Annulé'
-        break;
-    }
+  //     default: 'Annulé'
+  //       break;
+  //   }
 
-    this._snackBar.open(this.msg,'Fermer', {
-      duration: 3000,
-      horizontalPosition: "center",
-      verticalPosition: "bottom",
-    });
+  //   this._snackBar.open(this.msg,'Fermer', {
+  //     duration: 3000,
+  //     horizontalPosition: "center",
+  //     verticalPosition: "bottom",
+  //   });
 
-  }
+  // }
 
 
   recupdate(id) {
-    this.tableauService.getAll()
+    this.tabService.getAll()
     .subscribe({
       next: (data) => {
         // console.log(response);
@@ -186,15 +186,14 @@ export class DialogBoxComponent implements OnInit {
         };
       },
       error: (e) => console.error(e)
-      });
+    });
   };
 
 
-  ///////////////// not in prod /////////////////////
+  ///////////////// Upload /////////////////////
   
   selectFiles(event: any): void {
     this.message = [];
-    // this.progressInfos = [];
     this.selectedFileNames = [];
     this.selectedFiles = event.target.files;
   
@@ -220,21 +219,17 @@ export class DialogBoxComponent implements OnInit {
   
 
   upload(idx: number, file: File): void {
-    // this.progressInfos[idx] = { value: 0, fileName: file.name };
   
     if (file) {
       this.uploadService.upload(file, this.local_data.id).subscribe({
         next: (event: any) => {
           if (event.type === HttpEventType.UploadProgress) {
-            // this.progressInfos[idx].value = Math.round(100 * event.loaded / event.total);
           } else if (event instanceof HttpResponse) {
             const msg = 'Uploaded the file successfully: ' + file.name;
             this.message.push(msg);
-            this.docs = this.uploadService.getFiles();
           }
         },
         error: (err: any) => {
-          // this.progressInfos[idx].value = 0;
           const msg = 'Could not upload the file: ' + file.name;
           this.message.push(msg);
           console.error(err);
@@ -243,14 +238,12 @@ export class DialogBoxComponent implements OnInit {
     }
   }
   
-  
-
   deleteUp(id) {
     this.uploadService.delete(id)
       .subscribe({
         next: (res) => {
           // console.log(response);
-          this.docs = this.uploadService.getFiles();
+          // this.recupTab();
         },
         error: (e) => console.error(e)
       });

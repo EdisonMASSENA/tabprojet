@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpEvent, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { formatDate } from '@angular/common';
 
 const url = environment.Url + 'api/file';
 
@@ -20,7 +19,7 @@ export class UploadService {
     const formData: FormData = new FormData();
 
     formData.append('file', file);
-    formData.append('id', id);
+    formData.append('tabId', id);
     
     const req = new HttpRequest('POST', `${url}/upload`, formData, {
       reportProgress: true,
@@ -30,9 +29,9 @@ export class UploadService {
     return this.http.request(req);
   }
 
-  getFiles(): Observable<any> {
-    return this.http.get(`${url}/info`);
-  }
+  // getFiles(): Observable<any> {
+  //   return this.http.get(`${url}/info`);
+  // }
 
   delete(id): Observable<any> {
     return this.http.delete(`${url}/${id}`);
