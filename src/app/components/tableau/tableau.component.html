@@ -283,7 +283,7 @@
             <mat-menu #menu="matMenu" xPosition="before" yPosition="above">
               <button (click)="openDialog('Upload',tabs)" mat-menu-item> 
                 <mat-icon>add</mat-icon> 
-                Ajouter un document 
+                Ajouter un document
               </button>
               <a mat-menu-item *ngFor="let doc of tabs.file">
                 <a href="{{url}}api/file/{{doc.id}}" mat-icon-button>
