@@ -201,7 +201,7 @@ export class TableauComponent implements OnInit {
         case 'Upload': 
           setTimeout(() => {
             this.recupTab();
-          },5000);
+          },8000);
           this.msg = 'Document ajouté'
           this.snackbar(this.msg)
           break;
