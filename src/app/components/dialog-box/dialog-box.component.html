@@ -279,26 +279,42 @@
   </div> -->
 
   <div *ngSwitchCase=" action === 'Upload' ">
+
+    <mat-toolbar *ngIf="currentFile" class="progress-bar">
+      <mat-progress-bar color="accent" [value]="progress"></mat-progress-bar>
+      <span class="progress">{{ progress }}%</span>
+    </mat-toolbar>
+
     <mat-form-field class="textInp">
-      <div>
+      <!-- <div>
         <mat-toolbar>
           <input matInput [value]="selectedFileNames.length ? selectedFileNames : 'Ajouter documents'"/>
         </mat-toolbar>
-    
         <input type="file" id="fileInput" name="fileInput" multiple (change)="selectFiles($event)"/>
+      </div> -->
+      <div>
+        <mat-toolbar>
+          <input matInput [value]="fileName" />
+          <button mat-flat-button color="primary" [disabled]="!currentFile" (click)="upload(local_data.id)"> Upload </button>
+        </mat-toolbar>
+        <input type="file" id="fileInput" multiple (change)="selectFile($event)" name="fileInput"/>
       </div>
     </mat-form-field>
 
+    <div *ngIf="message" class="message">
+      {{ message }}
+    </div>
+
     <mat-card class="list-card">
       <mat-card-header>
-        <mat-card-title>Liste de fichier :</mat-card-title>
+        <mat-card-title>Liste de fichiers :</mat-card-title>
       </mat-card-header>
       <mat-card-content>
         <mat-list role="list">
           <mat-list-item role="listitem" *ngFor="let doc of local_data.file" class="list-item">
             <p matLine>
-              <a href="{{ url+'api/file/'+doc.id }}">{{ doc.name }}</a>
-              <button mat-icon-button color="warn" (click)="deleteUp(doc.id)">
+              <a href="{{ url+'api/file/dl/'+doc.id }}">{{ doc.name }}</a>
+              <button mat-icon-button color="warn" (click)="deleteUp(doc.id, local_data.id)">
                 <mat-icon>delete</mat-icon>
               </button>
             </p>
@@ -315,6 +331,15 @@
 </div>
 
 <div mat-dialog-actions>
-  <button mat-flat-button (click)="doAction()" color="accent"> {{action}} </button>
-  <button mat-button (click)="closeDialog()">Annuler</button>
+
+  <div *ngIf="action === 'Upload' ; else normal">
+    <button mat-flat-button color="accent" (click)="doAction()"> Terminer </button>
+  </div>
+
+  <ng-template #normal>
+    <button mat-flat-button (click)="doAction()" color="accent"> {{action}} </button>    
+    <button mat-button (click)="closeDialog()">Annuler</button>
+  </ng-template>
+  
+
 </div>

@@ -62,18 +62,23 @@ export class DialogBoxComponent implements OnInit {
   ];
   action: string;
   local_data: any;
-  msg: string;
+  // msgsnk: string;
   moiss: number[] = [];
   annees: number[] = [];
   url = environment.Url;
   user: any;
   
-  selectedFiles?: FileList;
-  selectedFileNames: string[] = [];
+  
+  // selectedFileNames: string[] = [];
+  // docs?: Observable<any>;
+  // selectedFiles?: FileList;
 
-  message: string[] = [];
+  message = '';
+  progress = 0;
+  currentFile?: File;
+  fileInfos?: Observable<any>;
+  fileName = 'Ajouter documents';
 
-  docs?: Observable<any>;
   diaFormControl = new FormControl('', [
     Validators.required
   ]);
@@ -102,14 +107,19 @@ export class DialogBoxComponent implements OnInit {
 
   doAction() {
 
+    if (this.local_data.action == 'Modifier' || this.local_data.action == 'Ajouter' && this.local_data.chef ) {
+      this.local_data.chef = this.local_data.chef.charAt(0).toUpperCase() + this.local_data.chef.slice(1);
+    }
 
-    this.local_data.chef = this.local_data.chef.charAt(0).toUpperCase() + this.local_data.chef.slice(1);
-    this.local_data.projet = this.local_data.projet.charAt(0).toUpperCase() + this.local_data.projet.slice(1);
-    if (this.local_data.priorite) {
+    if (this.local_data.action == 'Modifier' || this.local_data.action == 'Ajouter' && this.local_data.projet ) {
+      this.local_data.projet = this.local_data.projet.charAt(0).toUpperCase() + this.local_data.projet.slice(1);
+    }
+
+    if (this.local_data.action == 'Modifier' || this.local_data.action == 'Ajouter' && this.local_data.priorite) {
       this.local_data.priorite = this.local_data.priorite.charAt(0).toUpperCase() + this.local_data.priorite.slice(1);
     };
 
-    if (!this.local_data.progress) {
+    if (!this.local_data.progress && this.local_data.action == 'Ajouter') {
       this.local_data.progress = 0;
     };
 
@@ -126,9 +136,6 @@ export class DialogBoxComponent implements OnInit {
       this.local_data.fin = new Date(this.local_data.finannee,this.local_data.finmois,0,0,0,0);
     }
 
-    if (this.local_data.action == 'Upload') {
-      this.uploadFiles();
-    }
 
     this.dialogRef.close({ event: this.action, data: this.local_data });
 
@@ -192,63 +199,99 @@ export class DialogBoxComponent implements OnInit {
 
   ///////////////// Upload /////////////////////
   
-  selectFiles(event: any): void {
-    this.message = [];
-    this.selectedFileNames = [];
-    this.selectedFiles = event.target.files;
+  // selectFiles(event: any): void {
+    // this.message = [];
+    // this.selectedFileNames = [];
+    // this.selectedFiles = event.target.files;
   
 
-    if (this.selectedFiles && this.selectedFiles[0]) {
-      const numberOfFiles = this.selectedFiles.length;
-      for (let i = 0; i < numberOfFiles; i++) {  
-        this.selectedFileNames.push(this.selectedFiles[i].name);
-      }
+    // if (this.selectedFiles && this.selectedFiles[0]) {
+    //   const numberOfFiles = this.selectedFiles.length;
+    //   for (let i = 0; i < numberOfFiles; i++) {  
+    //     this.selectedFileNames.push(this.selectedFiles[i].name);
+    //   }
+    // }
+  // }
+
+
+  // uploadFiles(): void {
+  //   this.message = [];
+  
+  //   if (this.selectedFiles) {
+  //     for (let i = 0; i < this.selectedFiles.length; i++) {
+  //       this.upload(i, this.selectedFiles[i]);
+  //     }
+  //   }
+  // }
+
+  selectFile(event: any): void {
+    if (event.target.files && event.target.files[0]) {
+      const file: File = event.target.files[0];
+      this.currentFile = file;
+      this.fileName = this.currentFile.name;
+    } else {
+      this.fileName = 'Ajouter documents';
     }
-  }
-  
+  }  
 
-  uploadFiles(): void {
-    this.message = [];
+  upload(id): void {
   
-    if (this.selectedFiles) {
-      for (let i = 0; i < this.selectedFiles.length; i++) {
-        this.upload(i, this.selectedFiles[i]);
-      }
-    }
-  }
-  
+    this.progress = 0;
+    this.message = "";
 
-  upload(idx: number, file: File): void {
-  
-    if (file) {
-      this.uploadService.upload(file, this.local_data.id).subscribe({
+    if (this.currentFile) {
+
+      this.uploadService.upload(this.currentFile, id).subscribe({
         next: (event: any) => {
           if (event.type === HttpEventType.UploadProgress) {
+            this.progress = Math.round(100 * event.loaded / event.total);
           } else if (event instanceof HttpResponse) {
-            const msg = 'Uploaded the file successfully: ' + file.name;
-            this.message.push(msg);
+            this.message = event.body.message;
+            this.recupFile(id);
           }
         },
         error: (err: any) => {
-          const msg = 'Could not upload the file: ' + file.name;
-          this.message.push(msg);
-          console.error(err);
+          console.log(err);
+          this.progress = 0;
+
+          if (err.error && err.error.message) {
+            this.message = err.error.message;
+          } else {
+            this.message = 'Could not upload the file!';
+          }
+
+          this.currentFile = undefined;
         }
       });
     }
-  }
+  };
+
   
-  deleteUp(id) {
+  deleteUp(id,tabid) {
     this.uploadService.delete(id)
       .subscribe({
         next: (res) => {
           // console.log(response);
-          // this.recupTab();
+          this.recupFile(tabid);
         },
         error: (e) => console.error(e)
       });
   };
 
+
+ /////////// refresh fichier après modif ////////////////
+
+  recupFile(id): void {
+    this.uploadService.getFiles(id)
+      .subscribe({
+        next: (files) => {
+          this.local_data.file = files;
+        },
+        error: (e) => console.error(e)
+      });
+  };
+
+  //////////////////////////////////////
 
   ///////////////////////////////////////////
 

@@ -181,27 +181,30 @@ export class TableauComponent implements OnInit {
       data: obj
     });
     dialogRef.afterClosed().subscribe(result => {
-
       switch (result.event) {
         case 'Ajouter': 
           this.createTableau(result.data);
-          this.msg = 'Le projet ' + result.projet + ' a été ajouté';
+          this.msg = 'Le projet ' + result.data.projet + ' a été ajouté';
+          this.snackbar(this.msg)
           break;
 
         case 'Modifier': 
           this.editTableau(result.data);
-          this.msg = 'Le projet ' + result.projet + ' a été modifié'
+          this.msg = 'Le projet ' + result.data.projet + ' a été modifié'
+          this.snackbar(this.msg)
           break;
 
         case 'Supprimer': 
           this.deleteTableau(result.data);
-          this.msg = 'Le projet ' + result.projet + ' a été supprimé'
+          this.msg = 'Le projet ' + result.data.projet + ' a été supprimé'
+          this.snackbar(this.msg)
           break;
 
         case 'Upload': 
-          setTimeout(() => this.recupTab(),2000);
+          // setTimeout(() => this.recupTab(),2000);
           this.msg = 'Document ajouté'
           this.snackbar(this.msg)
+          this.recupTab()
           break;
       
         case 'Annuler': 
@@ -302,21 +305,6 @@ export class TableauComponent implements OnInit {
         error: (e) => console.error(e)
       });
   };
-
-  /////////// not in prod ////////////////
-
-  // recupFile(): void {
-  //   this.uploadService.getFiles()
-  //     .subscribe({
-  //       next: (files) => {
-  //         this.docs = files;
-  //         // console.log(this.docs);
-  //       },
-  //       error: (e) => console.error(e)
-  //     });
-  // };
-
-  //////////////////////////////////////
 
 
   //////////////// Tableau en PDF (npm: jsPDF autotable) /////////////////

@@ -29,9 +29,9 @@ export class UploadService {
     return this.http.request(req);
   }
 
-  // getFiles(): Observable<any> {
-  //   return this.http.get(`${url}/info`);
-  // }
+  getFiles(id): Observable<any> {
+    return this.http.get(`${url}/${id}`);
+  }
 
   delete(id): Observable<any> {
     return this.http.delete(`${url}/${id}`);
