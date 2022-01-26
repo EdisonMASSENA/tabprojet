@@ -1,8 +1,8 @@
 <h1 mat-dialog-title> Action :: <strong>{{action}}</strong></h1>
 
-<div mat-dialog-content [ngSwitch]="action">
+<div mat-dialog-content [ngSwitch]="true">
 
-  <div *ngSwitchCase="'Ajouter'">
+  <div *ngSwitchCase=" action === 'Ajouter' || action === 'Modifier' ">
 
     <mat-form-field class="textInp" appearance="outline">
       <mat-label>{{action}} Projet</mat-label>
@@ -89,18 +89,6 @@
     <p class="lab">Avancement:</p>
     <mat-slider class="progRow" thumbLabel="true" tickInterval="25" [(ngModel)]="local_data.progress"></mat-slider>
 
-    <!-- not in prod -->
-    <!-- <mat-form-field class="textInp">
-      <div>
-        <mat-toolbar>
-          <input matInput [value]="selectedFileNames.length ? selectedFileNames : 'Choisir Pièces Jointes'" />
-        </mat-toolbar>
-    
-        <input type="file" id="fileInput" name="fileInput" multiple (change)="selectFiles($event)"/>
-      </div>
-    </mat-form-field> -->
-    <!--  -->
-
     <div class="flex">
 
       <mat-radio-group aria-labelledby="radio-group-label" class="radio-group" [(ngModel)]="local_data.etat" >
@@ -153,7 +141,7 @@
   </div>
 
 
-  <div *ngSwitchCase="'Modifier'">
+  <!-- <div *ngSwitchCase="'Modifier'">
 
     <mat-form-field class="textInp" appearance="outline">
       <mat-label>{{action}} Projet</mat-label>
@@ -224,7 +212,7 @@
       </mat-select>
     </mat-form-field>
     
-    <!-- <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline">
       <mat-label>Choisir date de fin prévue</mat-label>
       <input matInput [matDatepicker]="dp" [formControl]="date">
       <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
@@ -234,40 +222,10 @@
                       (monthSelected)="chosenMonthHandler($event, dp)"
                       panelClass="example-month-picker">
       </mat-datepicker>
-    </mat-form-field> -->
+    </mat-form-field>
 
     <p class="lab">Avancement:</p>
     <mat-slider class="progRow" thumbLabel="true" tickInterval="25" [(ngModel)]="local_data.progress"></mat-slider>
-       
-<!-- not in prod -->
-    <!-- <mat-form-field class="textInp">
-      <div>
-        <mat-toolbar>
-          <input matInput [value]="selectedFileNames.length ? selectedFileNames : 'Choisir Pièces Jointes'"/>
-        </mat-toolbar>
-    
-        <input type="file" id="fileInput" name="fileInput" multiple (change)="selectFiles($event)"/>
-      </div>
-    </mat-form-field>
-    
-    <mat-card class="list-card">
-      <mat-card-header>
-        <mat-card-title>Liste de fichier :</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <mat-list role="list">
-          <mat-list-item role="listitem" *ngFor="let doc of docs | async" class="list-item">
-            <p matLine>
-              <a href="{{ url+'api/file/'+doc.id }}">{{ doc.name }}</a>
-              <button mat-icon-button color="warn" (click)="deleteUp(doc.id)">
-                <mat-icon>delete</mat-icon>
-              </button>
-            </p>
-          </mat-list-item>
-        </mat-list>
-      </mat-card-content>
-    </mat-card> -->
-  <!--  -->
 
     <div class="flex">
 
@@ -318,15 +276,70 @@
       <textarea class="row" matInput [(ngModel)]="local_data.encours"></textarea>
     </mat-form-field>
 
+  </div> -->
+
+  <div *ngSwitchCase=" action === 'Upload' ">
+
+    <mat-toolbar *ngIf="currentFile" class="progress-bar">
+      <mat-progress-bar color="accent" [value]="progress"></mat-progress-bar>
+      <span class="progress">{{ progress }}%</span>
+    </mat-toolbar>
+
+    <mat-form-field class="textInp">
+      <!-- <div>
+        <mat-toolbar>
+          <input matInput [value]="selectedFileNames.length ? selectedFileNames : 'Ajouter documents'"/>
+        </mat-toolbar>
+        <input type="file" id="fileInput" name="fileInput" multiple (change)="selectFiles($event)"/>
+      </div> -->
+      <div>
+        <mat-toolbar>
+          <input matInput [value]="fileName" />
+          <button mat-flat-button color="primary" [disabled]="!currentFile" (click)="upload(local_data.id)"> Upload </button>
+        </mat-toolbar>
+        <input type="file" id="fileInput" multiple (change)="selectFile($event)" name="fileInput"/>
+      </div>
+    </mat-form-field>
+
+    <div *ngIf="message" class="message">
+      {{ message }}
+    </div>
+
+    <mat-card class="list-card">
+      <mat-card-header>
+        <mat-card-title>Liste de fichiers :</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-list role="list">
+          <mat-list-item role="listitem" *ngFor="let doc of local_data.file" class="list-item">
+            <p class="break" matLine>
+              <a href="{{ url+'api/file/dl/'+doc.id }}">{{ doc.name }}</a>
+              <button mat-icon-button color="warn" (click)="deleteUp(doc.id, local_data.id)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </p>
+          </mat-list-item>
+        </mat-list>
+      </mat-card-content>
+    </mat-card>
   </div>
-  
-  <div *ngSwitchCase="'Supprimer'">
+
+  <div *ngSwitchCase="action === 'Supprimer'">
     <p> Êtes-vous sûr de vouloir supprimer le projet : <b>{{local_data.projet}}</b>?</p>
   </div>
 
 </div>
 
 <div mat-dialog-actions>
-  <button mat-flat-button (click)="doAction(); openSnackBar( local_data.projet, action )" color="accent"> {{action}} </button>
-  <button mat-button (click)="closeDialog()">Annuler</button>
+
+  <div *ngIf="action === 'Upload' ; else normal">
+    <button mat-flat-button color="accent" (click)="doAction()"> Terminer </button>
+  </div>
+
+  <ng-template #normal>
+    <button mat-flat-button (click)="doAction()" color="accent"> {{action}} </button>    
+    <button mat-button (click)="closeDialog()">Annuler</button>
+  </ng-template>
+  
+
 </div>

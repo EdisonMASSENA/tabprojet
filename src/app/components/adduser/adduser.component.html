@@ -1,0 +1,69 @@
+<mat-toolbar color="primary" class="center">
+    <img src="assets/logo.png" alt="logo" id="logo">
+    <span>Suivi de Projets</span>
+</mat-toolbar>
+
+<div [ngClass]="medium ? 'altsm' : 'normal'">
+
+    <h1>Ajout direction</h1>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Ajout Direction</mat-label>
+        <input required matInput [(ngModel)]="user.username">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Ajout Mot de passe</mat-label>
+        <input (keyup.enter)="createUser()" required matInput [(ngModel)]="user.password">
+    </mat-form-field>
+
+    <button mat-flat-button (click)="createUser()" color="accent">Ajouter</button>
+
+</div>
+
+
+
+<mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+    <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true " class="blue"></mat-header-row>
+    <mat-row *matRowDef="let user; columns: displayedColumns;" class="element-row"></mat-row>
+
+    <ng-container matColumnDef="direction">
+        <mat-header-cell *matHeaderCellDef class="white"
+            [ngClass]="!medium ? 'projet prohea' : 'projetM proheaM' "> Direction </mat-header-cell>
+        <mat-cell *matCellDef="let user" [ngClass]="!medium ? 'projet' : 'projetM' ">
+
+            <div>
+                {{user.username}} 
+            </div>
+
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="mdp">
+        <mat-header-cell *matHeaderCellDef class="white type"> MDP </mat-header-cell>
+        <mat-cell *matCellDef="let user">
+
+            <div>
+                {{user.password}}
+            </div>
+
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="action">
+        <mat-header-cell *matHeaderCellDef class="white"> Action </mat-header-cell>
+        <mat-cell *matCellDef="let user">
+
+          <span class="actionPill"> 
+
+            <button mat-icon-button matTooltip="Supprimer" color="warn" (click)="deleteUser(user.id)">
+              <mat-icon>delete</mat-icon>
+            </button>
+
+          </span>
+
+        </mat-cell>
+      </ng-container>
+
+</mat-table>

@@ -39,6 +39,10 @@ export class LoginComponent implements OnInit {
   errorMessage = '';
   small: boolean;
 
+  mdpFormControl = new FormControl('', [
+    Validators.required
+  ]);
+
   constructor(private _snackBar: MatSnackBar, private router: Router, private authService: AuthService, private tokenStorage: TokenStorageService, private breakpointObserver: BreakpointObserver) { }
 
   ngOnInit(): void {
@@ -50,39 +54,45 @@ export class LoginComponent implements OnInit {
 
     this.recupUser();
 
+    this.responsive();
+    
+  }
+
+  
+  responsive(){
     this.breakpointObserver
       .observe([Breakpoints.HandsetPortrait,Breakpoints.Small,,Breakpoints.XSmall])
-      .subscribe((state: BreakpointState) => {
-        if (state.matches) {
-           this.small = true;
-        }else{
-          this.small = false;
+        .subscribe((state: BreakpointState) => {
+          if (state.matches) {
+            this.small = true;
+          }else{
+            this.small = false;
 
         }
       });
   }
-
-  mdpFormControl = new FormControl('', [
-    Validators.required
-  ]);
-
 
 
   login(): void {
     if (this.form.username == 'Consultation') {
       this.form.password = null ;
     };
-    this.authService.login(this.form).subscribe(
-      data => {
+    this.authService.login(this.form).subscribe({
+      next: (data) => {
         this.tokenStorage.saveToken(data.accessToken);
         this.tokenStorage.saveUser(data);
 
         this.isLoginFailed = false;
         this.isLoggedIn = true;
-        this.router.navigate(['/projets']);
+        
+        if (data.username == 'Admin') {
+          this.router.navigate(['/admin']);
+        } else {
+          this.router.navigate(['/projets']);
+        }
 
       },
-      err => {
+      error: (err) => {
         this.errorMessage = err.error.message;
         this.isLoginFailed = true;
         console.log(err.error.message)
@@ -94,22 +104,21 @@ export class LoginComponent implements OnInit {
           horizontalPosition: "center",
           verticalPosition: "bottom",
         });
-
       }
-    );
+    });
   }
+
 
   recupUser(): void {
     this.authService.user()
-      .subscribe(
-        data => {
+      .subscribe({
+        next: (data) => {
           for (let i = 0; i < data.length; i++) {
             this.dirs = this.dirs.concat(data[i].username);
           }
         },
-        error => {
-          console.log(error);
-        });
+        error: (e) => console.error(e)
+      });
   }
 
 

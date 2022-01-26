@@ -4,9 +4,10 @@
 
 export const environment = {
   production: false,
-  Url: 'https://api-tab-dev.herokuapp.com/'
+  // Url: 'https://api-tab-dev.herokuapp.com/'
+  // Url: 'https://mlj-dev.herokuapp.com/'
   // Url: 'https://api-tab.herokuapp.com/'
-  // Url: 'https://localhost:8080/'
+  Url: 'http://localhost:8080/'
 
 };
 

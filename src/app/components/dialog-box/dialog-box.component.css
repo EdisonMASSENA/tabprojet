@@ -54,14 +54,14 @@ img
   margin: 15px 0;
 }
 
-
+/* 
 .month-picker .mat-calendar-period-button {
   pointer-events: none;
 }
 
 .month-picker .mat-calendar-arrow {
   display: none;
-}
+} */
 
 /* .progRow{
   margin-left: 10px;
@@ -73,4 +73,13 @@ img
 
 .mat-slider-horizontal{
   width: 90%;
+}
+
+.break{
+  word-wrap: break-word;
+  word-break: break-word;
+  overflow-wrap: break-word;
+
+  word-wrap: break-word !important;
+  white-space: pre-wrap !important;
 }
