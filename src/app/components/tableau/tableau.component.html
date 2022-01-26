@@ -371,15 +371,23 @@
                 <span class="textPills">Action:</span>
 
 
-                <button mat-icon-button (click)="consult ? menuAc : openDialog('Upload',tabs) " [matMenuTriggerFor]="menuAc ? menu : null"  matTooltip="Pièces jointes" color="accent">
+                <button mat-icon-button [matMenuTriggerFor]="menu" matTooltip="Pièces jointes" color="accent">
                   <mat-icon>attachment</mat-icon>
                 </button>
     
-                
-                <mat-menu #menu="matMenu" xPosition="before" yPosition="above" >
-                  <a href="{{url}}api/file/{{doc.id}}" mat-menu-item *ngFor="let doc of tabs.file">
-                    <mat-icon>file_download</mat-icon>
+                <mat-menu #menu="matMenu" xPosition="before" yPosition="above">
+                  <button (click)="openDialog('Upload',tabs)" mat-menu-item *ngIf="!consult" > 
+                    <mat-icon>settings</mat-icon> 
+                    Gestion des documents
+                  </button>
+                  <a mat-menu-item href="{{url}}api/file/dl/{{doc.id}}" *ngFor="let doc of tabs.file">
+                    <!-- <a mat-icon-button> -->
+                      <mat-icon>file_download</mat-icon>
+                    <!-- </a> -->
                     <span>{{doc.name}}</span>
+                    <!-- <button mat-icon-button (click)="deleteUp(doc.id)">
+                      <mat-icon>delete</mat-icon>
+                    </button> -->
                   </a>
                 </mat-menu>
         
