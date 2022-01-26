@@ -74,3 +74,12 @@ img
 .mat-slider-horizontal{
   width: 90%;
 }
+
+.break{
+  word-wrap: break-word;
+  word-break: break-word;
+  overflow-wrap: break-word;
+
+  word-wrap: break-word !important;
+  white-space: pre-wrap !important;
+}

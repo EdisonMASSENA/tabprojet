@@ -312,7 +312,7 @@
       <mat-card-content>
         <mat-list role="list">
           <mat-list-item role="listitem" *ngFor="let doc of local_data.file" class="list-item">
-            <p matLine>
+            <p class="break" matLine>
               <a href="{{ url+'api/file/dl/'+doc.id }}">{{ doc.name }}</a>
               <button mat-icon-button color="warn" (click)="deleteUp(doc.id, local_data.id)">
                 <mat-icon>delete</mat-icon>
