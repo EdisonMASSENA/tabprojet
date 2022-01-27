@@ -286,13 +286,8 @@
                 Gestion des documents
               </button>
               <a mat-menu-item href="{{url}}api/file/dl/{{doc.id}}" *ngFor="let doc of tabs.file">
-                <!-- <a mat-icon-button> -->
-                  <mat-icon>file_download</mat-icon>
-                <!-- </a> -->
+                <mat-icon>file_download</mat-icon>
                 <span>{{doc.name}}</span>
-                <!-- <button mat-icon-button (click)="deleteUp(doc.id)">
-                  <mat-icon>delete</mat-icon>
-                </button> -->
               </a>
             </mat-menu>
 
@@ -381,13 +376,8 @@
                     Gestion des documents
                   </button>
                   <a mat-menu-item href="{{url}}api/file/dl/{{doc.id}}" *ngFor="let doc of tabs.file">
-                    <!-- <a mat-icon-button> -->
-                      <mat-icon>file_download</mat-icon>
-                    <!-- </a> -->
+                    <mat-icon>file_download</mat-icon>
                     <span>{{doc.name}}</span>
-                    <!-- <button mat-icon-button (click)="deleteUp(doc.id)">
-                      <mat-icon>delete</mat-icon>
-                    </button> -->
                   </a>
                 </mat-menu>
         
