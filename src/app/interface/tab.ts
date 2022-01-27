@@ -14,18 +14,18 @@ export interface Tab {
     etat: String;
     tendance: String; 
     progress: Number;
+    file: any;
 };
 
 export interface User{
     id:Number;
-    direction:String;
-    mdp:String;
-    
+    username:String;
+    password:String;
 };
 
 export interface Upload{
     id:Number;
     data:Blob;
     type:String;
-    projetId:Number;
+    tab_id:Number;
 };

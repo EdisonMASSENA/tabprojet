@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
-const AUTH_API = environment.Url + 'api/auth/';
+const url = environment.Url + 'api/auth';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -17,14 +17,26 @@ export class AuthService {
   constructor (private http: HttpClient) { }
 
   login(credentials): Observable<any> {
-    return this.http.post(AUTH_API + 'signin', {
+    return this.http.post(url + '/signin', {
       username: credentials.username,
       password: credentials.password
     }, httpOptions);
   }
 
   user(): Observable<any>{
-    return this.http.get(AUTH_API + 'user');
+    return this.http.get(url + '/user');
+  }
+
+  admin(): Observable<any>{
+    return this.http.get(url + '/admin');
+  }
+  
+  create(user): Observable<any>{
+    return this.http.post(url + '/admin', user);
+  }
+
+  delete(id): Observable<any> {
+    return this.http.delete(`${url}/admin/${id}`);
   }
   
 }

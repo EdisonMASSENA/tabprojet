@@ -169,6 +169,12 @@ img
     color: white ;
 }
 
+.rechlab
+{
+    color: white ;
+    font-size: 14px;
+}
+
 .scroll
 {
     position: fixed;
@@ -220,7 +226,7 @@ img
     padding: 10px;
     flex: 0 0 4% !important;
     word-wrap: break-word !important;
-    white-space: pre-wrap !important;
+    /* white-space: pre-wrap !important; */
     overflow-wrap: break-word;
     word-wrap: break-word;
     /* word-break: break-word; */
@@ -486,9 +492,7 @@ img
 }
 
 .pourcent{
-    /* padding-right: 100px; */
     color: #ff4081;
-    /* font-size: 16px; */
 }
 
 .wid{

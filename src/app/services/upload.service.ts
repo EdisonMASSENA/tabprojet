@@ -13,13 +13,14 @@ const url = environment.Url + 'api/file';
 
 export class UploadService {
 
-  constructor( private http: HttpClient) {}
+  constructor(private http: HttpClient) {}
 
-  upload(file: File): Observable<HttpEvent<any>> {
+  upload(file: File, id): Observable<HttpEvent<any>> {
     const formData: FormData = new FormData();
 
     formData.append('file', file);
-
+    formData.append('tabId', id);
+    
     const req = new HttpRequest('POST', `${url}/upload`, formData, {
       reportProgress: true,
       responseType: 'json'
@@ -28,11 +29,7 @@ export class UploadService {
     return this.http.request(req);
   }
 
-  getFiles(): Observable<any> {
-    return this.http.get(`${url}/info`);
-  }
-
-  download(id): Observable<any> {
+  getFiles(id): Observable<any> {
     return this.http.get(`${url}/${id}`);
   }
 

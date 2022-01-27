@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, HostListener, NgZone, Injectable } from '@angular/core';
+import { Component, OnInit, ViewChild, HostListener} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -22,7 +22,7 @@ import { DatePipe } from '@angular/common'
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable'
 import * as XLSX from 'xlsx';
-type AOA = any[][];
+
 
 
 import { Tab } from "src/app/interface/tab";
@@ -30,7 +30,8 @@ import { UploadService } from 'src/app/services/upload.service';
 import { TableauService } from "src/app/services/tableau.service";
 import { DialogBoxComponent } from 'src/app/components/dialog-box/dialog-box.component';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
-import { now } from 'lodash';
+
+// import { now } from 'lodash';
 
 
 
@@ -91,11 +92,13 @@ export class TableauComponent implements OnInit {
   url = environment.Url;
   ndate = new Date;
   date = this.datepipe.transform(this.ndate, 'dd/MM/yyyy');
+  msg: any;
+  menuAc: boolean;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   
 
-  constructor(private datepipe: DatePipe, private _ngZone: NgZone, private uploadService: UploadService, private tokenStorage: TokenStorageService, private _snackBar: MatSnackBar, private tabservice: TableauService, public dialog: MatDialog, private router: Router, private breakpointObserver: BreakpointObserver) { }
+  constructor(private datepipe: DatePipe, private uploadService: UploadService, private tokenStorage: TokenStorageService, private _snackBar: MatSnackBar, private tabservice: TableauService, public dialog: MatDialog, private router: Router, private breakpointObserver: BreakpointObserver) { }
 
 
   ngOnInit(): void {
@@ -108,10 +111,6 @@ export class TableauComponent implements OnInit {
 
     ////// Affichage responsive//////
     this.tabDisplay();
-
-
-    // this.recupFile();
-
 
     //////////////////// Bar de recherche filtré par projet ////////////////////////////
     this.dataSource.filterPredicate = function (tab, filter: string): boolean {
@@ -151,6 +150,7 @@ export class TableauComponent implements OnInit {
     };
     if (this.username == 'Consultation') {
       this.consult = true;
+      this.menuAc = true;
     };
   };
 
@@ -165,10 +165,6 @@ export class TableauComponent implements OnInit {
           this.medium = true;
           this.displayedColumns = ['projet', 'direction', 'chef', 'etat', 'tendance'];
         }
-        // else if (this.consult) {
-        //   this.medium = false;
-        //   this.displayedColumns = ['chef', 'direction', 'priorite', 'projet', 'date', 'etat', 'tendance', 'accompli', 'attention', 'enCours', 'action'];
-        // }
         else {
           this.medium = false;
           this.displayedColumns = ['projet', 'type', 'direction', 'priorite', 'chef', 'debut', 'fin', 'etat', 'tendance', 'accompli', 'attention', 'enCours', 'action'];
@@ -185,20 +181,40 @@ export class TableauComponent implements OnInit {
       data: obj
     });
     dialogRef.afterClosed().subscribe(result => {
-      if (result.event == 'Ajouter') {
-        this.createTableau(result.data);
-      }
-      else if (result.event == 'Modifier') {
-        this.editTableau(result.data);
-      }
-      else if (result.event == 'Supprimer') {
-        this.deleteTableau(result.data);
-      }
-      else if (result.event == 'Annuler') {
-        let msg = 'Action annulée'
-        this.snackbar(msg)
-      }
-    });
+      switch (result.event) {
+        case 'Ajouter': 
+          this.createTableau(result.data);
+          this.msg = 'Le projet ' + result.data.projet + ' a été ajouté';
+          this.snackbar(this.msg)
+          break;
+
+        case 'Modifier': 
+          this.editTableau(result.data);
+          this.msg = 'Le projet ' + result.data.projet + ' a été modifié'
+          this.snackbar(this.msg)
+          break;
+
+        case 'Supprimer': 
+          this.deleteTableau(result.data);
+          this.msg = 'Le projet ' + result.data.projet + ' a été supprimé'
+          this.snackbar(this.msg)
+          break;
+
+        case 'Upload': 
+          this.msg = 'Modification effectuée'
+          this.snackbar(this.msg)
+          this.recupTab()
+          break;
+      
+        case 'Annuler': 
+          this.msg = 'Action annulée'
+          this.snackbar(this.msg)
+          break;  
+
+        default :
+          break;
+      };
+    })
   };
 
 
@@ -213,34 +229,29 @@ export class TableauComponent implements OnInit {
 
   /////////////////////// Ajout Projet ////////////////////
   createTableau(data: Tab): void {
-
     this.tabservice.create(data)
-      .subscribe(
-        response => {
-          // console.log(response);
+      .subscribe({
+        next: (res) => {
+          // console.log(res);
           this.recupTab();
-          // this.recupFile();
         },
-        error => {
-          // console.log(error);
-        });
-
+        error: (e) => console.error(e)
+      });
   };
 
 
   //////////////// Modification des champs /////////////////
 
   editTableau(data: Tab): void {
+    delete data.file;
     this.tabservice.update(data.id, data)
-      .subscribe(
-        response => {
-          // console.log(data.date);
+      .subscribe({
+        next: (res) => {
+          // console.log(res);
           this.recupTab();
-          // this.recupFile();
         },
-        error => {
-          // console.log(error);
-        });
+        error: (e) => console.error(e)
+      });
 
   };
 
@@ -248,17 +259,27 @@ export class TableauComponent implements OnInit {
   //////////////////// Suppression Projet ////////////////////
   deleteTableau(data: Tab) {
     this.tabservice.delete(data.id)
-      .subscribe(
-        response => {
-          // console.log(response);
+      .subscribe({
+        next: (res) => {
+          // console.log(res);
           this.recupTab();
         },
-        error => {
-          // console.log(error);
-        });
+        error: (e) => console.error(e)
+      });
 
   };
 
+
+  deleteUp(id) {
+    this.uploadService.delete(id)
+      .subscribe({
+        next: (res) => {
+          // console.log(response);
+          this.recupTab();
+        },
+        error: (e) => console.error(e)
+      });
+  };
 
 
   //////////////////// Bar de recherche /////////////////////
@@ -271,8 +292,8 @@ export class TableauComponent implements OnInit {
   ///////////////////// Data Tableau ////////////////////////
   recupTab(): void {
     this.tabservice.getAll()
-      .subscribe(
-        data => {
+      .subscribe({
+        next: (data) => {
           if (this.username == 'Consultation') {
             this.dataSource.data = data
           }
@@ -280,27 +301,9 @@ export class TableauComponent implements OnInit {
             this.dataSource.data = data.filter(item => item.direction === this.username);
           };
         },
-        error => {
-          // console.log(error);
-        });
+        error: (e) => console.error(e)
+      });
   };
-
-  /////////// not in prod ////////////////
-
-  // recupFile(): void {
-  //   this.uploadService.getFiles()
-  //     .subscribe(
-  //       files => {
-  //           this.docs = files;
-  //         // console.log(this.docs);
-  //       },
-  //       error => {
-  //         // console.log(error);
-  //       });
-
-  // };
-
-  //////////////////////////////////////
 
 
   //////////////// Tableau en PDF (npm: jsPDF autotable) /////////////////
@@ -309,20 +312,20 @@ export class TableauComponent implements OnInit {
 
     let prepare = [];
     this.dataSource.data.forEach(e => {
-      let tempObj = [];
-      tempObj.push(e.chef);
-      tempObj.push(e.direction);
-      tempObj.push(e.priorite);
-      tempObj.push(e.projet + '  (' + e.type + ')');
-      tempObj.push(this.datepipe.transform(e.debut, 'MM/yyyy'));
-      tempObj.push(this.datepipe.transform(e.fin, 'MM/yyyy'));
-      tempObj.push(e.progress + '%');
-      tempObj.push(e.etat);
-      tempObj.push(e.tendance);
-      tempObj.push(e.accompli);
-      tempObj.push(e.attention);
-      tempObj.push(e.encours);
-      prepare.push(tempObj);
+      let pdfData = [];
+      pdfData.push(e.chef);
+      pdfData.push(e.direction);
+      pdfData.push(e.priorite);
+      pdfData.push(e.projet + '  (' + e.type + ')');
+      pdfData.push(this.datepipe.transform(e.debut, 'MM/yyyy'));
+      pdfData.push(this.datepipe.transform(e.fin, 'MM/yyyy'));
+      pdfData.push(e.progress + '%');
+      pdfData.push(e.etat);
+      pdfData.push(e.tendance);
+      pdfData.push(e.accompli);
+      pdfData.push(e.attention);
+      pdfData.push(e.encours);
+      prepare.push(pdfData);
     });
 
     const doc = new jsPDF('l', 'mm', 'a3')
@@ -388,17 +391,17 @@ export class TableauComponent implements OnInit {
     let dataExcel = [];
 
     this.dataSource.data.forEach(e => {
-      let tempObj = [];
+      let excelData = [];
       let etat : String;
       let tendance : String;
 
-      tempObj.push(e.chef);
-      tempObj.push(e.direction);
-      tempObj.push(e.priorite);
-      tempObj.push(e.projet + '  (' + e.type + ')');
-      tempObj.push(e.progress + '%');
-      tempObj.push(this.datepipe.transform(e.debut, 'MM/yyyy'));
-      tempObj.push(this.datepipe.transform(e.fin, 'MM/yyyy'));
+      excelData.push(e.chef);
+      excelData.push(e.direction);
+      excelData.push(e.priorite);
+      excelData.push(e.projet + '  (' + e.type + ')');
+      excelData.push(e.progress + '%');
+      excelData.push(this.datepipe.transform(e.debut, 'MM/yyyy'));
+      excelData.push(this.datepipe.transform(e.fin, 'MM/yyyy'));
       switch (e.etat) {
         case 'assets/1.png':
          etat = 'Soleil';
@@ -419,7 +422,7 @@ export class TableauComponent implements OnInit {
         default:
           break;
       }
-      tempObj.push(etat);
+      excelData.push(etat);
       switch (e.tendance) {
         case 'assets/a.png':
          tendance = 'Bonne';
@@ -436,11 +439,11 @@ export class TableauComponent implements OnInit {
         default:
           break;
       }
-      tempObj.push(tendance);
-      tempObj.push(e.accompli);
-      tempObj.push(e.attention);
-      tempObj.push(e.encours);
-      dataExcel.push(tempObj);
+      excelData.push(tendance);
+      excelData.push(e.accompli);
+      excelData.push(e.attention);
+      excelData.push(e.encours);
+      dataExcel.push(excelData);
     });
 
     const rename = dataExcel.map(({
@@ -539,11 +542,12 @@ export class TableauComponent implements OnInit {
   };
 
 
+/////////////////// Sidenav Tri ////////////////////
 
 tri(tri){
   this.tabservice.getAll()
-      .subscribe(
-        data => {
+      .subscribe({
+        next: (data) => {
           switch (tri) {
             case 'assets/1.png': case 'assets/2.png': case 'assets/3.png': case 'assets/4.png':
               this.dataSource.data = data.filter(item => item.etat === tri);
@@ -558,15 +562,12 @@ tri(tri){
               break;
           }
         },
-        error => {
-          // console.log(error);
-        });
- 
-   
+        error: (e) => console.error(e)
+      });
 }
 
 
-  /////////////////////////////////
+  ////////////////END/////////////////
 
 
 };
