@@ -62,21 +62,14 @@ export class DialogBoxComponent implements OnInit {
   ];
   action: string;
   local_data: any;
-  // msgsnk: string;
   moiss: number[] = [];
   annees: number[] = [];
   url = environment.Url;
   user: any;
   
-  
-  // selectedFileNames: string[] = [];
-  // docs?: Observable<any>;
-  // selectedFiles?: FileList;
-
   message = '';
   progress = 0;
   currentFile?: File;
-  fileInfos?: Observable<any>;
   fileName = 'Ajouter documents';
 
   diaFormControl = new FormControl('', [
@@ -148,35 +141,6 @@ export class DialogBoxComponent implements OnInit {
   }
 
 
-
-  // openSnackBar(nom: string, action: string) {
-
-  //   switch (action) {
-  //     case 'Ajouter': this.msg = 'Le projet ' + nom + ' a été ajouté'
-
-  //       break;
-
-  //     case 'Supprimer': this.msg = 'Le projet ' + nom + ' a été supprimé'
-
-  //       break;
-
-  //     case 'Modifier': this.msg = 'Le projet ' + nom + ' a été modifié'
-
-  //     break;
-
-  //     default: 'Annulé'
-  //       break;
-  //   }
-
-  //   this._snackBar.open(this.msg,'Fermer', {
-  //     duration: 3000,
-  //     horizontalPosition: "center",
-  //     verticalPosition: "bottom",
-  //   });
-
-  // }
-
-
   recupdate(id) {
     this.tabService.getAll()
     .subscribe({
@@ -198,31 +162,6 @@ export class DialogBoxComponent implements OnInit {
 
 
   ///////////////// Upload /////////////////////
-  
-  // selectFiles(event: any): void {
-    // this.message = [];
-    // this.selectedFileNames = [];
-    // this.selectedFiles = event.target.files;
-  
-
-    // if (this.selectedFiles && this.selectedFiles[0]) {
-    //   const numberOfFiles = this.selectedFiles.length;
-    //   for (let i = 0; i < numberOfFiles; i++) {  
-    //     this.selectedFileNames.push(this.selectedFiles[i].name);
-    //   }
-    // }
-  // }
-
-
-  // uploadFiles(): void {
-  //   this.message = [];
-  
-  //   if (this.selectedFiles) {
-  //     for (let i = 0; i < this.selectedFiles.length; i++) {
-  //       this.upload(i, this.selectedFiles[i]);
-  //     }
-  //   }
-  // }
 
   selectFile(event: any): void {
     if (event.target.files && event.target.files[0]) {
@@ -290,8 +229,6 @@ export class DialogBoxComponent implements OnInit {
         error: (e) => console.error(e)
       });
   };
-
-  //////////////////////////////////////
 
   ///////////////////////////////////////////
 

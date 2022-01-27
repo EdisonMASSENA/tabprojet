@@ -19,8 +19,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {MatSortModule} from '@angular/material/sort'; 
-import {MatTooltipModule} from '@angular/material/tooltip'; 
-import {MatChipsModule} from '@angular/material/chips';
+import {MatTooltipModule} from '@angular/material/tooltip';
 // import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatCardModule} from '@angular/material/card';
 import {MatListModule} from '@angular/material/list';
@@ -69,7 +68,6 @@ import { AdduserComponent } from './components/adduser/adduser.component';
     HttpClientModule,
     MatTooltipModule,
     LayoutModule,
-    MatChipsModule,
     // MatDatepickerModule,
     MatCardModule,
     MatListModule,
