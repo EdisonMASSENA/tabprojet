@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, HostListener, NgZone} from '@angular/core';
+import { Component, OnInit, ViewChild, HostListener} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -98,7 +98,7 @@ export class TableauComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   
 
-  constructor(private datepipe: DatePipe, private _ngZone: NgZone, private uploadService: UploadService, private tokenStorage: TokenStorageService, private _snackBar: MatSnackBar, private tabservice: TableauService, public dialog: MatDialog, private router: Router, private breakpointObserver: BreakpointObserver) { }
+  constructor(private datepipe: DatePipe, private uploadService: UploadService, private tokenStorage: TokenStorageService, private _snackBar: MatSnackBar, private tabservice: TableauService, public dialog: MatDialog, private router: Router, private breakpointObserver: BreakpointObserver) { }
 
 
   ngOnInit(): void {
@@ -201,8 +201,7 @@ export class TableauComponent implements OnInit {
           break;
 
         case 'Upload': 
-          // setTimeout(() => this.recupTab(),2000);
-          this.msg = 'Document ajouté'
+          this.msg = 'Modification effectuée'
           this.snackbar(this.msg)
           this.recupTab()
           break;
