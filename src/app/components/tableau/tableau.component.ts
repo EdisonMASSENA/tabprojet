@@ -206,6 +206,11 @@ export class TableauComponent implements OnInit {
           this.recupTab()
           break;
       
+        case 'Nomodif': 
+          this.msg = 'Pas de modification'
+          this.snackbar(this.msg)
+          break;
+
         case 'Annuler': 
           this.msg = 'Action annulée'
           this.snackbar(this.msg)

@@ -71,6 +71,7 @@ export class DialogBoxComponent implements OnInit {
   progress = 0;
   currentFile?: File;
   fileName = 'Ajouter documents';
+  modif = false;
 
   diaFormControl = new FormControl('', [
     Validators.required
@@ -129,8 +130,11 @@ export class DialogBoxComponent implements OnInit {
       this.local_data.fin = new Date(this.local_data.finannee,this.local_data.finmois,0,0,0,0);
     }
 
-
-    this.dialogRef.close({ event: this.action, data: this.local_data });
+    if (this.modif) {
+      this.dialogRef.close({ event: this.action, data: this.local_data });
+    } else {
+      this.dialogRef.close({ event: 'Nomodif', data:'' });
+    }
 
   }
 
@@ -187,6 +191,7 @@ export class DialogBoxComponent implements OnInit {
           } else if (event instanceof HttpResponse) {
             this.message = event.body.message;
             this.recupFile(id);
+            this.modif = true;
           }
         },
         error: (err: any) => {
@@ -212,6 +217,7 @@ export class DialogBoxComponent implements OnInit {
         next: (res) => {
           // console.log(response);
           this.recupFile(tabid);
+          this.modif = true;
         },
         error: (e) => console.error(e)
       });
