@@ -285,10 +285,14 @@
                 <mat-icon>settings</mat-icon> 
                 Gestion des documents
               </button>
-              <a mat-menu-item href="{{url}}api/file/dl/{{doc.id}}" *ngFor="let doc of tabs.file">
+              <a mat-menu-item href="{{url}}api/file/dl/{{doc.id}}" *ngFor="let doc of tabs.file" >
                 <mat-icon>file_download</mat-icon>
                 <span>{{doc.name}}</span>
               </a>
+              <button mat-menu-item *ngIf="tabs.file.length == 0">
+                <mat-icon>block</mat-icon>
+                Aucun documents
+              </button>
             </mat-menu>
 
             <button mat-icon-button [matTooltip]="consult ? 'Vous n\'avez pas les droits' : 'Modifier'" [disabled]="consult" color="primary" (click)="openDialog('Modifier',tabs)">
