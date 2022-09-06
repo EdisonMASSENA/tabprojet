@@ -1,8 +1,10 @@
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { User } from 'src/app/interface/tab';
 import { AuthService } from 'src/app/services/auth.service';
+import { TokenStorageService } from 'src/app/services/token-storage.service';
 
 @Component({
   selector: 'app-adduser',
@@ -17,7 +19,7 @@ export class AdduserComponent implements OnInit {
   dataSource = new MatTableDataSource<User>();
   getUser: any;
 
-  constructor(private breakpointObserver: BreakpointObserver, private authService: AuthService) { }
+  constructor(private breakpointObserver: BreakpointObserver, private authService: AuthService, private tokenStorage: TokenStorageService, private router: Router) { }
 
   ngOnInit(): void {
 
@@ -26,6 +28,12 @@ export class AdduserComponent implements OnInit {
     this.recupUser();
 
   }
+
+  logout(): void {
+    this.tokenStorage.signOut();
+    this.router.navigate(['']);
+    let msg = 'Déconnexion';
+  };
 
   responsive(){
     this.breakpointObserver
