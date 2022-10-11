@@ -130,11 +130,7 @@ export class DialogBoxComponent implements OnInit {
       this.local_data.fin = new Date(this.local_data.finannee,this.local_data.finmois,0,0,0,0);
     }
 
-    if (this.modif) {
-      this.dialogRef.close({ event: this.action, data: this.local_data });
-    } else {
-      this.dialogRef.close({ event: 'Nomodif', data:'' });
-    }
+    this.dialogRef.close({ event: this.action, data: this.local_data });
 
   }
 

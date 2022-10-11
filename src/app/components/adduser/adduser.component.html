@@ -1,6 +1,11 @@
 <mat-toolbar color="primary" class="center">
     <img src="assets/logo.png" alt="logo" id="logo">
     <span>Suivi de Projets</span>
+
+    <button mat-icon-button matTooltip="Déconnexion" (click)="logout()">
+        <mat-icon>power_settings_new</mat-icon>
+    </button>
+
 </mat-toolbar>
 
 <div [ngClass]="medium ? 'altsm' : 'normal'">
